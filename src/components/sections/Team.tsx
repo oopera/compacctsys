@@ -32,32 +32,32 @@ export function Team() {
               <p className="mb-5 font-mono text-[10px] uppercase tracking-widest text-[var(--muted)]">
                 {roleLabel[role]}
               </p>
-              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {members.map((member) => (
                   <div
                     key={member.id}
-                    className="flex items-center gap-4 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-5 py-4 transition-colors hover:border-[var(--orange)]/40"
+                    className="flex overflow-hidden border border-[var(--border)] bg-[var(--surface)] transition-colors hover:border-[var(--orange)]/40"
                   >
-                    <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full">
+                    <div className="relative w-28 shrink-0 bg-[var(--bg-alt)]">
                       {member.photo ? (
                         <Image
                           src={member.photo}
                           alt={member.name}
                           fill
-                          className="object-cover"
-                          sizes="48px"
+                          className="object-cover object-center"
+                          sizes="112px"
                         />
                       ) : (
                         <div
-                          className="flex h-full w-full items-center justify-center font-mono text-xs font-semibold text-white"
+                          className="flex h-full w-full items-center justify-center font-mono text-lg font-semibold text-white/60"
                           style={{ background: "var(--hero-mid)" }}
                         >
                           {member.name.split(" ").map((n) => n[0]).join("").slice(0, 2)}
                         </div>
                       )}
                     </div>
-                    <div className="min-w-0">
-                      <p className="text-sm font-medium text-[var(--text)]">
+                    <div className="flex flex-col justify-center px-5 py-4">
+                      <p className="text-sm font-semibold text-[var(--text)]">
                         {member.title ? `${member.title} ` : ""}
                         {member.name}
                       </p>
