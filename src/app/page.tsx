@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { Nav } from "@/components/Nav";
 import { Hero } from "@/components/sections/Hero";
 import { ResearchThemes } from "@/components/sections/ResearchThemes";

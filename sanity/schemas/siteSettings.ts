@@ -5,8 +5,6 @@ export const siteSettings = defineType({
   name: "siteSettings",
   title: "Site Settings",
   type: "document",
-  // Prevent creating multiple instances via __experimental_actions
-  __experimental_actions: ["update", "publish"],
   fields: [
     defineField({
       name: "groupName",

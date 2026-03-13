@@ -1,7 +1,8 @@
-import { publications } from "@/lib/data";
+import { getPublications } from "@/lib/sanity/queries";
 import { SectionHeader } from "@/components/SectionHeader";
 
-export function Publications() {
+export async function Publications() {
+  const publications = await getPublications();
   return (
     <section id="publications" className="bg-[var(--bg)] py-24">
       <div className="mx-auto max-w-6xl px-6">

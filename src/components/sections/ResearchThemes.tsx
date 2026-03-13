@@ -1,7 +1,8 @@
-import { researchThemes } from "@/lib/data";
+import { getResearchThemes } from "@/lib/sanity/queries";
 import { SectionHeader } from "@/components/SectionHeader";
 
-export function ResearchThemes() {
+export async function ResearchThemes() {
+  const researchThemes = await getResearchThemes();
   return (
     <section id="research" className="bg-[var(--bg-alt)] py-24">
       <div className="mx-auto max-w-6xl px-6">
