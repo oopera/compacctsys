@@ -50,20 +50,28 @@ export const teamMember = defineType({
       options: { hotspot: true },
     }),
     defineField({
-      name: "links",
-      title: "Links",
-      type: "array",
-      of: [
-        defineField({
-          name: "link",
-          title: "Link",
-          type: "object",
-          fields: [
-            defineField({ name: "label", title: "Label", type: "string" }),
-            defineField({ name: "url", title: "URL", type: "url" }),
-          ],
-        }),
-      ],
+      name: "website",
+      title: "Personal Website",
+      type: "url",
+      description: "https://example.com",
+    }),
+    defineField({
+      name: "linkedin",
+      title: "LinkedIn",
+      type: "url",
+      description: "https://linkedin.com/in/…",
+    }),
+    defineField({
+      name: "orcid",
+      title: "ORCID",
+      type: "url",
+      description: "https://orcid.org/0000-0000-0000-0000",
+    }),
+    defineField({
+      name: "scholar",
+      title: "Google Scholar",
+      type: "url",
+      description: "https://scholar.google.com/citations?user=…",
     }),
     defineField({
       name: "order",
