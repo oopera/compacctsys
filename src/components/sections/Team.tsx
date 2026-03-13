@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { team } from "@/lib/data";
+import { getTeam } from "@/lib/sanity/queries";
 import { SectionHeader } from "@/components/SectionHeader";
 import { TeamRole } from "@/types";
 
@@ -13,7 +13,8 @@ const roleLabel: Record<TeamRole, string> = {
 
 const roleOrder: TeamRole[] = ["pi", "postdoc", "associate", "phd", "admin"];
 
-export function Team() {
+export async function Team() {
+  const team = await getTeam();
   const sorted = [...team]
     .filter((m) => m.current)
     .sort((a, b) => a.order - b.order);
