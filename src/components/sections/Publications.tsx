@@ -1,5 +1,6 @@
 import { getPublications } from "@/lib/sanity/queries";
 import { SectionHeader } from "@/components/SectionHeader";
+import { CopyBibtexButton } from "@/components/CopyBibtexButton";
 
 export async function Publications() {
   const publications = await getPublications();
@@ -34,9 +35,34 @@ export async function Publications() {
                   </span>
                 </div>
                 <h3 className="mb-1 text-sm font-semibold text-[var(--text)]">{pub.title}</h3>
-                <p className="text-xs text-[var(--muted)]">
-                  {pub.authors.map((a) => a.name).join(", ")}
-                </p>
+                <div className="mt-1 flex items-center justify-between gap-4">
+                  <p className="text-xs text-[var(--muted)]">
+                    {pub.authors.map((a) => a.name).join(", ")}
+                  </p>
+                  <div className="flex shrink-0 items-center gap-3">
+                    {pub.doi && (
+                      <a
+                        href={`https://doi.org/${pub.doi}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-mono text-[10px] uppercase tracking-wider text-[var(--muted)] transition-colors hover:text-[var(--text)]"
+                      >
+                        DOI
+                      </a>
+                    )}
+                    {pub.url && (
+                      <a
+                        href={pub.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-mono text-[10px] uppercase tracking-wider text-[var(--muted)] transition-colors hover:text-[var(--text)]"
+                      >
+                        PDF
+                      </a>
+                    )}
+                    {pub.bibtex && <CopyBibtexButton bibtex={pub.bibtex} />}
+                  </div>
+                </div>
               </li>
             ))}
           </ul>
