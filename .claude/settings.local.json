@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.compacctsys.net)",
+      "WebFetch(domain:rc-trust.ai)"
+    ]
+  }
+}

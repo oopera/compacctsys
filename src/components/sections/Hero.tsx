@@ -1,33 +1,41 @@
+import { HeroCanvas } from "@/components/HeroCanvas";
 import { siteSettings } from "@/lib/data";
 
 export function Hero() {
   return (
-    <section id="about" className="mx-auto max-w-6xl px-6 pb-24 pt-40">
-      <div className="max-w-3xl">
-        <p className="mb-4 font-mono text-xs uppercase tracking-widest text-[var(--orange)]">
+    <section
+      id="about"
+      className="relative flex min-h-[92vh] items-center overflow-hidden"
+      style={{
+        background:
+          "linear-gradient(135deg, var(--hero-from) 0%, var(--hero-mid) 50%, var(--hero-to) 100%)",
+      }}
+    >
+      <HeroCanvas />
+      <div className="relative z-10 mx-auto max-w-6xl px-6 py-32">
+        <p className="mb-5 font-mono text-xs uppercase tracking-widest text-white/40">
           Research Group
         </p>
-        <h1 className="mb-6 text-5xl font-semibold leading-tight tracking-tight text-[var(--text)] md:text-6xl">
-          Compliant and{" "}
-          <span className="text-[var(--violet)]">Accountable</span>{" "}
+        <h1 className="mb-6 font-serif italic text-6xl leading-[1.05] tracking-tight text-white md:text-7xl lg:text-8xl">
+          Compliant and
+          <br />
+          Accountable
+          <br />
           Systems
         </h1>
-        <p className="mb-4 text-lg font-light leading-relaxed text-[var(--muted)]">
+        <p className="mb-10 max-w-lg text-lg font-light leading-relaxed text-white/55">
           {siteSettings.tagline}
         </p>
-        <p className="mb-10 max-w-2xl text-base leading-relaxed text-[var(--text)]/80">
-          {siteSettings.description}
-        </p>
-        <div className="flex flex-wrap items-center gap-3">
-          <span className="rounded-full border border-[var(--border)] px-3 py-1 font-mono text-xs text-[var(--muted)]">
+        <div className="flex flex-wrap gap-3">
+          <span className="rounded-full border border-white/15 px-4 py-1.5 font-mono text-xs text-white/50">
             RC-Trust · University of Duisburg-Essen
           </span>
-          <span className="rounded-full border border-[var(--border)] px-3 py-1 font-mono text-xs text-[var(--muted)]">
+          <span className="rounded-full border border-white/15 px-4 py-1.5 font-mono text-xs text-white/50">
             Dept. CST · University of Cambridge
           </span>
           <a
             href={`mailto:${siteSettings.contactEmail}`}
-            className="rounded-full border border-[var(--violet)]/40 px-3 py-1 font-mono text-xs text-[var(--violet)] transition-colors hover:border-[var(--violet)] hover:bg-[var(--violet)]/10"
+            className="rounded-full border border-white/25 px-4 py-1.5 font-mono text-xs text-white/70 transition-colors hover:border-white/50 hover:text-white"
           >
             {siteSettings.contactEmail}
           </a>

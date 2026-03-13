@@ -3,7 +3,7 @@ import { SectionHeader } from "@/components/SectionHeader";
 
 export function Projects() {
   return (
-    <section id="projects" className="border-t border-[var(--border)] py-24">
+    <section id="projects" className="bg-[var(--bg-alt)] py-24">
       <div className="mx-auto max-w-6xl px-6">
         <SectionHeader label="Funded work" title="Projects" />
         <div className="grid gap-4 lg:grid-cols-2">
@@ -16,7 +16,7 @@ export function Projects() {
                 <h3 className="text-sm font-semibold leading-snug text-[var(--text)]">
                   {project.shortTitle ? (
                     <>
-                      <span className="text-[var(--violet)]">{project.shortTitle}</span>
+                      <span style={{ color: "var(--violet)" }}>{project.shortTitle}</span>
                       {" — "}
                       {project.title}
                     </>
@@ -25,11 +25,12 @@ export function Projects() {
                   )}
                 </h3>
                 <span
-                  className={`shrink-0 rounded-full px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider ${
+                  className="shrink-0 rounded-full px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider"
+                  style={
                     project.status === "active"
-                      ? "bg-[var(--violet)]/10 text-[var(--violet)]"
-                      : "bg-[var(--border)] text-[var(--muted)]"
-                  }`}
+                      ? { background: "color-mix(in srgb, var(--violet) 10%, transparent)", color: "var(--violet)" }
+                      : { background: "var(--bg-alt)", color: "var(--muted)" }
+                  }
                 >
                   {project.status}
                 </span>
@@ -41,7 +42,8 @@ export function Projects() {
                 {project.funders.map((funder) => (
                   <span
                     key={funder}
-                    className="rounded-full border border-[var(--orange)]/30 px-2 py-0.5 font-mono text-[10px] text-[var(--orange)]"
+                    className="rounded-full border px-2 py-0.5 font-mono text-[10px]"
+                    style={{ borderColor: "color-mix(in srgb, var(--orange) 35%, transparent)", color: "var(--orange)" }}
                   >
                     {funder}
                   </span>

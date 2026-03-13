@@ -3,14 +3,12 @@ import { SectionHeader } from "@/components/SectionHeader";
 
 export function News() {
   return (
-    <section id="news" className="border-t border-[var(--border)] py-24">
+    <section id="news" className="bg-[var(--bg-alt)] py-24">
       <div className="mx-auto max-w-6xl px-6">
         <SectionHeader label="Updates" title="Latest News" />
         {news.length === 0 ? (
-          <div className="rounded-lg border border-dashed border-[var(--border)] p-12 text-center">
-            <p className="font-mono text-xs text-[var(--muted)]">
-              News items coming soon.
-            </p>
+          <div className="rounded-lg border border-dashed border-[var(--border)] p-16 text-center">
+            <p className="font-mono text-xs text-[var(--muted)]">News items coming soon.</p>
           </div>
         ) : (
           <ul className="space-y-4">
@@ -33,7 +31,8 @@ export function News() {
                     href={item.externalUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-3 inline-block font-mono text-xs text-[var(--violet)] hover:underline"
+                    className="mt-3 inline-block font-mono text-xs transition-colors hover:underline"
+                    style={{ color: "var(--violet)" }}
                   >
                     Read more →
                   </a>
