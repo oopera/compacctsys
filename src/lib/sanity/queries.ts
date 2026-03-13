@@ -43,11 +43,11 @@ export async function getResearchThemes(): Promise<ResearchTheme[]> {
 
 // ─── Projects ────────────────────────────────────────────────────────────────
 
-const projectsQuery = `*[_type == "project"] | order(order asc) {
+const projectsQuery = `*[_type == "project"] | order(_createdAt asc) {
   "id": _id,
   title,
   shortTitle,
-  description,
+  "description": pt::text(description),
   status,
   funders,
   collaborators,
@@ -95,7 +95,7 @@ const newsQuery = `*[_type == "newsItem"] | order(date desc) {
   title,
   "slug": slug.current,
   date,
-  body,
+  "body": pt::text(body),
   tags,
   externalUrl,
   "image": image.asset->url,
