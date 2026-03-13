@@ -7,11 +7,11 @@
   --border:    #e4e2dd;
   --text:      #1c1916;
   --muted:     #6b6560;
-  --violet:    #6d28d9;
+  --violet:    #8b1a4a;
   --orange:    #c2410c;
-  --hero-from: #08061c;
-  --hero-mid:  #1c0d5c;
-  --hero-to:   #060418;
+  --hero-from: #0e0208;
+  --hero-mid:  #3d0a2e;
+  --hero-to:   #080106;
 }
 
 @theme inline {
