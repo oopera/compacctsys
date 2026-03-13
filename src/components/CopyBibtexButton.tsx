@@ -14,7 +14,7 @@ export function CopyBibtexButton({ bibtex }: { bibtex: string }) {
   return (
     <button
       onClick={handleCopy}
-      className="font-mono text-[10px] uppercase tracking-wider transition-colors"
+      className="font-mono text-[10px] uppercase tracking-wider transition-colors cursor-pointer"
       style={{ color: copied ? "var(--violet)" : "var(--muted)" }}
     >
       {copied ? "Copied!" : "BibTeX"}

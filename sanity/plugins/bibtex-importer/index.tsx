@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { definePlugin } from "sanity";
 import { useClient } from "sanity";
 import { entries as parseBibtex } from "bibtex-parse";
@@ -84,6 +84,23 @@ function toPublication(raw: RawEntry): ParsedPublication {
   };
 }
 
+// ─── Team member helpers ───────────────────────────────────────────────────────
+
+interface TeamMember {
+  _id: string;
+  name: string;
+}
+
+/** Normalise a name for fuzzy matching: lowercase, collapse spaces */
+function normaliseName(name: string): string {
+  return name.toLowerCase().replace(/\s+/g, " ").trim();
+}
+
+function findTeamMember(authorName: string, teamMembers: TeamMember[]): TeamMember | undefined {
+  const needle = normaliseName(authorName);
+  return teamMembers.find((tm) => normaliseName(tm.name) === needle);
+}
+
 // ─── Component ────────────────────────────────────────────────────────────────
 
 function BibtexImporterTool() {
@@ -95,6 +112,14 @@ function BibtexImporterTool() {
   const [parseError, setParseError] = useState<string | null>(null);
   const [status, setStatus] = useState<Record<string, "idle" | "importing" | "done" | "error">>({});
   const [importing, setImporting] = useState(false);
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
+
+  useEffect(() => {
+    client
+      .fetch<TeamMember[]>(`*[_type == "teamMember"]{ _id, name }`)
+      .then(setTeamMembers)
+      .catch(() => {/* non-fatal */});
+  }, [client]);
 
   const handleParse = useCallback(() => {
     setParseError(null);
@@ -139,10 +164,20 @@ function BibtexImporterTool() {
     for (const pub of toImport) {
       setStatus((s) => ({ ...s, [pub.raw.key]: "importing" }));
       try {
+        const authors = pub.authors.map((name, i) => {
+          const match = findTeamMember(name, teamMembers);
+          return {
+            _type: "author",
+            _key: `author-${i}`,
+            name,
+            ...(match ? { teamMember: { _type: "reference", _ref: match._id } } : {}),
+          };
+        });
+
         await client.create({
           _type: "publication",
           title: pub.title,
-          authors: pub.authors.map((name) => ({ _type: "author", name })),
+          authors,
           venue: pub.venue,
           year: pub.year,
           type: pub.pubType,
@@ -312,8 +347,27 @@ function BibtexImporterTool() {
                           </span>
                         )}
                       </div>
-                      <div style={{ fontSize: "0.75rem", color: "#6b7280", marginTop: "0.2rem" }}>
-                        {pub.authors.join(", ")}
+                      <div style={{ fontSize: "0.75rem", color: "#6b7280", marginTop: "0.2rem", display: "flex", flexWrap: "wrap", gap: "0.25rem" }}>
+                        {pub.authors.map((name, i) => {
+                          const matched = findTeamMember(name, teamMembers);
+                          return (
+                            <React.Fragment key={i}>
+                              {i > 0 && <span>,</span>}
+                              <span
+                                title={matched ? `Linked to team member` : undefined}
+                                style={matched ? {
+                                  color: "#5b21b6",
+                                  fontWeight: 600,
+                                  background: "#ede9fe",
+                                  borderRadius: 3,
+                                  padding: "0 0.25rem",
+                                } : undefined}
+                              >
+                                {name}{matched ? " ✦" : ""}
+                              </span>
+                            </React.Fragment>
+                          );
+                        })}
                       </div>
                       <div style={{ fontSize: "0.7rem", color: "#9ca3af", marginTop: "0.15rem", display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
                         <span>{pub.venue || "—"}</span>
