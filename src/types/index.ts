@@ -1,0 +1,111 @@
+// ─── Team ────────────────────────────────────────────────────────────────────
+
+export type TeamRole =
+  | "pi"
+  | "postdoc"
+  | "phd"
+  | "associate"
+  | "admin";
+
+export interface TeamMemberLink {
+  label: string;
+  url: string;
+}
+
+export interface TeamMember {
+  id: string;
+  name: string;
+  role: TeamRole;
+  title?: string; // e.g. "Dr.", "Prof. Dr."
+  bio?: string;
+  email?: string;
+  photo?: string;
+  links?: TeamMemberLink[];
+  order: number; // for manual sort
+  current: boolean;
+}
+
+// ─── Research Themes ─────────────────────────────────────────────────────────
+
+export interface ResearchTheme {
+  id: string;
+  title: string;
+  description: string;
+  order: number;
+}
+
+// ─── Projects ────────────────────────────────────────────────────────────────
+
+export type ProjectStatus = "active" | "completed";
+
+export interface Project {
+  id: string;
+  title: string;
+  shortTitle?: string; // e.g. "RAInS"
+  description: string;
+  status: ProjectStatus;
+  funders: string[];
+  collaborators: string[];  // external institutions
+  teamMemberIds: string[];  // references TeamMember.id
+  researchThemeIds: string[];
+  url?: string;
+  startYear?: number;
+  endYear?: number;
+}
+
+// ─── Publications ────────────────────────────────────────────────────────────
+
+export type PublicationType =
+  | "conference"
+  | "journal"
+  | "workshop"
+  | "arxiv"
+  | "book-chapter"
+  | "demo"
+  | "other";
+
+export interface PublicationAuthor {
+  name: string;
+  teamMemberId?: string; // if internal
+}
+
+export interface Publication {
+  id: string;
+  title: string;
+  authors: PublicationAuthor[];
+  venue: string;           // full venue name
+  venueShort?: string;     // e.g. "CHI", "CSCW"
+  year: number;
+  type: PublicationType;
+  abstract?: string;
+  doi?: string;
+  url?: string;
+  bibtex?: string;
+  award?: string;          // e.g. "Best Paper Award"
+  researchThemeIds: string[];
+  teamMemberIds: string[];
+}
+
+// ─── News ────────────────────────────────────────────────────────────────────
+
+export interface NewsItem {
+  id: string;
+  title: string;
+  slug: string;
+  date: string; // ISO date string
+  body: string; // will become block content in Sanity
+  tags: string[];
+  externalUrl?: string;
+  image?: string;
+  publicationId?: string; // link to related publication if relevant
+}
+
+// ─── Site Settings ───────────────────────────────────────────────────────────
+
+export interface SiteSettings {
+  groupName: string;
+  tagline: string;
+  description: string;
+  contactEmail: string;
+  domain: string;
+}
