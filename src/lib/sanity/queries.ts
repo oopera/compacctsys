@@ -130,11 +130,11 @@ export async function getAwardedPublications(): Promise<Publication[]> {
 // ─── Site settings ───────────────────────────────────────────────────────────
 
 const siteSettingsQuery = `*[_type == "siteSettings"][0] {
-  "id": _id,
-  siteTitle,
+  groupName,
   tagline,
-  email,
-  affiliations
+  contactEmail,
+  affiliations,
+  domain
 }`;
 
 export async function getSiteSettings(): Promise<SiteSettings | null> {

@@ -104,8 +104,8 @@ export interface NewsItem {
 
 export interface SiteSettings {
   groupName: string;
-  tagline: string;
-  description: string;
-  contactEmail: string;
-  domain: string;
+  tagline?: string;
+  contactEmail?: string;
+  affiliations?: string[];
+  domain?: string;
 }

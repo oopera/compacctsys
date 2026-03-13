@@ -1,7 +1,9 @@
 import { HeroCanvas } from "@/components/HeroCanvas";
-import { siteSettings } from "@/lib/data";
+import { getSiteSettings } from "@/lib/sanity/queries";
 
-export function Hero() {
+export async function Hero() {
+  const settings = await getSiteSettings();
+
   return (
     <section
       id="about"
@@ -17,28 +19,30 @@ export function Hero() {
           Research Group
         </p>
         <h1 className="mb-6 font-serif italic text-6xl leading-[1.05] tracking-tight text-white md:text-7xl lg:text-8xl">
-          Compliant and
-          <br />
-          Accountable
-          <br />
-          Systems
+          {settings?.groupName ?? "Compliant and Accountable Systems"}
         </h1>
-        <p className="mb-10 max-w-lg text-lg font-light leading-relaxed text-white/55">
-          {siteSettings.tagline}
-        </p>
+        {settings?.tagline && (
+          <p className="mb-10 max-w-lg text-lg font-light leading-relaxed text-white/55">
+            {settings.tagline}
+          </p>
+        )}
         <div className="flex flex-wrap gap-3">
-          <span className="rounded-full border border-white/15 px-4 py-1.5 font-mono text-xs text-white/50">
-            RC-Trust · University of Duisburg-Essen
-          </span>
-          <span className="rounded-full border border-white/15 px-4 py-1.5 font-mono text-xs text-white/50">
-            Dept. CST · University of Cambridge
-          </span>
-          <a
-            href={`mailto:${siteSettings.contactEmail}`}
-            className="rounded-full border border-white/25 px-4 py-1.5 font-mono text-xs text-white/70 transition-colors hover:border-white/50 hover:text-white"
-          >
-            {siteSettings.contactEmail}
-          </a>
+          {settings?.affiliations?.map((affiliation) => (
+            <span
+              key={affiliation}
+              className="border border-white/15 px-4 py-1.5 font-mono text-xs text-white/50"
+            >
+              {affiliation}
+            </span>
+          ))}
+          {settings?.contactEmail && (
+            <a
+              href={`mailto:${settings.contactEmail}`}
+              className="border border-white/25 px-4 py-1.5 font-mono text-xs text-white/70 transition-colors hover:border-white/50 hover:text-white"
+            >
+              {settings.contactEmail}
+            </a>
+          )}
         </div>
       </div>
     </section>

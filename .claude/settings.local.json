@@ -3,7 +3,8 @@
     "allow": [
       "WebFetch(domain:www.compacctsys.net)",
       "WebFetch(domain:rc-trust.ai)",
-      "Bash(npx tsx scripts/patch-portable-text.ts)"
+      "Bash(npx tsx scripts/patch-portable-text.ts)",
+      "Bash(npm run build)"
     ]
   }
 }

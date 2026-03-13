@@ -29,6 +29,13 @@ export const siteSettings = defineType({
       type: "string",
     }),
     defineField({
+      name: "affiliations",
+      title: "Affiliations",
+      description: 'Shown as pills in the hero — e.g. "RC-Trust · University of Duisburg-Essen"',
+      type: "array",
+      of: [{ type: "string" }],
+    }),
+    defineField({
       name: "domain",
       title: "Domain",
       type: "string",
