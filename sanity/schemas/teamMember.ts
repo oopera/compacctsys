@@ -50,28 +50,42 @@ export const teamMember = defineType({
       options: { hotspot: true },
     }),
     defineField({
-      name: "website",
-      title: "Personal Website",
-      type: "url",
-      description: "https://example.com",
-    }),
-    defineField({
-      name: "linkedin",
-      title: "LinkedIn",
-      type: "url",
-      description: "https://linkedin.com/in/…",
-    }),
-    defineField({
-      name: "orcid",
-      title: "ORCID",
-      type: "url",
-      description: "https://orcid.org/0000-0000-0000-0000",
-    }),
-    defineField({
-      name: "scholar",
-      title: "Google Scholar",
-      type: "url",
-      description: "https://scholar.google.com/citations?user=…",
+      name: "links",
+      title: "Links",
+      type: "array",
+      of: [
+        defineField({
+          name: "link",
+          title: "Link",
+          type: "object",
+          fields: [
+            defineField({
+              name: "provider",
+              title: "Provider",
+              type: "string",
+              options: {
+                list: [
+                  { title: "Personal Website", value: "website" },
+                  { title: "LinkedIn",          value: "linkedin" },
+                  { title: "ORCID",             value: "orcid" },
+                  { title: "Google Scholar",    value: "scholar" },
+                ],
+                layout: "radio",
+              },
+              validation: (r) => r.required(),
+            }),
+            defineField({
+              name: "url",
+              title: "URL",
+              type: "url",
+              validation: (r) => r.required(),
+            }),
+          ],
+          preview: {
+            select: { title: "provider", subtitle: "url" },
+          },
+        }),
+      ],
     }),
     defineField({
       name: "order",

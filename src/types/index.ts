@@ -7,6 +7,13 @@ export type TeamRole =
   | "associate"
   | "admin";
 
+export type TeamMemberLinkProvider = "website" | "linkedin" | "orcid" | "scholar";
+
+export interface TeamMemberLink {
+  provider: TeamMemberLinkProvider;
+  url: string;
+}
+
 export interface TeamMember {
   id: string;
   name: string;
@@ -15,10 +22,7 @@ export interface TeamMember {
   bio?: string;
   email?: string;
   photo?: string;
-  website?: string;
-  linkedin?: string;
-  orcid?: string;
-  scholar?: string;
+  links?: TeamMemberLink[];
   order: number; // for manual sort
   current: boolean;
 }

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { getTeam } from "@/lib/sanity/queries";
 import { SectionHeader } from "@/components/SectionHeader";
-import { TeamRole, TeamMember } from "@/types";
+import { TeamRole, TeamMember, TeamMemberLinkProvider } from "@/types";
 
 const roleLabel: Record<TeamRole, string> = {
   pi:        "Principal Investigator",
@@ -54,37 +54,34 @@ function ScholarIcon() {
 
 // ─── Link row ─────────────────────────────────────────────────────────────────
 
-interface LinkDef {
-  href: string | undefined;
-  label: string;
-  icon: React.JSX.Element;
-}
+const providerMeta: Record<TeamMemberLinkProvider, { label: string; icon: React.JSX.Element }> = {
+  website:  { label: "Personal Website", icon: <GlobeIcon /> },
+  linkedin: { label: "LinkedIn",         icon: <LinkedInIcon /> },
+  orcid:    { label: "ORCID",            icon: <OrcidIcon /> },
+  scholar:  { label: "Google Scholar",   icon: <ScholarIcon /> },
+};
 
 function MemberLinks({ member }: { member: TeamMember }) {
-  const links: LinkDef[] = [
-    { href: member.website,  label: "Website",        icon: <GlobeIcon /> },
-    { href: member.linkedin, label: "LinkedIn",       icon: <LinkedInIcon /> },
-    { href: member.orcid,    label: "ORCID",          icon: <OrcidIcon /> },
-    { href: member.scholar,  label: "Google Scholar", icon: <ScholarIcon /> },
-  ].filter((l): l is LinkDef & { href: string } => Boolean(l.href));
-
-  if (links.length === 0) return null;
+  if (!member.links?.length) return null;
 
   return (
     <div className="mt-2 flex items-center gap-2.5">
-      {links.map(({ href, label, icon }) => (
-        <a
-          key={label}
-          href={href}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={label}
-          title={label}
-          className="text-[var(--muted)] transition-colors hover:text-[var(--violet)]"
-        >
-          {icon}
-        </a>
-      ))}
+      {member.links.map(({ provider, url }) => {
+        const meta = providerMeta[provider] ?? { label: provider, icon: <GlobeIcon /> };
+        return (
+          <a
+            key={provider}
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={meta.label}
+            title={meta.label}
+            className="text-[var(--muted)] transition-colors hover:text-[var(--violet)]"
+          >
+            {meta.icon}
+          </a>
+        );
+      })}
     </div>
   );
 }

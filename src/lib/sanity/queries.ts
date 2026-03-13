@@ -19,10 +19,7 @@ const teamQuery = `*[_type == "teamMember" && current == true] | order(order asc
   email,
   "photo": photo.asset->url,
   "photoHotspot": photo.hotspot,
-  website,
-  linkedin,
-  orcid,
-  scholar,
+  links[]{provider, url},
   order,
   current
 }`;
