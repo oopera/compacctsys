@@ -7,6 +7,7 @@ import { Team } from "@/components/sections/Team";
 import { Projects } from "@/components/sections/Projects";
 import { Publications } from "@/components/sections/Publications";
 import { News } from "@/components/sections/News";
+import { Recognitions } from "@/components/sections/Recognitions";
 import { Footer } from "@/components/Footer";
 
 export default function Home() {
@@ -19,6 +20,7 @@ export default function Home() {
         <Team />
         <Projects />
         <Publications />
+        <Recognitions />
         <News />
       </main>
       <Footer />

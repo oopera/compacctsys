@@ -30,11 +30,11 @@ export async function getTeam(): Promise<TeamMember[]> {
 
 // ─── Research themes ─────────────────────────────────────────────────────────
 
-const researchThemesQuery = `*[_type == "researchTheme"] | order(order asc) {
+const researchThemesQuery = `*[_type == "researchTheme"] | order(orderRank asc) {
   "id": _id,
   title,
   description,
-  order
+  orderRank
 }`;
 
 export async function getResearchThemes(): Promise<ResearchTheme[]> {
@@ -104,6 +104,27 @@ const newsQuery = `*[_type == "newsItem"] | order(date desc) {
 
 export async function getNews(): Promise<NewsItem[]> {
   return client.fetch(newsQuery, {}, { next: { tags: ["newsItem"] } });
+}
+
+// ─── Awards ──────────────────────────────────────────────────────────────────
+
+const awardsQuery = `*[_type == "publication" && defined(award)] | order(year desc) {
+  "id": _id,
+  title,
+  authors[]{
+    name,
+    "teamMemberId": teamMember->_id
+  },
+  venue,
+  venueShort,
+  year,
+  award,
+  doi,
+  url
+}`;
+
+export async function getAwardedPublications(): Promise<Publication[]> {
+  return client.fetch(awardsQuery, {}, { next: { tags: ["publication"] } });
 }
 
 // ─── Site settings ───────────────────────────────────────────────────────────
