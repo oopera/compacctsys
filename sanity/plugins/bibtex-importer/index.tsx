@@ -17,6 +17,7 @@ interface ParsedPublication {
   title: string;
   authors: string[];
   venue: string;
+  venueShort?: string;
   year: number;
   doi?: string;
   url?: string;
@@ -66,7 +67,8 @@ function toPublication(raw: RawEntry): ParsedPublication {
   const str = (key: string): string =>
     (raw[key.toUpperCase()] as string | undefined) ?? "";
 
-  const venue = str("BOOKTITLE") || str("JOURNAL") || str("SERIES") || str("PUBLISHER") || "";
+  const venue = str("BOOKTITLE") || str("JOURNAL") || str("PUBLISHER") || "";
+  const venueShort = str("SERIES") || undefined;
   const yearRaw = raw["YEAR"] ?? raw["year"];
   const year = typeof yearRaw === "number" ? yearRaw : parseInt(String(yearRaw ?? "0"), 10);
 
@@ -75,6 +77,7 @@ function toPublication(raw: RawEntry): ParsedPublication {
     title: str("TITLE"),
     authors: parseAuthors(str("AUTHOR")),
     venue,
+    venueShort,
     year: isNaN(year) ? 0 : year,
     doi: str("DOI") || undefined,
     url: str("URL") || undefined,
@@ -179,6 +182,7 @@ function BibtexImporterTool() {
           title: pub.title,
           authors,
           venue: pub.venue,
+          ...(pub.venueShort ? { venueShort: pub.venueShort } : {}),
           year: pub.year,
           type: pub.pubType,
           ...(pub.doi ? { doi: pub.doi } : {}),
@@ -371,6 +375,11 @@ function BibtexImporterTool() {
                       </div>
                       <div style={{ fontSize: "0.7rem", color: "#9ca3af", marginTop: "0.15rem", display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
                         <span>{pub.venue || "—"}</span>
+                        {pub.venueShort && (
+                          <span style={{ fontFamily: "monospace", background: "#e5e7eb", borderRadius: 3, padding: "0 0.25rem" }}>
+                            {pub.venueShort}
+                          </span>
+                        )}
                         <span>·</span>
                         <span>{pub.year || "—"}</span>
                         <span>·</span>
