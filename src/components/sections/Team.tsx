@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { team } from "@/lib/data";
 import { SectionHeader } from "@/components/SectionHeader";
 import { TeamRole } from "@/types";
@@ -37,11 +38,23 @@ export function Team() {
                     key={member.id}
                     className="flex items-center gap-4 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-5 py-4 transition-colors hover:border-[var(--orange)]/40"
                   >
-                    <div
-                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full font-mono text-xs font-semibold text-white"
-                      style={{ background: "var(--hero-mid)" }}
-                    >
-                      {member.name.split(" ").map((n) => n[0]).join("").slice(0, 2)}
+                    <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full">
+                      {member.photo ? (
+                        <Image
+                          src={member.photo}
+                          alt={member.name}
+                          fill
+                          className="object-cover"
+                          sizes="48px"
+                        />
+                      ) : (
+                        <div
+                          className="flex h-full w-full items-center justify-center font-mono text-xs font-semibold text-white"
+                          style={{ background: "var(--hero-mid)" }}
+                        >
+                          {member.name.split(" ").map((n) => n[0]).join("").slice(0, 2)}
+                        </div>
+                      )}
                     </div>
                     <div className="min-w-0">
                       <p className="text-sm font-medium text-[var(--text)]">
