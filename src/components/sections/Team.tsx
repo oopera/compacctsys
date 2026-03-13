@@ -36,7 +36,7 @@ export function Team() {
                 {members.map((member) => (
                   <div
                     key={member.id}
-                    className="flex overflow-hidden border border-[var(--border)] bg-[var(--surface)] transition-colors hover:border-[var(--orange)]/40"
+                    className="flex h-28 overflow-hidden border border-[var(--border)] bg-[var(--surface)] transition-colors hover:border-[var(--orange)]/40"
                   >
                     <div className="relative w-28 shrink-0 bg-[var(--bg-alt)]">
                       {member.photo ? (
