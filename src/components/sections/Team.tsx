@@ -117,8 +117,8 @@ export async function Team() {
                     key={member.id}
                     className="flex overflow-hidden border border-[var(--border)] bg-[var(--surface)] transition-colors hover:border-[var(--orange)]/40"
                   >
-                    {/* Photo */}
-                    <div className="relative w-28 shrink-0 self-stretch bg-[var(--bg-alt)]">
+                    {/* Photo — fixed square so it never stretches taller than wide */}
+                    <div className="relative h-28 w-28 shrink-0 bg-[var(--bg-alt)]">
                       {member.photo ? (
                         <Image
                           src={member.photo}
