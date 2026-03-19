@@ -7,43 +7,53 @@ export async function Hero() {
   return (
     <section
       id="about"
-      className="relative flex min-h-[92vh] items-center overflow-hidden"
-      style={{
-        background:
-          "linear-gradient(135deg, var(--hero-from) 0%, var(--hero-mid) 50%, var(--hero-to) 100%)",
-      }}
+      className="relative flex min-h-screen flex-col overflow-hidden bg-black"
     >
       <HeroCanvas />
-      <div className="relative z-10 mx-auto max-w-6xl px-6 py-32">
-        <p className="mb-5 font-mono text-xs uppercase tracking-widest text-white/40">
+
+      {/* Top strip */}
+      <div className="relative z-10 flex items-center justify-between border-b border-white/10 px-6 py-4 md:px-10">
+        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/30">
           Research Group
-        </p>
-        <h1 className="mb-6 font-serif italic text-6xl leading-[1.05] tracking-tight text-white md:text-7xl lg:text-8xl">
+        </span>
+        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/20">
+          Compliant · Accountable · Trustworthy
+        </span>
+      </div>
+
+      {/* Main — title fills the space */}
+      <div className="relative z-10 flex flex-1 flex-col justify-end px-6 pb-10 pt-16 md:px-10">
+        <h1
+          className="font-serif italic leading-[0.92] tracking-tight text-white"
+          style={{ fontSize: "clamp(3.5rem, 10vw, 10rem)" }}
+        >
           {settings?.groupName ?? "Compliant and Accountable Systems"}
         </h1>
+
         {settings?.tagline && (
-          <p className="mb-10 max-w-lg text-lg font-light leading-relaxed text-white/55">
+          <p className="mt-8 max-w-xl text-sm leading-relaxed text-white/40 md:text-base">
             {settings.tagline}
           </p>
         )}
-        <div className="flex flex-wrap gap-3">
-          {settings?.affiliations?.map((affiliation) => (
-            <span
-              key={affiliation}
-              className="border border-white/15 px-4 py-1.5 font-mono text-xs text-white/50"
-            >
-              {affiliation}
+      </div>
+
+      {/* Bottom strip */}
+      <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 px-6 py-4 md:px-10">
+        <div className="flex flex-wrap gap-6">
+          {settings?.affiliations?.map((a) => (
+            <span key={a} className="font-mono text-[10px] uppercase tracking-wider text-white/30">
+              {a}
             </span>
           ))}
-          {settings?.contactEmail && (
-            <a
-              href={`mailto:${settings.contactEmail}`}
-              className="border border-white/25 px-4 py-1.5 font-mono text-xs text-white/70 transition-colors hover:border-white/50 hover:text-white"
-            >
-              {settings.contactEmail}
-            </a>
-          )}
         </div>
+        {settings?.contactEmail && (
+          <a
+            href={`mailto:${settings.contactEmail}`}
+            className="font-mono text-[10px] text-white/40 transition-colors hover:text-white"
+          >
+            {settings.contactEmail}
+          </a>
+        )}
       </div>
     </section>
   );

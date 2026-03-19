@@ -13,17 +13,17 @@ export async function Nav() {
   const settings = await getSiteSettings();
 
   return (
-    <header className="fixed top-0 z-50 w-full border-b border-white/10 bg-[var(--hero-from)]/90 backdrop-blur-sm">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <a href="#" className="font-mono text-sm font-semibold tracking-widest text-white/80 transition-colors hover:text-white">
+    <header className="fixed top-0 z-50 w-full border-b-2 border-black bg-white">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3 md:px-10">
+        <a href="#" className="font-mono text-xs font-bold uppercase tracking-widest text-black transition-opacity hover:opacity-60">
           {settings?.groupName ?? "CompAcctSys"}
         </a>
-        <nav className="hidden gap-7 md:flex">
+        <nav className="hidden gap-8 md:flex">
           {links.map((l) => (
             <a
               key={l.href}
               href={l.href}
-              className="text-xs font-medium uppercase tracking-wider text-white/40 transition-colors hover:text-white/80"
+              className="font-mono text-[10px] uppercase tracking-widest text-black/40 transition-colors hover:text-black"
             >
               {l.label}
             </a>
