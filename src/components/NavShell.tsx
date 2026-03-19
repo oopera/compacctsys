@@ -15,7 +15,7 @@ export function NavShell({ groupName }: { groupName: string }) {
   const pathname = usePathname();
 
   return (
-    <header className="fixed top-0 z-50 w-full border-b-2 border-black bg-white">
+    <header className="sticky top-0 z-50 w-full border-b-2 border-black bg-white">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3 md:px-10">
         <Link href="/" className="group font-mono text-xs font-medium tracking-widest text-black">Comp<span className="inline-block max-w-0 overflow-hidden whitespace-nowrap align-text-bottom [transition:max-width_500ms_ease-in-out] group-hover:max-w-[64px]">{"liant\u00a0"}</span><span className="inline-block max-w-0 overflow-hidden whitespace-nowrap align-text-bottom [transition:max-width_500ms_ease-in-out] group-hover:max-w-[46px]">{"and\u00a0"}</span>Acct<span className="inline-block max-w-0 overflow-hidden whitespace-nowrap align-text-bottom [transition:max-width_500ms_ease-in-out] group-hover:max-w-[92px]">{"ountable\u00a0"}</span>Sys<span className="inline-block max-w-0 overflow-hidden whitespace-nowrap align-text-bottom [transition:max-width_500ms_ease-in-out] group-hover:max-w-[44px]">{"tems"}</span></Link>
 
