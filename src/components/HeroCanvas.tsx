@@ -1,127 +1,119 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import * as THREE from "three";
 
-const NODE_COUNT = 72;
-const CONNECT_DIST = 170; // px
-const SPEED = 0.28;
+const GRID      = 72;        // px between grid lines
+const DRIFT     = 0.12;      // px/frame diagonal drift
+const TRAIL_MS  = 750;       // ms a trail point stays alive
+const GLOW_R    = GRID * 2.2; // px radius of the cell glow
+
+interface Pt { x: number; y: number; t: number; }
 
 export function HeroCanvas() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d")!;
 
-    let w = el.clientWidth;
-    let h = el.clientHeight;
+    let w = 0, h = 0, offset = 0, raf: number;
+    const trail: Pt[] = [];
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setClearColor(0x000000, 0);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(w, h);
-    el.appendChild(renderer.domElement);
+    function resize() {
+      w = canvas!.width  = canvas!.offsetWidth;
+      h = canvas!.height = canvas!.offsetHeight;
+    }
+    resize();
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.OrthographicCamera(-w / 2, w / 2, h / 2, -h / 2, 0, 1);
-
-    // Nodes
-    const nodes = Array.from({ length: NODE_COUNT }, () => ({
-      x: (Math.random() - 0.5) * w,
-      y: (Math.random() - 0.5) * h,
-      vx: (Math.random() - 0.5) * SPEED * 2,
-      vy: (Math.random() - 0.5) * SPEED * 2,
-    }));
-
-    // Points geometry
-    const pPos = new Float32Array(NODE_COUNT * 3);
-    const pGeo = new THREE.BufferGeometry();
-    pGeo.setAttribute("position", new THREE.BufferAttribute(pPos, 3));
-    const pMat = new THREE.PointsMaterial({
-      color: 0xd4b8e0,
-      size: 4,
-      sizeAttenuation: false,
-      transparent: true,
-      opacity: 0.7,
-    });
-    scene.add(new THREE.Points(pGeo, pMat));
-
-    // Lines geometry (pre-allocate max)
-    const lPos = new Float32Array(NODE_COUNT * NODE_COUNT * 6);
-    const lAttr = new THREE.BufferAttribute(lPos, 3);
-    lAttr.setUsage(THREE.DynamicDrawUsage);
-    const lGeo = new THREE.BufferGeometry();
-    lGeo.setAttribute("position", lAttr);
-    const lMat = new THREE.LineBasicMaterial({
-      color: 0xc4a8d8,
-      transparent: true,
-      opacity: 0.2,
-    });
-    const lineSegs = new THREE.LineSegments(lGeo, lMat);
-    scene.add(lineSegs);
-
-    const connectSq = CONNECT_DIST * CONNECT_DIST;
-    let raf: number;
-
-    function tick() {
-      raf = requestAnimationFrame(tick);
-
-      for (let i = 0; i < NODE_COUNT; i++) {
-        const n = nodes[i];
-        n.x += n.vx;
-        n.y += n.vy;
-        if (n.x > w / 2 || n.x < -w / 2) n.vx *= -1;
-        if (n.y > h / 2 || n.y < -h / 2) n.vy *= -1;
-        pPos[i * 3] = n.x;
-        pPos[i * 3 + 1] = n.y;
-        pPos[i * 3 + 2] = 0;
+    function onMove(e: MouseEvent) {
+      const r = canvas!.getBoundingClientRect();
+      // Only track when cursor is over the canvas area
+      const x = e.clientX - r.left;
+      const y = e.clientY - r.top;
+      if (x >= 0 && y >= 0 && x <= r.width && y <= r.height) {
+        trail.push({ x, y, t: performance.now() });
       }
-      pGeo.attributes.position.needsUpdate = true;
+    }
+    window.addEventListener("mousemove", onMove);
 
-      let ec = 0;
-      for (let i = 0; i < NODE_COUNT; i++) {
-        for (let j = i + 1; j < NODE_COUNT; j++) {
-          const dx = nodes[i].x - nodes[j].x;
-          const dy = nodes[i].y - nodes[j].y;
-          if (dx * dx + dy * dy < connectSq) {
-            lPos[ec * 6 + 0] = nodes[i].x;
-            lPos[ec * 6 + 1] = nodes[i].y;
-            lPos[ec * 6 + 2] = 0;
-            lPos[ec * 6 + 3] = nodes[j].x;
-            lPos[ec * 6 + 4] = nodes[j].y;
-            lPos[ec * 6 + 5] = 0;
-            ec++;
+    function draw() {
+      raf = requestAnimationFrame(draw);
+      const now = performance.now();
+
+      // Expire old trail points
+      while (trail.length && now - trail[0].t > TRAIL_MS) trail.shift();
+
+      ctx.clearRect(0, 0, w, h);
+
+      const ox = offset % GRID;
+      const oy = offset % GRID;
+
+      // ── Lit cells (drawn below grid lines) ──────────────────────────────
+      if (trail.length) {
+        for (let x = -GRID + ox; x < w + GRID; x += GRID) {
+          for (let y = -GRID + oy; y < h + GRID; y += GRID) {
+            const cx = x + GRID / 2;
+            const cy = y + GRID / 2;
+            let intensity = 0;
+            for (const pt of trail) {
+              const dist = Math.hypot(pt.x - cx, pt.y - cy);
+              const age  = 1 - (now - pt.t) / TRAIL_MS;
+              const prox = Math.max(0, 1 - dist / GLOW_R);
+              intensity  = Math.max(intensity, age * prox * prox);
+            }
+            if (intensity > 0.01) {
+              ctx.fillStyle = `rgba(139,92,246,${intensity * 0.38})`;
+              ctx.fillRect(x, y, GRID, GRID);
+            }
           }
         }
       }
-      lGeo.setDrawRange(0, ec * 2);
-      lAttr.needsUpdate = true;
 
-      renderer.render(scene, camera);
+      // ── Grid lines ───────────────────────────────────────────────────────
+      ctx.strokeStyle = "rgba(255,255,255,0.07)";
+      ctx.lineWidth   = 1;
+      ctx.beginPath();
+      for (let x = -GRID + ox; x < w + GRID; x += GRID) {
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, h);
+      }
+      for (let y = -GRID + oy; y < h + GRID; y += GRID) {
+        ctx.moveTo(0, y);
+        ctx.lineTo(w, y);
+      }
+      ctx.stroke();
+
+      // ── Intersection dots (brighter + larger near cursor) ────────────────
+      for (let x = -GRID + ox; x < w + GRID; x += GRID) {
+        for (let y = -GRID + oy; y < h + GRID; y += GRID) {
+          let boost = 0;
+          for (const pt of trail) {
+            const dist = Math.hypot(pt.x - x, pt.y - y);
+            const age  = 1 - (now - pt.t) / TRAIL_MS;
+            const prox = Math.max(0, 1 - dist / (GRID * 1.5));
+            boost = Math.max(boost, age * prox);
+          }
+          ctx.fillStyle = `rgba(255,255,255,${0.18 + boost * 0.72})`;
+          ctx.beginPath();
+          ctx.arc(x, y, 1.5 + boost * 2, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      offset += DRIFT;
     }
 
-    tick();
+    draw();
 
-    const onResize = () => {
-      w = el.clientWidth;
-      h = el.clientHeight;
-      renderer.setSize(w, h);
-      camera.left = -w / 2;
-      camera.right = w / 2;
-      camera.top = h / 2;
-      camera.bottom = -h / 2;
-      camera.updateProjectionMatrix();
-    };
+    const onResize = () => resize();
     window.addEventListener("resize", onResize);
-
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", onResize);
-      renderer.dispose();
-      if (el.contains(renderer.domElement)) el.removeChild(renderer.domElement);
+      window.removeEventListener("mousemove", onMove);
     };
   }, []);
 
-  return <div ref={containerRef} className="absolute inset-0" />;
+  return <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />;
 }

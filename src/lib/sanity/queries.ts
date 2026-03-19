@@ -15,7 +15,7 @@ const teamQuery = `*[_type == "teamMember" && current == true] | order(order asc
   name,
   title,
   role,
-  bio,
+  "bio": pt::text(bio),
   email,
   "photo": photo.asset->url,
   "photoHotspot": photo.hotspot,
@@ -132,6 +132,7 @@ export async function getAwardedPublications(): Promise<Publication[]> {
 const siteSettingsQuery = `*[_type == "siteSettings"][0] {
   groupName,
   tagline,
+  "description": pt::text(description),
   contactEmail,
   affiliations,
   domain

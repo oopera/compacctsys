@@ -1,6 +1,6 @@
 interface SectionHeaderProps {
   label: string;
-  title: string;
+  title?: string;
   accent?: "violet" | "orange";
   light?: boolean;
 }
@@ -9,19 +9,28 @@ export function SectionHeader({ label, title, accent = "violet", light = false }
   const accentColor = accent === "orange" ? "var(--orange)" : "var(--violet)";
   const labelColor = light ? "rgba(255,255,255,0.4)" : "var(--muted)";
   const titleColor = light ? "#ffffff" : "var(--text)";
+  const borderColor = light ? "rgba(255,255,255,0.12)" : "var(--border)";
 
   return (
-    <div className="mb-12">
-      <p className="mb-3 font-mono text-xs uppercase tracking-widest" style={{ color: labelColor }}>
-        {label}
-      </p>
+    <div className="mb-16">
+      {/* Ruled label row */}
+      <div className="flex items-center gap-4 mb-6" style={{ borderTop: `1px solid ${borderColor}`, paddingTop: "1rem" }}>
+        <p
+          className="shrink-0 font-mono text-[10px] uppercase tracking-widest"
+          style={{ color: labelColor }}
+        >
+          {label}
+        </p>
+        <div className="flex-1 h-px" style={{ background: borderColor }} />
+      </div>
+
+      {/* Title */}
       <h2
-        className="font-serif text-4xl italic leading-tight tracking-tight md:text-5xl"
+        className="text-3xl font-semibold leading-tight tracking-tight md:text-4xl"
         style={{ color: titleColor }}
       >
         {title}
       </h2>
-      <div className="mt-4 h-px w-12" style={{ background: accentColor }} />
     </div>
   );
 }
