@@ -26,7 +26,7 @@ export function SectionHeader({ label, title, accent = "violet", light = false }
 
       {/* Title */}
       <h2
-        className="text-5xl font-black leading-[1.0] tracking-tighter md:text-6xl"
+        className="text-3xl font-semibold leading-tight tracking-tight md:text-4xl"
         style={{ color: titleColor }}
       >
         {title}

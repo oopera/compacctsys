@@ -7,7 +7,7 @@ export async function Hero() {
   return (
     <section
       id="about"
-      className="relative flex min-h-screen flex-col overflow-hidden bg-black"
+      className="relative flex min-h-[65vh] flex-col overflow-hidden bg-black"
     >
       <HeroCanvas />
 
@@ -24,8 +24,8 @@ export async function Hero() {
       {/* Main — title fills the space */}
       <div className="relative z-10 flex flex-1 flex-col justify-end px-6 pb-10 pt-16 md:px-10">
         <h1
-          className="font-black leading-[0.9] tracking-tighter text-white"
-          style={{ fontSize: "clamp(3.5rem, 10vw, 10rem)" }}
+          className="font-semibold leading-tight tracking-tight text-white"
+          style={{ fontSize: "clamp(2rem, 5vw, 4.5rem)" }}
         >
           {settings?.groupName ?? "Compliant and Accountable Systems"}
         </h1>

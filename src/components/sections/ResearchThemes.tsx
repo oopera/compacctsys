@@ -18,7 +18,7 @@ export async function ResearchThemes() {
                 className="absolute left-0 top-8 bottom-8 w-[2px] opacity-0 transition-opacity group-hover:opacity-100"
                 style={{ background: "var(--violet)" }}
               />
-              <h3 className="mb-3 text-lg font-bold leading-snug tracking-tight text-[var(--text)]">
+              <h3 className="mb-3 text-base font-semibold leading-snug text-[var(--text)]">
                 {theme.title}
               </h3>
               <p className="text-xs leading-relaxed text-[var(--muted)]">

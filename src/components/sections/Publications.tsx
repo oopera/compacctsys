@@ -64,7 +64,7 @@ export async function Publications() {
                 </div>
 
                 {/* Title */}
-                <h3 className="mb-3 text-2xl font-bold leading-snug tracking-tight text-[var(--text)] transition-colors group-hover:text-[var(--violet)] md:text-3xl">
+                <h3 className="mb-3 text-lg font-semibold leading-snug text-[var(--text)] transition-colors group-hover:text-[var(--violet)]">
                   {pub.title}
                 </h3>
 
