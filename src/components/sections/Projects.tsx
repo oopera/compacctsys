@@ -10,7 +10,7 @@ export async function Projects({ standalone }: ProjectsProps) {
 
   return (
     <section id="projects" className="bg-[var(--bg)] py-24">
-      <div className="mx-auto max-w-5xl px-6">
+      <div className="mx-auto max-w-6xl px-6 md:px-10">
         {!standalone && <SectionHeader label="Funded work" title="Projects" />}
 
         {projects.length === 0 ? (

@@ -32,12 +32,14 @@ export function NewsCarousel({ items }: { items: NewsItem[] }) {
   return (
     <div
       ref={trackRef}
-      className="flex gap-px overflow-x-auto select-none"
+      className="flex gap-6 overflow-x-auto select-none"
       style={{
         cursor: "grab",
         scrollbarWidth: "none",
         msOverflowStyle: "none",
         scrollSnapType: "x mandatory",
+        paddingLeft: "max(1.5rem, calc((100vw - 72rem) / 2 + 2.5rem))",
+        paddingRight: "max(1.5rem, calc((100vw - 72rem) / 2 + 2.5rem))",
       }}
       onMouseDown={onMouseDown}
       onMouseMove={onMouseMove}
@@ -47,7 +49,7 @@ export function NewsCarousel({ items }: { items: NewsItem[] }) {
       {items.map((item) => (
         <article
           key={item.id}
-          className="group flex w-72 shrink-0 flex-col border-r border-[var(--border)] last:border-r-0 md:w-80"
+          className="group flex w-72 shrink-0 flex-col border border-[var(--border)] md:w-80"
           style={{ scrollSnapAlign: "start" }}
         >
           {/* Image */}

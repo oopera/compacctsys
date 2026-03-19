@@ -23,9 +23,15 @@ function CornerDot({ pos }: { pos: "tl" | "tr" | "bl" | "br" }) {
 export async function ResearchThemes({ standalone }: ResearchThemesProps) {
   const researchThemes = await getResearchThemes();
   return (
-    <section id="research" className="bg-[var(--bg)] py-24">
-      <div className="mx-auto max-w-6xl px-6">
+    <section id="research" className="bg-[var(--bg)] py-12">
+      <div className="mx-auto max-w-6xl px-6 md:px-10">
         {!standalone && <SectionHeader label="Focus areas" title="Research Themes" />}
+        {standalone && (
+          <div className="mb-6 flex items-center gap-4 border-t border-[var(--border)] pt-4">
+            <p className="shrink-0 font-mono text-[10px] uppercase tracking-widest text-[var(--muted)]">Focus areas</p>
+            <div className="flex-1 h-px bg-[var(--border)]" />
+          </div>
+        )}
         <div className="grid gap-px border border-[var(--border)] bg-[var(--border)] sm:grid-cols-2 lg:grid-cols-3">
           {researchThemes.map((theme) => (
             <div
