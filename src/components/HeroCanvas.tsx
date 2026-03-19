@@ -3,9 +3,9 @@
 import { useEffect, useRef } from "react";
 
 const GRID      = 72;        // px between grid lines
-const DRIFT     = 0.12;      // px/frame diagonal drift
+const DRIFT     = 0.1;      // px/frame diagonal drift
 const TRAIL_MS  = 750;       // ms a trail point stays alive
-const GLOW_R    = GRID * 2.2; // px radius of the cell glow
+const GLOW_R    = GRID * 1.5; // px radius of the cell glow
 
 interface Pt { x: number; y: number; t: number; }
 
