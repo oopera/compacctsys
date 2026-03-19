@@ -24,7 +24,7 @@ export async function Hero() {
       {/* Main — title fills the space */}
       <div className="relative z-10 flex flex-1 flex-col justify-end px-6 pb-10 pt-16 md:px-10">
         <h1
-          className="font-serif italic leading-[0.92] tracking-tight text-white"
+          className="font-black leading-[0.9] tracking-tighter text-white"
           style={{ fontSize: "clamp(3.5rem, 10vw, 10rem)" }}
         >
           {settings?.groupName ?? "Compliant and Accountable Systems"}
