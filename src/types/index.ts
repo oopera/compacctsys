@@ -107,6 +107,7 @@ export interface NewsItem {
 export interface SiteSettings {
   groupName: string;
   tagline?: string;
+  description?: string;
   contactEmail?: string;
   affiliations?: string[];
   domain?: string;

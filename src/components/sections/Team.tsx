@@ -63,9 +63,8 @@ const providerMeta: Record<TeamMemberLinkProvider, { label: string; icon: React.
 
 function MemberLinks({ member }: { member: TeamMember }) {
   if (!member.links?.length) return null;
-
   return (
-    <div className="mt-2 flex items-center gap-2.5">
+    <div className="flex items-center gap-3">
       {member.links.map(({ provider, url }) => {
         const meta = providerMeta[provider] ?? { label: provider, icon: <GlobeIcon /> };
         return (
@@ -88,7 +87,11 @@ function MemberLinks({ member }: { member: TeamMember }) {
 
 // ─── Section ──────────────────────────────────────────────────────────────────
 
-export async function Team() {
+interface TeamProps {
+  standalone?: boolean;
+}
+
+export async function Team({ standalone }: TeamProps) {
   const team = await getTeam();
   const sorted = [...team]
     .filter((m) => m.current)
@@ -100,38 +103,36 @@ export async function Team() {
 
   return (
     <section id="team" className="bg-[var(--bg)] py-24">
-      <div className="mx-auto max-w-6xl px-6">
-        <SectionHeader label="The group" title="Team" accent="orange" />
-        <div className="space-y-16">
+      <div className="mx-auto max-w-5xl px-6">
+        {!standalone && <SectionHeader label="The group" title="Team" accent="orange" />}
+        <div className="space-y-12">
           {grouped.map(({ role, members }) => (
             <div key={role}>
-              {/* Role divider */}
-              <div className="mb-8 flex items-center gap-4" style={{ borderTop: "1px solid var(--border)", paddingTop: "1rem" }}>
+              {/* Role label */}
+              <div className="mb-0 flex items-center gap-4 border-t border-[var(--border)] pt-4">
                 <p className="shrink-0 font-mono text-[10px] uppercase tracking-widest text-[var(--muted)]">
                   {roleLabel[role]}
                 </p>
                 <div className="flex-1 h-px bg-[var(--border)]" />
               </div>
 
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {/* Member rows */}
+              <ul className="divide-y divide-[var(--border)]">
                 {members.map((member) => (
-                  <div
-                    key={member.id}
-                    className="group flex flex-col overflow-hidden border border-[var(--border)] bg-[var(--surface)] transition-colors hover:border-[var(--orange)]/50"
-                  >
-                    {/* Square photo */}
-                    <div className="relative aspect-square w-full bg-[var(--bg-alt)]">
+                  <li key={member.id} className="group flex gap-6 py-8">
+                    {/* Photo */}
+                    <div className="relative h-20 w-20 shrink-0 overflow-hidden bg-[var(--bg-alt)]">
                       {member.photo ? (
                         <Image
                           src={member.photo}
                           alt={member.name}
                           fill
                           className="object-cover object-center"
-                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          sizes="80px"
                         />
                       ) : (
                         <div
-                          className="flex h-full w-full items-center justify-center font-mono text-4xl font-semibold text-white/40"
+                          className="flex h-full w-full items-center justify-center font-mono text-lg font-semibold text-white/40"
                           style={{ background: "var(--hero-mid)" }}
                         >
                           {member.name.split(" ").map((n) => n[0]).join("").slice(0, 2)}
@@ -140,32 +141,36 @@ export async function Team() {
                     </div>
 
                     {/* Info */}
-                    <div className="flex flex-1 flex-col p-5">
-                      <p className="text-base font-semibold leading-snug text-[var(--text)]">
-                        {member.title ? `${member.title} ` : ""}{member.name}
-                      </p>
+                    <div className="flex min-w-0 flex-1 flex-col justify-center">
+                      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                        <p className="text-base font-semibold leading-snug text-[var(--text)]">
+                          {member.title ? `${member.title} ` : ""}{member.name}
+                        </p>
+                        {member.email && (
+                          <a
+                            href={`mailto:${member.email}`}
+                            className="font-mono text-[10px] text-[var(--muted)] transition-colors hover:text-[var(--violet)]"
+                          >
+                            {member.email}
+                          </a>
+                        )}
+                      </div>
 
                       {member.bio && (
-                        <p className="mt-2 line-clamp-3 text-xs leading-relaxed text-[var(--muted)]">
+                        <p className="mt-1 line-clamp-2 text-sm leading-relaxed text-[var(--muted)]">
                           {member.bio}
                         </p>
                       )}
 
-                      <div className="mt-auto pt-4 flex items-center justify-between">
-                        {member.email ? (
-                          <a
-                            href={`mailto:${member.email}`}
-                            className="truncate font-mono text-[10px] text-[var(--muted)] transition-colors hover:text-[var(--violet)]"
-                          >
-                            {member.email}
-                          </a>
-                        ) : <span />}
-                        <MemberLinks member={member} />
-                      </div>
+                      {member.links?.length ? (
+                        <div className="mt-2">
+                          <MemberLinks member={member} />
+                        </div>
+                      ) : null}
                     </div>
-                  </div>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
           ))}
         </div>

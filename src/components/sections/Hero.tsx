@@ -30,11 +30,6 @@ export async function Hero() {
           {settings?.groupName ?? "Compliant and Accountable Systems"}
         </h1>
 
-        {settings?.tagline && (
-          <p className="mt-8 max-w-xl text-sm leading-relaxed text-white/40 md:text-base">
-            {settings.tagline}
-          </p>
-        )}
       </div>
 
       {/* Bottom strip */}

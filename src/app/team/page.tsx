@@ -15,7 +15,7 @@ export default function TeamPage() {
       <Nav />
       <main>
         <SubpageHero label="People" title="Team" />
-        <Team />
+        <Team standalone />
       </main>
       <Footer />
     </>

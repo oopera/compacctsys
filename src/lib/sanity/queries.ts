@@ -132,6 +132,7 @@ export async function getAwardedPublications(): Promise<Publication[]> {
 const siteSettingsQuery = `*[_type == "siteSettings"][0] {
   groupName,
   tagline,
+  "description": pt::text(description),
   contactEmail,
   affiliations,
   domain

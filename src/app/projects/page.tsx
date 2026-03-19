@@ -15,7 +15,7 @@ export default function ProjectsPage() {
       <Nav />
       <main>
         <SubpageHero label="Funded work" title="Projects" />
-        <Projects />
+        <Projects standalone />
       </main>
       <Footer />
     </>
