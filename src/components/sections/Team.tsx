@@ -102,31 +102,36 @@ export async function Team() {
     <section id="team" className="bg-[var(--bg)] py-24">
       <div className="mx-auto max-w-6xl px-6">
         <SectionHeader label="The group" title="Team" accent="orange" />
-        <div className="space-y-14">
+        <div className="space-y-16">
           {grouped.map(({ role, members }) => (
             <div key={role}>
-              <p className="mb-5 font-mono text-[10px] uppercase tracking-widest text-[var(--muted)]">
-                {roleLabel[role]}
-              </p>
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {/* Role divider */}
+              <div className="mb-8 flex items-center gap-4" style={{ borderTop: "1px solid var(--border)", paddingTop: "1rem" }}>
+                <p className="shrink-0 font-mono text-[10px] uppercase tracking-widest text-[var(--muted)]">
+                  {roleLabel[role]}
+                </p>
+                <div className="flex-1 h-px bg-[var(--border)]" />
+              </div>
+
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {members.map((member) => (
                   <div
                     key={member.id}
-                    className="flex overflow-hidden border border-[var(--border)] bg-[var(--surface)] transition-colors hover:border-[var(--orange)]/40"
+                    className="group flex flex-col overflow-hidden border border-[var(--border)] bg-[var(--surface)] transition-colors hover:border-[var(--orange)]/50"
                   >
-                    {/* Photo — fixed square so it never stretches taller than wide */}
-                    <div className="relative h-28 w-28 shrink-0 bg-[var(--bg-alt)]">
+                    {/* Square photo */}
+                    <div className="relative aspect-square w-full bg-[var(--bg-alt)]">
                       {member.photo ? (
                         <Image
                           src={member.photo}
                           alt={member.name}
                           fill
                           className="object-cover object-center"
-                          sizes="112px"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         />
                       ) : (
                         <div
-                          className="flex h-full w-full items-center justify-center font-mono text-lg font-semibold text-white/60"
+                          className="flex h-full w-full items-center justify-center font-mono text-4xl font-semibold text-white/40"
                           style={{ background: "var(--hero-mid)" }}
                         >
                           {member.name.split(" ").map((n) => n[0]).join("").slice(0, 2)}
@@ -134,21 +139,29 @@ export async function Team() {
                       )}
                     </div>
 
-                    {/* Text */}
-                    <div className="flex flex-col justify-center px-5 py-4">
-                      <p className="text-sm font-semibold text-[var(--text)]">
-                        {member.title ? `${member.title} ` : ""}
-                        {member.name}
+                    {/* Info */}
+                    <div className="flex flex-1 flex-col p-5">
+                      <p className="text-base font-semibold leading-snug text-[var(--text)]">
+                        {member.title ? `${member.title} ` : ""}{member.name}
                       </p>
-                      {member.email && (
-                        <a
-                          href={`mailto:${member.email}`}
-                          className="mt-0.5 block truncate font-mono text-[11px] text-[var(--muted)] transition-colors hover:text-[var(--violet)]"
-                        >
-                          {member.email}
-                        </a>
+
+                      {member.bio && (
+                        <p className="mt-2 line-clamp-3 text-xs leading-relaxed text-[var(--muted)]">
+                          {member.bio}
+                        </p>
                       )}
-                      <MemberLinks member={member} />
+
+                      <div className="mt-auto pt-4 flex items-center justify-between">
+                        {member.email ? (
+                          <a
+                            href={`mailto:${member.email}`}
+                            className="truncate font-mono text-[10px] text-[var(--muted)] transition-colors hover:text-[var(--violet)]"
+                          >
+                            {member.email}
+                          </a>
+                        ) : <span />}
+                        <MemberLinks member={member} />
+                      </div>
                     </div>
                   </div>
                 ))}

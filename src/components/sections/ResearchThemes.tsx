@@ -7,14 +7,18 @@ export async function ResearchThemes() {
     <section id="research" className="bg-[var(--bg-alt)] py-24">
       <div className="mx-auto max-w-6xl px-6">
         <SectionHeader label="Focus areas" title="Research Themes" />
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-px border border-[var(--border)] bg-[var(--border)] sm:grid-cols-2 lg:grid-cols-3">
           {researchThemes.map((theme) => (
             <div
               key={theme.id}
-              className="group rounded-lg border border-[var(--border)] bg-[var(--surface)] p-6 transition-colors hover:border-[var(--violet)]/40"
+              className="group relative bg-[var(--surface)] p-8 transition-colors hover:bg-[var(--bg)]"
             >
-              <div className="mb-4 h-px w-8 bg-[var(--violet)] opacity-60 transition-opacity group-hover:opacity-100" />
-              <h3 className="mb-2 text-sm font-semibold leading-snug text-[var(--text)]">
+              {/* Left accent bar on hover */}
+              <div
+                className="absolute left-0 top-8 bottom-8 w-[2px] opacity-0 transition-opacity group-hover:opacity-100"
+                style={{ background: "var(--violet)" }}
+              />
+              <h3 className="mb-3 font-serif text-xl italic leading-snug tracking-tight text-[var(--text)]">
                 {theme.title}
               </h3>
               <p className="text-xs leading-relaxed text-[var(--muted)]">
