@@ -17,12 +17,7 @@ export function NavShell({ groupName }: { groupName: string }) {
   return (
     <header className="fixed top-0 z-50 w-full border-b-2 border-black bg-white">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3 md:px-10">
-        <Link
-          href="/"
-          className="font-mono text-xs font-medium uppercase tracking-widest text-black transition-opacity hover:opacity-60"
-        >
-          {groupName}
-        </Link>
+        <Link href="/" className="group font-mono text-xs font-medium tracking-widest text-black">Comp<span className="inline-block max-w-0 overflow-hidden whitespace-nowrap align-text-bottom [transition:max-width_500ms_ease-in-out] group-hover:max-w-[64px]">{"liant\u00a0"}</span><span className="inline-block max-w-0 overflow-hidden whitespace-nowrap align-text-bottom [transition:max-width_500ms_ease-in-out] group-hover:max-w-[46px]">{"and\u00a0"}</span>Acct<span className="inline-block max-w-0 overflow-hidden whitespace-nowrap align-text-bottom [transition:max-width_500ms_ease-in-out] group-hover:max-w-[92px]">{"ountable\u00a0"}</span>Sys<span className="inline-block max-w-0 overflow-hidden whitespace-nowrap align-text-bottom [transition:max-width_500ms_ease-in-out] group-hover:max-w-[44px]">{"tems"}</span></Link>
 
         {/* Desktop nav */}
         <nav className="hidden gap-8 md:flex">
@@ -30,8 +25,9 @@ export function NavShell({ groupName }: { groupName: string }) {
             <Link
               key={l.href}
               href={l.href}
-              className="font-mono text-[10px] uppercase tracking-widest transition-colors"
-              style={{ color: pathname === l.href ? "var(--black, #000)" : "rgba(0,0,0,0.4)" }}
+              className={`font-mono text-[10px] uppercase tracking-widest transition-colors hover:text-black ${
+                pathname === l.href ? "text-black" : "text-black/40"
+              }`}
             >
               {l.label}
             </Link>
@@ -61,14 +57,15 @@ export function NavShell({ groupName }: { groupName: string }) {
 
       {/* Mobile drawer */}
       {open && (
-        <nav className="border-t-2 border-black bg-white md:hidden">
+        <nav className="border-t border-[var(--border)] bg-white md:hidden">
           {links.map((l) => (
             <Link
               key={l.href}
               href={l.href}
               onClick={() => setOpen(false)}
-              className="block border-b border-black/10 px-6 py-4 font-mono text-[10px] uppercase tracking-widest transition-colors hover:bg-black hover:text-white"
-              style={{ color: pathname === l.href ? "#000" : "rgba(0,0,0,0.5)" }}
+              className={`block border-b border-[var(--border)] px-6 py-4 font-mono text-[10px] uppercase tracking-widest transition-colors hover:text-[var(--violet)] ${
+                pathname === l.href ? "text-black" : "text-black/50"
+              }`}
             >
               {l.label}
             </Link>

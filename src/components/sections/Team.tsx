@@ -114,13 +114,29 @@ export async function Team({ standalone }: TeamProps) {
               {/* Square photo */}
               <div className="relative aspect-square w-full overflow-hidden bg-[var(--bg-alt)]">
                 {member.photo ? (
-                  <Image
-                    src={member.photo}
-                    alt={member.name}
-                    fill
-                    className="object-cover object-center transition-opacity duration-300 group-hover:opacity-90"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                  />
+                  <>
+                    <Image
+                      src={member.photo}
+                      alt={member.name}
+                      fill
+                      className="object-cover object-center group-hover:grayscale group-hover:contrast-125"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    />
+                    {/* Duotone colour wash — fades in on hover */}
+                    <div
+                      className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-75"
+                      style={{ background: "var(--violet)", mixBlendMode: "color" }}
+                    />
+                    {/* Halftone dot grid — fades in on hover */}
+                    <div
+                      className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100"
+                      style={{
+                        backgroundImage: "radial-gradient(circle, rgba(0,0,0,0.55) 1px, transparent 1px)",
+                        backgroundSize: "4px 4px",
+                        mixBlendMode: "multiply",
+                      }}
+                    />
+                  </>
                 ) : (
                   <div
                     className="flex h-full w-full items-center justify-center font-mono text-2xl font-semibold text-white/40"

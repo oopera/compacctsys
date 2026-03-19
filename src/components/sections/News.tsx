@@ -8,7 +8,7 @@ export async function News() {
   return (
     <section id="news" className="bg-[var(--bg)] py-16">
       <div className="mx-auto max-w-6xl px-6 md:px-10">
-        <SectionHeader label="Updates" title="Latest News" />
+        <SectionHeader label="News" />
 
         {news.length === 0 ? (
           <div className="border border-dashed border-[var(--border)] p-16 text-center">

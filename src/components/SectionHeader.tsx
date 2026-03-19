@@ -1,6 +1,6 @@
 interface SectionHeaderProps {
   label: string;
-  title: string;
+  title?: string;
   accent?: "violet" | "orange";
   light?: boolean;
 }
