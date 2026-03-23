@@ -108,7 +108,7 @@ function findTeamMember(authorName: string, teamMembers: TeamMember[]): TeamMemb
 
 const FIELD_MAP: { bibtex: string; sanity: string; notes?: string }[] = [
   { bibtex: "title",                  sanity: "title" },
-  { bibtex: "author",                 sanity: "authors",     notes: "Split by "and". "Last, First" is reordered to "First Last". Names matched against team members." },
+  { bibtex: "author",                 sanity: "authors",     notes: "Split by \"and\". \"Last, First\" is reordered to \"First Last\". Names matched against team members." },
   { bibtex: "booktitle / journal / publisher", sanity: "venue", notes: "First non-empty value used, in that order." },
   { bibtex: "series",                 sanity: "venueShort",  notes: "Short venue abbreviation, e.g. CHI, CSCW." },
   { bibtex: "year",                   sanity: "year" },
