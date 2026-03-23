@@ -1,4 +1,4 @@
-import { HeroCanvas } from "@/components/HeroCanvas";
+import { SceneCanvas } from "@/components/SceneCanvas";
 import { getSiteSettings } from "@/lib/sanity/queries";
 
 export async function Hero() {
@@ -10,7 +10,9 @@ export async function Hero() {
       className="relative flex min-h-[65vh] flex-col overflow-hidden"
       style={{ background: "var(--hero-bg)" }}
     >
-      <HeroCanvas />
+      <div className="abgsolute overflow-hidden h-full max-w-6xl" style={{ background: "var(--hero-bg)" }}>
+        <SceneCanvas variant="nodes" />
+      </div>
 
       {/* Top strip */}
       <div className="relative z-10" style={{ borderBottom: "1px solid var(--hero-line)" }}>

@@ -1,7 +1,7 @@
 "use client";
 
 import { siteSettings } from "@/lib/data";
-import { HeroCanvas } from "@/components/HeroCanvas";
+import { SceneCanvas } from "@/components/SceneCanvas";
 
 export function Footer() {
   return (
@@ -9,7 +9,7 @@ export function Footer() {
       className="relative overflow-hidden py-14"
       style={{ background: "var(--hero-bg)" }}
     >
-      <HeroCanvas />
+      <SceneCanvas />
 
       <div className="relative z-10 mx-auto max-w-6xl px-6">
         <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
