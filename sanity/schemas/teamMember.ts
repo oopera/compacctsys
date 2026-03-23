@@ -23,11 +23,13 @@ export const teamMember = defineType({
       type: "string",
       options: {
         list: [
-          { title: "Principal Investigator", value: "pi" },
-          { title: "PostDoc", value: "postdoc" },
-          { title: "PhD Candidate", value: "phd" },
-          { title: "Associate Researcher", value: "associate" },
-          { title: "Administrative", value: "admin" },
+          { title: "Principal Investigator",  value: "pi" },
+          { title: "PostDoc",                 value: "postdoc" },
+          { title: "PhD Candidate",           value: "phd" },
+          { title: "Research Assistant",      value: "research-assistant" },
+          { title: "Research Intern",         value: "research-intern" },
+          { title: "Associate Researcher",    value: "associate" },
+          { title: "Administrative",          value: "admin" },
         ],
       },
       validation: (r) => r.required(),

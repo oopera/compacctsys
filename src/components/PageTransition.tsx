@@ -14,6 +14,7 @@ export function PageTransition() {
   // Fade in whenever the route settles
   useEffect(() => {
     selfNav.current = false;
+    if (pathname.startsWith("/studio")) { setOpacity(0); return; }
     const t = setTimeout(() => setOpacity(0), 50);
     return () => clearTimeout(t);
   }, [pathname]);
@@ -31,6 +32,8 @@ export function PageTransition() {
       if (!href || !href.startsWith("/")) return;
       // Already on this page — let the browser handle it normally (no transition)
       if (href === pathnameRef.current) return;
+      // Skip transition for studio routes
+      if (href.startsWith("/studio") || pathnameRef.current.startsWith("/studio")) return;
 
       e.preventDefault();
       selfNav.current = true;

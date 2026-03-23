@@ -1,17 +1,19 @@
 import Image from "next/image";
-import { getTeam } from "@/lib/sanity/queries";
+import { getTeam, getPastTeam } from "@/lib/sanity/queries";
 import { SectionHeader } from "@/components/SectionHeader";
 import { TeamRole, TeamMember, TeamMemberLinkProvider } from "@/types";
 
 const roleLabel: Record<TeamRole, string> = {
-  pi:        "Principal Investigator",
-  postdoc:   "PostDoc",
-  phd:       "PhD Candidate",
-  associate: "Associate Researcher",
-  admin:     "Administrative",
+  pi:                  "Principal Investigator",
+  postdoc:             "PostDoc",
+  phd:                 "PhD Candidate",
+  "research-assistant": "Research Assistant",
+  "research-intern":   "Research Intern",
+  associate:           "Associate Researcher",
+  admin:               "Administrative",
 };
 
-const roleOrder: TeamRole[] = ["pi", "postdoc", "associate", "phd", "admin"];
+const roleOrder: TeamRole[] = ["pi", "postdoc", "phd", "research-assistant", "research-intern", "associate", "admin"];
 
 // ─── Icons ────────────────────────────────────────────────────────────────────
 
@@ -92,14 +94,20 @@ interface TeamProps {
 }
 
 export async function Team({ standalone }: TeamProps) {
-  const team = await getTeam();
-  const sorted = [...team]
-    .filter((m) => m.current)
-    .sort((a, b) => a.order - b.order);
+  const [team, pastTeam] = await Promise.all([
+    getTeam(),
+    standalone ? getPastTeam() : Promise.resolve([]),
+  ]);
+
+  const sorted = [...team].sort((a, b) => a.order - b.order);
 
   // Flatten into ordered list with role attached
   const members = roleOrder.flatMap((role) =>
     sorted.filter((m) => m.role === role)
+  );
+
+  const pastSorted = roleOrder.flatMap((role) =>
+    pastTeam.filter((m) => m.role === role)
   );
 
   return (
@@ -179,6 +187,34 @@ export async function Team({ standalone }: TeamProps) {
           ))}
         </div>
       </div>
+
+      {/* Past members — standalone page only */}
+      {standalone && pastSorted.length > 0 && (
+        <div className="mx-auto max-w-6xl px-6 md:px-10 mt-20">
+          <div className="mb-8 flex items-center gap-4">
+            <span className="font-mono text-xs font-semibold uppercase tracking-widest text-[var(--muted)]">
+              Past Members
+            </span>
+            <div className="h-px flex-1 bg-[var(--border)]" />
+          </div>
+
+          <ul className="divide-y divide-[var(--border)]">
+            {pastSorted.map((member) => (
+              <li key={member.id} className="flex items-center justify-between gap-4 py-4">
+                <div className="flex items-baseline gap-3">
+                  <span className="text-sm font-medium text-[var(--text)]">
+                    {member.title ? `${member.title} ` : ""}{member.name}
+                  </span>
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-[var(--muted)]">
+                    {roleLabel[member.role]}
+                  </span>
+                </div>
+                <MemberLinks member={member} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </section>
   );
 }

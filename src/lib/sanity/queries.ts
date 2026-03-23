@@ -29,6 +29,20 @@ export async function getTeam(): Promise<TeamMember[]> {
   return client.fetch(teamQuery, {}, { next: { tags: ["teamMember"] } });
 }
 
+const pastTeamQuery = `*[_type == "teamMember" && current == false] | order(order asc) {
+  "id": _id,
+  name,
+  title,
+  role,
+  links[]{provider, url},
+  order,
+  current
+}`;
+
+export async function getPastTeam(): Promise<TeamMember[]> {
+  return client.fetch(pastTeamQuery, {}, { next: { tags: ["teamMember"] } });
+}
+
 // ─── Research themes ─────────────────────────────────────────────────────────
 
 const researchThemesQuery = `*[_type == "researchTheme"] | order(orderRank asc) {

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import { definePlugin } from "sanity";
 import { useClient } from "sanity";
 import { entries as parseBibtex } from "bibtex-parse";
@@ -104,6 +104,75 @@ function findTeamMember(authorName: string, teamMembers: TeamMember[]): TeamMemb
   return teamMembers.find((tm) => normaliseName(tm.name) === needle);
 }
 
+// ─── Legend ───────────────────────────────────────────────────────────────────
+
+const FIELD_MAP: { bibtex: string; sanity: string; notes?: string }[] = [
+  { bibtex: "title",                  sanity: "title" },
+  { bibtex: "author",                 sanity: "authors",     notes: "Split by "and". "Last, First" is reordered to "First Last". Names matched against team members." },
+  { bibtex: "booktitle / journal / publisher", sanity: "venue", notes: "First non-empty value used, in that order." },
+  { bibtex: "series",                 sanity: "venueShort",  notes: "Short venue abbreviation, e.g. CHI, CSCW." },
+  { bibtex: "year",                   sanity: "year" },
+  { bibtex: "doi",                    sanity: "doi" },
+  { bibtex: "url",                    sanity: "url" },
+  { bibtex: "abstract",               sanity: "abstract" },
+  { bibtex: "entry type",             sanity: "type",        notes: "inproceedings/proceedings/conference → conference · article → journal · misc/techreport/unpublished/preprint → arxiv · inbook/incollection/book → book-chapter · everything else → other" },
+  { bibtex: "(entire entry)",         sanity: "bibtex",      notes: "Reconstructed and stored verbatim for copy-to-clipboard." },
+];
+
+function Legend() {
+  const [open, setOpen] = useState(false);
+  const detailsRef = useRef<HTMLDetailsElement>(null);
+
+  return (
+    <details
+      ref={detailsRef}
+      open={open}
+      onToggle={(e) => setOpen((e.currentTarget as HTMLDetailsElement).open)}
+      style={{ marginBottom: "1rem", border: "1px solid #e5e7eb", borderRadius: 6, overflow: "hidden" }}
+    >
+      <summary style={{
+        padding: "0.6rem 0.9rem",
+        fontSize: "0.8rem",
+        fontWeight: 600,
+        cursor: "pointer",
+        background: "#f9fafb",
+        listStyle: "none",
+        display: "flex",
+        alignItems: "center",
+        gap: "0.4rem",
+        userSelect: "none",
+      }}>
+        <span style={{ fontSize: "0.7rem", color: "#6b7280" }}>{open ? "▾" : "▸"}</span>
+        Field mapping legend
+      </summary>
+
+      <div style={{ padding: "0.75rem 0.9rem", overflowX: "auto" }}>
+        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.78rem" }}>
+          <thead>
+            <tr style={{ borderBottom: "1px solid #e5e7eb" }}>
+              <th style={{ textAlign: "left", padding: "0.3rem 0.5rem", color: "#6b7280", fontWeight: 600, whiteSpace: "nowrap" }}>BibTeX field</th>
+              <th style={{ textAlign: "left", padding: "0.3rem 0.5rem", color: "#6b7280", fontWeight: 600, whiteSpace: "nowrap" }}>Sanity field</th>
+              <th style={{ textAlign: "left", padding: "0.3rem 0.5rem", color: "#6b7280", fontWeight: 600 }}>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            {FIELD_MAP.map((row) => (
+              <tr key={row.bibtex} style={{ borderBottom: "1px solid #f3f4f6" }}>
+                <td style={{ padding: "0.35rem 0.5rem", fontFamily: "monospace", color: "#1d4ed8", whiteSpace: "nowrap" }}>{row.bibtex}</td>
+                <td style={{ padding: "0.35rem 0.5rem", fontFamily: "monospace", color: "#059669", whiteSpace: "nowrap" }}>{row.sanity}</td>
+                <td style={{ padding: "0.35rem 0.5rem", color: "#6b7280" }}>{row.notes ?? "—"}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <p style={{ marginTop: "0.6rem", fontSize: "0.73rem", color: "#9ca3af" }}>
+          Fields not listed above (e.g. <code>award</code>, <code>venueShort</code> override, <code>researchThemes</code>) must be set manually after import.
+        </p>
+      </div>
+    </details>
+  );
+}
+
 // ─── Component ────────────────────────────────────────────────────────────────
 
 function BibtexImporterTool() {
@@ -206,9 +275,11 @@ function BibtexImporterTool() {
   return (
     <div style={{ padding: "2rem", maxWidth: 900, margin: "0 auto", fontFamily: "system-ui, sans-serif" }}>
       <h1 style={{ fontSize: "1.5rem", fontWeight: 700, marginBottom: "0.25rem" }}>BibTeX Importer</h1>
-      <p style={{ color: "#6b7280", marginBottom: "1.5rem", fontSize: "0.875rem" }}>
+      <p style={{ color: "#6b7280", marginBottom: "1rem", fontSize: "0.875rem" }}>
         Paste BibTeX entries below, preview them, then import into Sanity.
       </p>
+
+      <Legend />
 
       {/* Input area */}
       <textarea

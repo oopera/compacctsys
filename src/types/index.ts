@@ -4,6 +4,8 @@ export type TeamRole =
   | "pi"
   | "postdoc"
   | "phd"
+  | "research-assistant"
+  | "research-intern"
   | "associate"
   | "admin";
 
