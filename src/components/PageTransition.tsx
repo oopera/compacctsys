@@ -49,7 +49,7 @@ export function PageTransition() {
   return (
     <div
       aria-hidden
-      className="pointer-events-none fixed inset-0 z-[9999] bg-white"
+      className="pointer-events-none fixed inset-0 z-[9999] bg-[var(--bg)]"
       style={{ opacity, transition: `opacity ${DURATION}ms ease` }}
     />
   );

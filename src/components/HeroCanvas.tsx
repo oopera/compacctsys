@@ -11,6 +11,17 @@ interface Pt { x: number; y: number; t: number; }
 
 export function HeroCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const themeRef  = useRef("light");
+
+  // Track theme changes so the draw loop can read the latest value
+  useEffect(() => {
+    themeRef.current = document.documentElement.dataset.theme ?? "light";
+    const obs = new MutationObserver(() => {
+      themeRef.current = document.documentElement.dataset.theme ?? "light";
+    });
+    obs.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    return () => obs.disconnect();
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -49,6 +60,8 @@ export function HeroCanvas() {
       const ox = offset % GRID;
       const oy = offset % GRID;
 
+      const dark = themeRef.current === "dark";
+
       // ── Lit cells (drawn below grid lines) ──────────────────────────────
       if (trail.length) {
         for (let x = -GRID + ox; x < w + GRID; x += GRID) {
@@ -63,7 +76,10 @@ export function HeroCanvas() {
               intensity  = Math.max(intensity, age * prox * prox);
             }
             if (intensity > 0.01) {
-              ctx.fillStyle = `rgba(139,92,246,${intensity * 0.38})`;
+              // violet in light mode, orange in dark mode
+              ctx.fillStyle = dark
+                ? `rgba(251,146,60,${intensity * 0.45})`
+                : `rgba(139,92,246,${intensity * 0.38})`;
               ctx.fillRect(x, y, GRID, GRID);
             }
           }
@@ -71,7 +87,7 @@ export function HeroCanvas() {
       }
 
       // ── Grid lines ───────────────────────────────────────────────────────
-      ctx.strokeStyle = "rgba(255,255,255,0.07)";
+      ctx.strokeStyle = dark ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.07)";
       ctx.lineWidth   = 1;
       ctx.beginPath();
       for (let x = -GRID + ox; x < w + GRID; x += GRID) {
@@ -94,7 +110,9 @@ export function HeroCanvas() {
             const prox = Math.max(0, 1 - dist / (GRID * 1.5));
             boost = Math.max(boost, age * prox);
           }
-          ctx.fillStyle = `rgba(255,255,255,${0.18 + boost * 0.72})`;
+          ctx.fillStyle = dark
+            ? `rgba(0,0,0,${0.18 + boost * 0.72})`
+            : `rgba(255,255,255,${0.18 + boost * 0.72})`;
           ctx.beginPath();
           ctx.arc(x, y, 1.5 + boost * 2, 0, Math.PI * 2);
           ctx.fill();
