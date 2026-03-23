@@ -1,5 +1,6 @@
 export const dynamic = "force-dynamic";
 
+import { notFound } from "next/navigation";
 import { Nav } from "@/components/Nav";
 import { SubpageHero } from "@/components/SubpageHero";
 import { Footer } from "@/components/Footer";
@@ -13,6 +14,8 @@ export const metadata = {
 
 export default async function ApplyPage() {
   const [data, settings] = await Promise.all([getApplyPage(), getSiteSettings()]);
+
+  if (data?.showApplyPage === false) notFound();
 
   const positions    = data?.positions            ?? [];
   const expectations = data?.expectations         ?? [];

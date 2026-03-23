@@ -16,7 +16,7 @@ function highlight(bibtex: string): React.ReactNode[] {
       nodes.push(
         <span key={li}>
           <span style={{ color: "var(--main)" }}>{entryMatch[1]}</span>
-          {"{"}<span style={{ color: "#f59e0b" }}>{entryMatch[2]}</span>{","}
+          {"{"}<span style={{ color: "var(--secondary)" }}>{entryMatch[2]}</span>{","}
         </span>
       );
       nodes.push("\n");
@@ -37,9 +37,9 @@ function highlight(bibtex: string): React.ReactNode[] {
       nodes.push(
         <span key={li}>
           {indent}
-          <span style={{ color: "#34d399" }}>{key}</span>
+          <span style={{ color: "var(--secondary)" }}>{key}</span>
           <span style={{ color: "var(--muted)" }}>{eq}</span>
-          {"{"}<span style={{ color: "#e2e8f0" }}>{val}</span>{"}"}{comma}
+          {"{"}<span style={{ color: "var(--text)" }}>{val}</span>{"}"}{comma}
         </span>
       );
       nodes.push("\n");
@@ -88,8 +88,8 @@ function BibtexModal({ bibtex, onClose }: { bibtex: string; onClose: () => void 
       <div
         className="relative flex w-full max-w-2xl flex-col overflow-hidden"
         style={{
-          background: "#0f172a",
-          border: "1px solid rgba(255,255,255,0.1)",
+          background: "var(--bg-alt)",
+          border: "1px solid var(--border)",
           maxHeight: "80vh",
         }}
         onClick={(e) => e.stopPropagation()}
@@ -97,22 +97,22 @@ function BibtexModal({ bibtex, onClose }: { bibtex: string; onClose: () => void 
         {/* Header */}
         <div
           className="flex items-center justify-between px-5 py-3"
-          style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}
+          style={{ borderBottom: "1px solid var(--border)" }}
         >
-          <span className="font-mono text-[10px] uppercase tracking-widest text-white/30">
+          <span className="font-mono text-[10px] uppercase tracking-widest text-[var(--muted)]">
             BibTeX
           </span>
           <div className="flex items-center gap-4">
             <button
               onClick={handleCopy}
               className="font-mono text-[10px] uppercase tracking-widest transition-colors"
-              style={{ color: copied ? "#34d399" : "rgba(255,255,255,0.4)" }}
+              style={{ color: copied ? "var(--main)" : "var(--muted)" }}
             >
               {copied ? "Copied!" : "Copy"}
             </button>
             <button
               onClick={onClose}
-              className="font-mono text-[10px] uppercase tracking-widest text-white/30 transition-colors hover:text-white/70"
+              className="font-mono text-[10px] uppercase tracking-widest text-[var(--muted)] transition-colors hover:text-[var(--text)]"
               aria-label="Close"
             >
               ✕
@@ -125,7 +125,7 @@ function BibtexModal({ bibtex, onClose }: { bibtex: string; onClose: () => void 
           className="overflow-auto p-5 text-xs leading-relaxed"
           style={{
             fontFamily: "var(--font-geist-mono, monospace)",
-            color: "#e2e8f0",
+            color: "var(--text)",
             background: "transparent",
             margin: 0,
             whiteSpace: "pre-wrap",

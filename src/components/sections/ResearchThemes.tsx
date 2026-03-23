@@ -5,7 +5,7 @@ interface ResearchThemesProps {
   standalone?: boolean;
 }
 
-// Corner dot — appears at each corner on hover, like grid intersection points
+// Corner dot — appears at each corner on hover
 function CornerDot({ pos }: { pos: "tl" | "tr" | "bl" | "br" }) {
   const cls = {
     tl: "-top-[3px] -left-[3px]",
@@ -15,7 +15,7 @@ function CornerDot({ pos }: { pos: "tl" | "tr" | "bl" | "br" }) {
   }[pos];
   return (
     <span
-      className={`absolute ${cls} h-[6px] w-[6px] rounded-full bg-[var(--main)] opacity-0 transition-opacity duration-200 group-hover:opacity-100`}
+      className={`absolute ${cls} h-[6px] w-[6px] rounded-full bg-[var(--main)] opacity-0 transition-opacity duration-300 group-hover:opacity-100`}
     />
   );
 }
@@ -32,11 +32,12 @@ export async function ResearchThemes({ standalone }: ResearchThemesProps) {
             <div className="flex-1 h-px bg-[var(--border)]" />
           </div>
         )}
-        <div className="grid gap-px border border-[var(--border)] bg-[var(--border)] sm:grid-cols-2 lg:grid-cols-3">
-          {researchThemes.map((theme) => (
+
+        <div className="grid gap-px border border-[var(--border)] sm:grid-cols-2 lg:grid-cols-3">
+          {researchThemes.map((theme, i) => (
             <div
               key={theme.id}
-              className="group relative bg-[var(--surface)] p-8 transition-colors duration-200 hover:bg-black"
+              className="group relative overflow-hidden p-8 transition-colors duration-300"
             >
               {/* Corner dots */}
               <CornerDot pos="tl" />
@@ -44,10 +45,18 @@ export async function ResearchThemes({ standalone }: ResearchThemesProps) {
               <CornerDot pos="bl" />
               <CornerDot pos="br" />
 
-              <h3 className="mb-3 text-base font-semibold leading-snug text-[var(--text)] transition-colors duration-200 group-hover:text-white">
+              {/* Accent bar — slides in from left on hover */}
+              <span className="absolute left-0 top-0 h-full w-[3px] origin-top scale-y-0 bg-[var(--main)] transition-transform duration-300 group-hover:scale-y-100" />
+
+              {/* Index */}
+              <p className="mb-5 font-mono text-[10px] text-[var(--main)] transition-opacity duration-300">
+                {String(i + 1).padStart(2, "0")}
+              </p>
+
+              <h3 className="mb-3 text-sm font-semibold leading-snug text-[var(--text)] transition-colors duration-300">
                 {theme.title}
               </h3>
-              <p className="text-xs leading-relaxed text-[var(--muted)] transition-colors duration-200 group-hover:text-white/50">
+              <p className="text-xs leading-relaxed text-[var(--muted)] transition-colors duration-300">
                 {theme.description}
               </p>
             </div>

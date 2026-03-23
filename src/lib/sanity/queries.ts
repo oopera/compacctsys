@@ -145,6 +145,7 @@ export async function getAwardedPublications(): Promise<Publication[]> {
 // ─── Apply page ──────────────────────────────────────────────────────────────
 
 const applyPageQuery = `*[_type == "applyPage"][0] {
+  showApplyPage,
   intro,
   positions[]{ role, type, description },
   expectations[]{ heading, body },
@@ -155,6 +156,16 @@ const applyPageQuery = `*[_type == "applyPage"][0] {
 
 export async function getApplyPage(): Promise<ApplyPage | null> {
   return client.fetch(applyPageQuery, {}, { next: { tags: ["applyPage"] } });
+}
+
+export async function getApplyPageVisibility(): Promise<boolean> {
+  const result = await client.fetch<{ showApplyPage?: boolean } | null>(
+    `*[_type == "applyPage"][0]{ showApplyPage }`,
+    {},
+    { next: { tags: ["applyPage"] } },
+  );
+  // Default to true if the field hasn't been set yet
+  return result?.showApplyPage ?? true;
 }
 
 // ─── Site settings ───────────────────────────────────────────────────────────

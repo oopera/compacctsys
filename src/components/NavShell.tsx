@@ -12,12 +12,12 @@ const links = [
   { label: "Publications", href: "/publications" },
 ];
 
-export function NavShell({ groupName }: { groupName: string }) {
+export function NavShell({ groupName, showApply = true }: { groupName: string; showApply?: boolean }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b-2 border-[var(--text)] bg-[var(--bg)]">
+    <header className="sticky top-0 z-50 w-full border-b border-[var(--border)] bg-[var(--bg)]">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3 md:px-10">
         <Link href="/" className="group py-3 font-mono text-xs font-medium tracking-widest text-[var(--text)]">Comp<span className="inline-block max-w-0 overflow-hidden whitespace-nowrap align-text-bottom [transition:max-width_500ms_ease-in-out] group-hover:max-w-[64px]">{"liant\u00a0"}</span><span className="inline-block max-w-0 overflow-hidden whitespace-nowrap align-text-bottom [transition:max-width_500ms_ease-in-out] group-hover:max-w-[46px]">{"and\u00a0"}</span>Acct<span className="inline-block max-w-0 overflow-hidden whitespace-nowrap align-text-bottom [transition:max-width_500ms_ease-in-out] group-hover:max-w-[92px]">{"ountable\u00a0"}</span>Sys<span className="inline-block max-w-0 overflow-hidden whitespace-nowrap align-text-bottom [transition:max-width_500ms_ease-in-out] group-hover:max-w-[44px]">{"tems"}</span></Link>
 
@@ -34,7 +34,7 @@ export function NavShell({ groupName }: { groupName: string }) {
               {l.label}
             </Link>
           ))}
-          <BtnLink href="/apply">Apply</BtnLink>
+          {showApply && <BtnLink href="/apply">Apply</BtnLink>}
           <div className="p-2">
             <ThemeToggle />
           </div>
@@ -76,13 +76,15 @@ export function NavShell({ groupName }: { groupName: string }) {
               {l.label}
             </Link>
           ))}
-          <Link
-            href="/apply"
-            onClick={() => setOpen(false)}
-            className="block border-b border-[var(--border)] px-6 py-4 font-mono text-[10px] uppercase tracking-widest text-[var(--text)] transition-colors hover:text-[var(--main)]"
-          >
-            Apply
-          </Link>
+          {showApply && (
+            <Link
+              href="/apply"
+              onClick={() => setOpen(false)}
+              className="block border-b border-[var(--border)] px-6 py-4 font-mono text-[10px] uppercase tracking-widest text-[var(--text)] transition-colors hover:text-[var(--main)]"
+            >
+              Apply
+            </Link>
+          )}
           <div className="flex items-center gap-3 px-6 py-4">
             <span className="font-mono text-[10px] uppercase tracking-widest text-[var(--muted)]">Theme</span>
             <ThemeToggle />

@@ -118,6 +118,7 @@ export interface ApplyExpectation {
 }
 
 export interface ApplyPage {
+  showApplyPage?: boolean;
   intro?: string;
   positions: ApplyPosition[];
   expectations: ApplyExpectation[];

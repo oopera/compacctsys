@@ -7,6 +7,13 @@ export const applyPage = defineType({
   type: "document",
   fields: [
     defineField({
+      name: "showApplyPage",
+      title: "Show Apply Page",
+      description: "When off, the Apply button is hidden from the nav and the page returns 404.",
+      type: "boolean",
+      initialValue: true,
+    }),
+    defineField({
       name: "intro",
       title: "Intro Text",
       description: "Optional paragraph shown below the hero.",
