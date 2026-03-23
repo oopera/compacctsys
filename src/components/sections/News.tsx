@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { getNews } from "@/lib/sanity/queries";
 import { SectionHeader } from "@/components/SectionHeader";
+import { BtnLink } from "@/components/Btn";
 
 export async function News() {
   const news = await getNews();
@@ -17,7 +18,7 @@ export async function News() {
         ) : (
           <ul className="divide-y divide-[var(--border)]">
             {news.map((item) => (
-              <li key={item.id} className="group flex gap-6 py-8 first:pt-0">
+              <li key={item.id} className="flex gap-6 py-8 first:pt-0">
                 {item.image && (
                   <div className="relative h-24 w-36 shrink-0 overflow-hidden bg-[var(--bg-alt)]">
                     <Image
@@ -37,7 +38,7 @@ export async function News() {
                       year: "numeric",
                     })}
                   </p>
-                  <h3 className="mb-1 text-base font-semibold leading-snug text-[var(--text)] transition-colors group-hover:text-[var(--violet)]">
+                  <h3 className="mb-1 text-base font-semibold leading-snug text-[var(--text)]">
                     {item.title}
                   </h3>
                   {item.body && (
@@ -46,14 +47,9 @@ export async function News() {
                     </p>
                   )}
                   {item.externalUrl && (
-                    <a
-                      href={item.externalUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-2 font-mono text-[10px] uppercase tracking-widest text-[var(--muted)] transition-colors hover:text-[var(--violet)]"
-                    >
+                    <BtnLink href={item.externalUrl} external className="mt-3">
                       Read more ↗
-                    </a>
+                    </BtnLink>
                   )}
                 </div>
               </li>

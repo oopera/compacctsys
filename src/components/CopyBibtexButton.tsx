@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { Btn } from "@/components/Btn";
 
 // ─── Syntax highlighter ───────────────────────────────────────────────────────
 
@@ -145,12 +146,7 @@ export function CopyBibtexButton({ bibtex }: { bibtex: string }) {
 
   return (
     <>
-      <button
-        onClick={() => setOpen(true)}
-        className="font-mono text-[10px] uppercase tracking-wider text-[var(--muted)] transition-colors hover:text-[var(--text)] cursor-pointer"
-      >
-        BibTeX
-      </button>
+      <Btn onClick={() => setOpen(true)}>BibTeX</Btn>
 
       {open && <BibtexModal bibtex={bibtex} onClose={() => setOpen(false)} />}
     </>

@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { BtnLink } from "@/components/Btn";
 
 const links = [
   { label: "Team",         href: "/team" },
@@ -33,12 +34,7 @@ export function NavShell({ groupName }: { groupName: string }) {
               {l.label}
             </Link>
           ))}
-          <Link
-            href="/apply"
-            className="border-2 border-[var(--text)] px-3 py-2 font-mono text-[10px] uppercase tracking-widest text-[var(--text)] transition-colors hover:bg-[var(--text)] hover:text-[var(--bg)]"
-          >
-            Apply
-          </Link>
+          <BtnLink href="/apply">Apply</BtnLink>
           <div className="p-2">
             <ThemeToggle />
           </div>

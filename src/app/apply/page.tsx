@@ -4,6 +4,7 @@ import { Nav } from "@/components/Nav";
 import { SubpageHero } from "@/components/SubpageHero";
 import { Footer } from "@/components/Footer";
 import { SectionHeader } from "@/components/SectionHeader";
+import { BtnLink } from "@/components/Btn";
 import { getApplyPage, getSiteSettings } from "@/lib/sanity/queries";
 
 export const metadata = {
@@ -108,12 +109,9 @@ export default async function ApplyPage() {
                   </ul>
                 )}
                 {contactEmail && (
-                  <a
-                    href={`mailto:${contactEmail}?subject=Application Enquiry`}
-                    className="inline-block border-2 border-black px-6 py-3 font-mono text-[10px] uppercase tracking-widest text-black transition-colors hover:bg-black hover:text-white"
-                  >
+                  <BtnLink href={`mailto:${contactEmail}?subject=Application Enquiry`} external>
                     Get in Touch ↗
-                  </a>
+                  </BtnLink>
                 )}
               </div>
             </div>

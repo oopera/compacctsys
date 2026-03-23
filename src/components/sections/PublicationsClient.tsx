@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { CopyBibtexButton } from "@/components/CopyBibtexButton";
+import { BtnLink, BtnToggle } from "@/components/Btn";
 import type { Publication, PublicationType } from "@/types";
 
 const typeLabel: Record<PublicationType, string> = {
@@ -66,77 +67,34 @@ export function PublicationsClient({ publications }: Props) {
     return Array.from(map.entries()).sort(([a], [b]) => b - a);
   }, [filtered]);
 
-  const filterBtn =
-    "font-mono text-[10px] uppercase tracking-widest px-3 py-1.5 border transition-colors duration-150";
-
   return (
     <>
       {/* Filter bar */}
       {(availableTypes.length > 1 || hasAwards || availableVenues.length > 0) && (
         <div className="mb-10 flex flex-wrap gap-2">
-          {/* All */}
-          <button
-            onClick={() => setActive(ALL)}
-            className={filterBtn}
-            style={
-              active === ALL
-                ? { color: "var(--violet)", borderColor: "var(--violet)", background: "color-mix(in srgb, var(--violet) 10%, transparent)" }
-                : { color: "var(--muted)", borderColor: "var(--border)" }
-            }
-          >
-            All
-          </button>
+          <BtnToggle active={active === ALL} onClick={() => setActive(ALL)}>All</BtnToggle>
 
-          {/* Type filters */}
           {availableTypes.map((t) => (
-            <button
-              key={t}
-              onClick={() => setActive(t)}
-              className={filterBtn}
-              style={
-                active === t
-                  ? { color: "var(--violet)", borderColor: "var(--violet)", background: "color-mix(in srgb, var(--violet) 10%, transparent)" }
-                  : { color: "var(--muted)", borderColor: "var(--border)" }
-              }
-            >
+            <BtnToggle key={t} active={active === t} onClick={() => setActive(t)}>
               {typeLabel[t]}
-            </button>
+            </BtnToggle>
           ))}
 
-          {/* Venue sub-filters */}
           {availableVenues.length > 0 && (
             <>
               <span className="self-center mx-1 h-4 w-px bg-[var(--border)]" />
               {availableVenues.map((v) => (
-                <button
-                  key={v}
-                  onClick={() => setActive(VENUE_PREFIX + v)}
-                  className={filterBtn}
-                  style={
-                    active === VENUE_PREFIX + v
-                      ? { color: "var(--violet)", borderColor: "var(--violet)", background: "color-mix(in srgb, var(--violet) 10%, transparent)" }
-                      : { color: "var(--muted)", borderColor: "var(--border)" }
-                  }
-                >
+                <BtnToggle key={v} active={active === VENUE_PREFIX + v} onClick={() => setActive(VENUE_PREFIX + v)}>
                   {venueLabels[v] ?? v}
-                </button>
+                </BtnToggle>
               ))}
             </>
           )}
 
-          {/* Awards filter — only shown if any publication has an award */}
           {hasAwards && (
-            <button
-              onClick={() => setActive(AWARDED)}
-              className={filterBtn}
-              style={
-                active === AWARDED
-                  ? { color: "var(--orange)", borderColor: "var(--orange)", background: "color-mix(in srgb, var(--orange) 10%, transparent)" }
-                  : { color: "var(--muted)", borderColor: "var(--border)" }
-              }
-            >
+            <BtnToggle active={active === AWARDED} accent="var(--orange)" onClick={() => setActive(AWARDED)}>
               Recognised
-            </button>
+            </BtnToggle>
           )}
         </div>
       )}
@@ -157,7 +115,7 @@ export function PublicationsClient({ publications }: Props) {
 
             <ul className="divide-y divide-[var(--border)]">
               {pubs.map((pub) => (
-                <li key={pub.id} className="group py-8 first:pt-0">
+                <li key={pub.id} className="py-8 first:pt-0">
 
                   {/* Type + award + venue badges */}
                   <div className="mb-4 flex flex-wrap items-center gap-3">
@@ -191,7 +149,7 @@ export function PublicationsClient({ publications }: Props) {
                   </div>
 
                   {/* Title */}
-                  <h3 className="mb-3 text-lg font-semibold leading-snug text-[var(--text)] transition-colors group-hover:text-[var(--violet)]">
+                  <h3 className="mb-3 text-lg font-semibold leading-snug text-[var(--text)]">
                     {pub.title}
                   </h3>
 
@@ -211,26 +169,12 @@ export function PublicationsClient({ publications }: Props) {
 
                   {/* Links */}
                   {(pub.doi || pub.url || pub.bibtex) && (
-                    <div className="flex items-center gap-5">
+                    <div className="flex flex-wrap items-center gap-2">
                       {pub.doi && (
-                        <a
-                          href={`https://doi.org/${pub.doi}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="font-mono text-[10px] uppercase tracking-widest text-[var(--muted)] transition-colors hover:text-[var(--text)]"
-                        >
-                          DOI ↗
-                        </a>
+                        <BtnLink href={`https://doi.org/${pub.doi}`} external>DOI ↗</BtnLink>
                       )}
                       {pub.url && (
-                        <a
-                          href={pub.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="font-mono text-[10px] uppercase tracking-widest text-[var(--muted)] transition-colors hover:text-[var(--text)]"
-                        >
-                          PDF ↗
-                        </a>
+                        <BtnLink href={pub.url} external>PDF ↗</BtnLink>
                       )}
                       {pub.bibtex && <CopyBibtexButton bibtex={pub.bibtex} />}
                     </div>
