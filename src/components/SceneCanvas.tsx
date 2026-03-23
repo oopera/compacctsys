@@ -1,22 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useCanvasTheme, type Theme } from "@/hooks/useCanvasTheme";
-
-// ─── Per-theme colour tables ──────────────────────────────────────────────────
-
-const PALETTE: Record<Theme, {
-  fg: string;       // RGB of nodes/dots/lines
-  glow: string;     // RGB of mouse glow
-  lineAlpha: number;
-}> = {
-  light:     { fg: "255,255,255", glow: "139,92,246",  lineAlpha: 0.07 },
-  dark:      { fg: "0,0,0",       glow: "251,146,60",  lineAlpha: 0.06 },
-  code:      { fg: "148,163,184", glow: "52,211,153",  lineAlpha: 0.08 },
-  retro:     { fg: "255,180,0",   glow: "255,140,0",   lineAlpha: 0.10 },
-  cyberpunk: { fg: "0,245,212",   glow: "255,45,120",  lineAlpha: 0.09 },
-  synthwave: { fg: "255,214,245", glow: "255,113,206", lineAlpha: 0.10 },
-};
+import { useCanvasTheme, type CanvasPalette } from "@/hooks/useCanvasTheme";
 
 // ─── Grid scene ───────────────────────────────────────────────────────────────
 
@@ -29,7 +14,7 @@ interface Pt { x: number; y: number; t: number; }
 
 function runGrid(
   canvas: HTMLCanvasElement,
-  themeRef: React.RefObject<Theme>,
+  paletteRef: React.RefObject<CanvasPalette>,
 ): () => void {
   const ctx = canvas.getContext("2d")!;
   let w = 0, h = 0, offset = 0, raf: number;
@@ -55,7 +40,7 @@ function runGrid(
     while (trail.length && now - trail[0].t > TRAIL_MS) trail.shift();
     ctx.clearRect(0, 0, w, h);
 
-    const { fg, glow, lineAlpha } = PALETTE[themeRef.current ?? "light"];
+    const { fg, glow, lineAlpha } = paletteRef.current;
     const ox = offset % GRID, oy = offset % GRID;
 
     // Lit cells
@@ -127,7 +112,7 @@ interface Node { x: number; y: number; vx: number; vy: number; r: number; }
 
 function runNodes(
   canvas: HTMLCanvasElement,
-  themeRef: React.RefObject<Theme>,
+  paletteRef: React.RefObject<CanvasPalette>,
 ): () => void {
   const ctx = canvas.getContext("2d")!;
   let w = 0, h = 0, raf: number;
@@ -160,19 +145,26 @@ function runNodes(
     raf = requestAnimationFrame(draw);
     ctx.clearRect(0, 0, w, h);
 
-    const { fg, glow } = PALETTE[themeRef.current ?? "light"];
+    const { fg, glow } = paletteRef.current;
     const mx = mouse.x, my = mouse.y;
 
+    const MARGIN = 60; // wall repulsion zone (px)
     for (const n of nodes) {
-      n.vx += (w * 0.5 - n.x) * 0.00006 + (Math.random() - 0.5) * 0.012;
-      n.vy += (h * 0.5 - n.y) * 0.00006 + (Math.random() - 0.5) * 0.012;
+      // Random walk — keeps nodes lively without pulling toward any fixed point
+      n.vx += (Math.random() - 0.5) * 0.015;
+      n.vy += (Math.random() - 0.5) * 0.015;
+
+      // Soft wall repulsion — pushes back when near edges, no central gravity
+      if (n.x < MARGIN)     n.vx += (MARGIN - n.x)     * 0.002;
+      if (n.x > w - MARGIN) n.vx -= (n.x - (w - MARGIN)) * 0.002;
+      if (n.y < MARGIN)     n.vy += (MARGIN - n.y)     * 0.002;
+      if (n.y > h - MARGIN) n.vy -= (n.y - (h - MARGIN)) * 0.002;
+
+      // Speed cap
       const spd = Math.hypot(n.vx, n.vy);
       if (spd > MAX_SPEED) { n.vx *= MAX_SPEED / spd; n.vy *= MAX_SPEED / spd; }
+
       n.x += n.vx; n.y += n.vy;
-      if (n.x < 0) { n.x = 0; n.vx =  Math.abs(n.vx); }
-      if (n.x > w) { n.x = w; n.vx = -Math.abs(n.vx); }
-      if (n.y < 0) { n.y = 0; n.vy =  Math.abs(n.vy); }
-      if (n.y > h) { n.y = h; n.vy = -Math.abs(n.vy); }
     }
 
     for (let i = 0; i < nodes.length; i++) {
@@ -221,15 +213,15 @@ export type CanvasVariant = "grid" | "nodes";
 
 export function SceneCanvas({ variant = "grid" }: { variant?: CanvasVariant }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const themeRef  = useCanvasTheme();
+  const { paletteRef } = useCanvasTheme();
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     return variant === "nodes"
-      ? runNodes(canvas, themeRef)
-      : runGrid(canvas, themeRef);
-  }, [variant, themeRef]);
+      ? runNodes(canvas, paletteRef)
+      : runGrid(canvas, paletteRef);
+  }, [variant, paletteRef]);
 
   return <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />;
 }

@@ -1,121 +1,163 @@
 @import "tailwindcss";
 
-main { flex: 1 1 auto; }
+main {
+  flex: 1 1 auto;
+}
 
 :root {
-  --bg:        #ffffff;
-  --bg-alt:    #f5f5f5;
-  --surface:   #ffffff;
-  --border:    #d4d4d4;
-  --text:      #000000;
-  --muted:     #555555;
-  --violet:    #8b5cf6;
-  --orange:    #c2410c;
+  --bg: #ffffff;
+  --bg-alt: #f5f5f5;
+  --surface: #ffffff;
+  --border: #d4d4d4;
+  --text: #000000;
+  --muted: #555555;
+  --main: #8b5cf6;
+  --secondary: #c2410c;
   --hero-from: #000000;
-  --hero-mid:  #000000;
-  --hero-to:   #000000;
+  --hero-mid: #000000;
+  --hero-to: #000000;
   /* Hero section palette */
-  --hero-bg:     #000000;
-  --hero-fg:     rgba(255,255,255,1);
-  --hero-muted:  rgba(255,255,255,0.30);
-  --hero-dimmer: rgba(255,255,255,0.20);
-  --hero-line:   rgba(255,255,255,0.10);
+  --hero-bg: #000000;
+  --hero-fg: rgba(255, 255, 255, 1);
+  --hero-muted: rgba(255, 255, 255, 0.30);
+  --hero-dimmer: rgba(255, 255, 255, 0.20);
+  --hero-line: rgba(255, 255, 255, 0.10);
+  /* Canvas animation palette */
+  --canvas-fg: #ffffff;
+  --canvas-glow: #8b5cf6;
+  --canvas-line-alpha: 0.07;
 }
 
 [data-theme="dark"] {
-  --bg:        #0f0f0f;
-  --bg-alt:    #1a1a1a;
-  --surface:   #1a1a1a;
-  --border:    #2e2e2e;
-  --text:      #f5f5f5;
-  --muted:     #888888;
-  --violet:    #a78bfa;
-  --orange:    #fb923c;
+  --bg: #0f0f0f;
+  --bg-alt: #1a1a1a;
+  --surface: #1a1a1a;
+  --border: #2e2e2e;
+  --text: #f5f5f5;
+  --muted: #888888;
+  --main: #a78bfa;
+  --secondary: #fb923c;
   /* Hero section palette — inverted */
-  --hero-bg:     #ffffff;
-  --hero-fg:     rgba(0,0,0,1);
-  --hero-muted:  rgba(0,0,0,0.40);
-  --hero-dimmer: rgba(0,0,0,0.25);
-  --hero-line:   rgba(0,0,0,0.10);
+  --hero-bg: #ffffff;
+  --hero-fg: rgba(0, 0, 0, 1);
+  --hero-muted: rgba(0, 0, 0, 0.40);
+  --hero-dimmer: rgba(0, 0, 0, 0.25);
+  --hero-line: rgba(0, 0, 0, 0.10);
+  /* Canvas animation palette */
+  --canvas-fg: #000000;
+  --canvas-glow: #fb923c;
+  --canvas-line-alpha: 0.06;
 }
 
 /* ── Code theme — BibTeX syntax palette ─────────────────────────────────── */
 [data-theme="code"] {
-  --bg:        #0f172a;   /* slate-900 */
-  --bg-alt:    #1e293b;   /* slate-800 */
-  --surface:   #1e293b;
-  --border:    #334155;   /* slate-700 */
-  --text:      #e2e8f0;   /* slate-200 */
-  --muted:     #94a3b8;   /* slate-400 */
-  --violet:    #a78bfa;   /* purple — @type tokens */
-  --orange:    #34d399;   /* emerald — replaces orange accent */
+  --bg: #0f172a;
+  /* slate-900 */
+  --bg-alt: #1e293b;
+  /* slate-800 */
+  --surface: #1e293b;
+  --border: #334155;
+  /* slate-700 */
+  --text: #e2e8f0;
+  /* slate-200 */
+  --muted: #94a3b8;
+  /* slate-400 */
+  --main: #a78bfa;
+  /* purple — @type tokens */
+  --secondary: #34d399;
+  /* emerald — replaces orange accent */
   /* Hero: same dark slate as body */
-  --hero-bg:     #0f172a;
-  --hero-fg:     rgba(226,232,240,1);
-  --hero-muted:  rgba(148,163,184,0.55);
-  --hero-dimmer: rgba(148,163,184,0.35);
-  --hero-line:   rgba(148,163,184,0.10);
+  --hero-bg: #0f172a;
+  --hero-fg: rgba(226, 232, 240, 1);
+  --hero-muted: rgba(148, 163, 184, 0.55);
+  --hero-dimmer: rgba(148, 163, 184, 0.35);
+  --hero-line: rgba(148, 163, 184, 0.10);
+  /* Canvas animation palette */
+  --canvas-fg: #94a3b8;
+  --canvas-glow: #34d399;
+  --canvas-line-alpha: 0.08;
 }
 
 /* ── Retro — amber phosphor terminal ────────────────────────────────────── */
 [data-theme="retro"] {
-  --bg:        #fdf6e3;   /* warm cream */
-  --bg-alt:    #f0e6cc;
-  --surface:   #f0e6cc;
-  --border:    #c9aa80;
-  --text:      #2c1a0e;   /* dark sepia */
-  --muted:     #7a5c3a;
-  --violet:    #bf4400;   /* burnt sienna */
-  --orange:    #d97706;   /* amber */
+  --bg: #fffcf6;
+  /* warm cream */
+  --bg-alt: #f0e6cc;
+  --surface: #f0e6cc;
+  --border: #c9aa80;
+  --text: #2c1a0e;
+  /* dark sepia */
+  --muted: #7a5c3a;
+  --main: #bf4400;
+  /* burnt sienna */
+  --secondary: #d97706;
+  /* amber */
   /* Hero: old CRT terminal — dark brown with amber phosphor */
-  --hero-bg:     #120900;
-  --hero-fg:     rgba(255,180,0,1);
-  --hero-muted:  rgba(255,180,0,0.45);
-  --hero-dimmer: rgba(255,180,0,0.25);
-  --hero-line:   rgba(255,180,0,0.10);
+  --hero-bg: #120900;
+  --hero-fg: rgba(255, 180, 0, 1);
+  --hero-muted: rgba(255, 180, 0, 0.45);
+  --hero-dimmer: rgba(255, 180, 0, 0.25);
+  --hero-line: rgba(255, 180, 0, 0.10);
+  /* Canvas animation palette */
+  --canvas-fg: #ffb400;
+  --canvas-glow: #ff8c00;
+  --canvas-line-alpha: 0.10;
 }
 
 /* ── Cyberpunk — neon on near-black ─────────────────────────────────────── */
 [data-theme="cyberpunk"] {
-  --bg:        #060612;   /* near black with blue cast */
-  --bg-alt:    #0d0d20;
-  --surface:   #0d0d20;
-  --border:    #1a1a3e;
-  --text:      #e0f2ff;   /* icy white */
-  --muted:     #3dd6f5;   /* cyan */
-  --violet:    #ff2d78;   /* hot pink */
-  --orange:    #00f5d4;   /* neon teal */
-  /* Hero: deep black, hot-pink glow */
-  --hero-bg:     #03030a;
-  --hero-fg:     rgba(0,245,212,1);
-  --hero-muted:  rgba(0,245,212,0.45);
-  --hero-dimmer: rgba(0,245,212,0.25);
-  --hero-line:   rgba(0,245,212,0.08);
+  --bg: #03030a;
+  /* near black with blue cast */
+  --bg-alt: #0d0d20;
+  --surface: #0d0d20;
+  --border: #1a1a3e;
+  --text: #ffffff;
+  --muted: #ffffff;
+  --main: #a42dff;
+  --secondary: #f5a23d;
+  --hero-bg: #03030a;
+  --hero-fg: rgb(245, 147, 0);
+  --hero-muted: rgba(255, 255, 255, 0.45);
+  --hero-dimmer: rgba(146, 56, 255, 0.25);
+  --hero-line: rgba(60, 0, 255, 0.08);
+  /* Canvas animation palette */
+  --canvas-fg: #00f5d4;
+  --canvas-glow: #ff2d78;
+  --canvas-line-alpha: 0.09;
 }
 
 /* ── Synthwave — deep purple, neon pink ─────────────────────────────────── */
 [data-theme="synthwave"] {
-  --bg:        #120025;   /* deep purple */
-  --bg-alt:    #1d0040;
-  --surface:   #1d0040;
-  --border:    #3d1080;
-  --text:      #ffd6f5;   /* light pink-white */
-  --muted:     #c084fc;   /* soft purple */
-  --violet:    #ff71ce;   /* neon pink */
-  --orange:    #01cdfe;   /* electric blue */
+  --bg: #120025;
+  /* deep purple */
+  --bg-alt: #1d0040;
+  --surface: #1d0040;
+  --border: #3d1080;
+  --text: #ffd6f5;
+  /* light pink-white */
+  --muted: #c084fc;
+  /* soft purple */
+  --main: #ff71ce;
+  /* neon pink */
+  --secondary: #01cdfe;
+  /* electric blue */
   /* Hero: deep purple with pink glow */
-  --hero-bg:     #0d0020;
-  --hero-fg:     rgba(255,214,245,1);
-  --hero-muted:  rgba(255,113,206,0.55);
-  --hero-dimmer: rgba(255,113,206,0.30);
-  --hero-line:   rgba(255,113,206,0.12);
+  --hero-bg: #0d0020;
+  --hero-fg: rgba(255, 214, 245, 1);
+  --hero-muted: rgba(255, 113, 206, 0.55);
+  --hero-dimmer: rgba(255, 113, 206, 0.30);
+  --hero-line: rgba(255, 113, 206, 0.12);
+  /* Canvas animation palette */
+  --canvas-fg: #ffd6f5;
+  --canvas-glow: #ff71ce;
+  --canvas-line-alpha: 0.10;
 }
 
 @theme inline {
   --color-background: var(--bg);
   --color-foreground: var(--text);
-  --font-sans:  var(--font-geist-sans);
-  --font-mono:  var(--font-geist-mono);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
   --font-serif: var(--font-geist-sans), system-ui, sans-serif;
 }
 
@@ -138,6 +180,7 @@ body {
   color: var(--hero-muted);
   transition: color 150ms;
 }
+
 .hero-email:hover {
   color: var(--hero-fg);
 }
