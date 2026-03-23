@@ -6,6 +6,7 @@ import type {
   Publication,
   NewsItem,
   SiteSettings,
+  ApplyPage,
 } from "@/types";
 
 // ─── Team ────────────────────────────────────────────────────────────────────
@@ -125,6 +126,21 @@ const awardsQuery = `*[_type == "publication" && defined(award)] | order(year de
 
 export async function getAwardedPublications(): Promise<Publication[]> {
   return client.fetch(awardsQuery, {}, { next: { tags: ["publication"] } });
+}
+
+// ─── Apply page ──────────────────────────────────────────────────────────────
+
+const applyPageQuery = `*[_type == "applyPage"][0] {
+  intro,
+  positions[]{ role, type, description },
+  expectations[]{ heading, body },
+  howToApply,
+  applicationChecklist,
+  applicationEmail
+}`;
+
+export async function getApplyPage(): Promise<ApplyPage | null> {
+  return client.fetch(applyPageQuery, {}, { next: { tags: ["applyPage"] } });
 }
 
 // ─── Site settings ───────────────────────────────────────────────────────────

@@ -20,7 +20,7 @@ export function NavShell({ groupName }: { groupName: string }) {
         <Link href="/" className="group font-mono text-xs font-medium tracking-widest text-black">Comp<span className="inline-block max-w-0 overflow-hidden whitespace-nowrap align-text-bottom [transition:max-width_500ms_ease-in-out] group-hover:max-w-[64px]">{"liant\u00a0"}</span><span className="inline-block max-w-0 overflow-hidden whitespace-nowrap align-text-bottom [transition:max-width_500ms_ease-in-out] group-hover:max-w-[46px]">{"and\u00a0"}</span>Acct<span className="inline-block max-w-0 overflow-hidden whitespace-nowrap align-text-bottom [transition:max-width_500ms_ease-in-out] group-hover:max-w-[92px]">{"ountable\u00a0"}</span>Sys<span className="inline-block max-w-0 overflow-hidden whitespace-nowrap align-text-bottom [transition:max-width_500ms_ease-in-out] group-hover:max-w-[44px]">{"tems"}</span></Link>
 
         {/* Desktop nav */}
-        <nav className="hidden gap-8 md:flex">
+        <nav className="hidden items-center gap-8 md:flex">
           {links.map((l) => (
             <Link
               key={l.href}
@@ -32,6 +32,12 @@ export function NavShell({ groupName }: { groupName: string }) {
               {l.label}
             </Link>
           ))}
+          <Link
+            href="/apply"
+            className="border-2 border-black px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-black transition-colors hover:bg-black hover:text-white"
+          >
+            Apply
+          </Link>
         </nav>
 
         {/* Mobile hamburger */}
@@ -70,6 +76,13 @@ export function NavShell({ groupName }: { groupName: string }) {
               {l.label}
             </Link>
           ))}
+          <Link
+            href="/apply"
+            onClick={() => setOpen(false)}
+            className="block px-6 py-4 font-mono text-[10px] uppercase tracking-widest text-black transition-colors hover:text-[var(--violet)]"
+          >
+            Apply
+          </Link>
         </nav>
       )}
     </header>
