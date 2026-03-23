@@ -47,7 +47,7 @@ export async function News() {
                     </p>
                   )}
                   {item.externalUrl && (
-                    <BtnLink href={item.externalUrl} external className="mt-3">
+                    <BtnLink href={item.externalUrl} external className="mt-3 w-fit">
                       Read more ↗
                     </BtnLink>
                   )}

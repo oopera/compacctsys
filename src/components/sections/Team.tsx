@@ -13,7 +13,7 @@ const roleLabel: Record<TeamRole, string> = {
   admin: "Administrative",
 };
 
-const roleOrder: TeamRole[] = ["pi", "postdoc", "phd", "research-assistant", "research-intern", "associate", "admin"];
+const roleOrder: TeamRole[] = ["pi", "postdoc", "associate", "phd", "research-assistant", "research-intern", "admin"];
 
 // ─── Icons ────────────────────────────────────────────────────────────────────
 

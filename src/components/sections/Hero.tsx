@@ -20,7 +20,7 @@ export async function Hero() {
           <span className="font-mono text-[10px] uppercase tracking-[0.2em]" style={{ color: "var(--hero-muted)" }}>
             Research Group
           </span>
-          <span className="font-mono text-[10px] uppercase tracking-[0.2em]" style={{ color: "var(--hero-dimmer)" }}>
+          <span className="font-mono text-[10px] uppercase tracking-[0.2em]" style={{ color: "var(--hero-muted)" }}>
             Compliant · Accountable · Trustworthy
           </span>
         </div>

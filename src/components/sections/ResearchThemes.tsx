@@ -5,21 +5,6 @@ interface ResearchThemesProps {
   standalone?: boolean;
 }
 
-// Corner dot — appears at each corner on hover
-function CornerDot({ pos }: { pos: "tl" | "tr" | "bl" | "br" }) {
-  const cls = {
-    tl: "-top-[3px] -left-[3px]",
-    tr: "-top-[3px] -right-[3px]",
-    bl: "-bottom-[3px] -left-[3px]",
-    br: "-bottom-[3px] -right-[3px]",
-  }[pos];
-  return (
-    <span
-      className={`absolute ${cls} h-[6px] w-[6px] rounded-full bg-[var(--main)] opacity-0 transition-opacity duration-300 group-hover:opacity-100`}
-    />
-  );
-}
-
 export async function ResearchThemes({ standalone }: ResearchThemesProps) {
   const researchThemes = await getResearchThemes();
   return (
@@ -33,35 +18,26 @@ export async function ResearchThemes({ standalone }: ResearchThemesProps) {
           </div>
         )}
 
-        <div className="grid gap-px border border-[var(--border)] sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="divide-y divide-[var(--border)] border-y border-[var(--border)]">
           {researchThemes.map((theme, i) => (
-            <div
+            <li
               key={theme.id}
-              className="group relative overflow-hidden p-8 transition-colors duration-300"
+              className="flex gap-8 py-5"
             >
-              {/* Corner dots */}
-              <CornerDot pos="tl" />
-              <CornerDot pos="tr" />
-              <CornerDot pos="bl" />
-              <CornerDot pos="br" />
-
-              {/* Accent bar — slides in from left on hover */}
-              <span className="absolute left-0 top-0 h-full w-[3px] origin-top scale-y-0 bg-[var(--main)] transition-transform duration-300 group-hover:scale-y-100" />
-
-              {/* Index */}
-              <p className="mb-5 font-mono text-[10px] text-[var(--main)] transition-opacity duration-300">
+              <span className="w-6 shrink-0 font-mono text-[10px] text-[var(--main)] pt-0.5">
                 {String(i + 1).padStart(2, "0")}
-              </p>
-
-              <h3 className="mb-3 text-sm font-semibold leading-snug text-[var(--text)] transition-colors duration-300">
-                {theme.title}
-              </h3>
-              <p className="text-xs leading-relaxed text-[var(--muted)] transition-colors duration-300">
-                {theme.description}
-              </p>
-            </div>
+              </span>
+              <div className="flex flex-col gap-1 sm:flex-row sm:gap-12">
+                <h3 className="w-72 shrink-0 text-sm font-semibold leading-snug text-[var(--text)]">
+                  {theme.title}
+                </h3>
+                <p className="text-xs leading-relaxed text-[var(--muted)]">
+                  {theme.description}
+                </p>
+              </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );

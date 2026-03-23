@@ -105,10 +105,33 @@ function BibtexModal({ bibtex, onClose }: { bibtex: string; onClose: () => void 
           <div className="flex items-center gap-4">
             <button
               onClick={handleCopy}
-              className="font-mono text-[10px] uppercase tracking-widest transition-colors"
+              className="group flex cursor-pointer items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest transition-colors duration-150"
               style={{ color: copied ? "var(--main)" : "var(--muted)" }}
             >
-              {copied ? "Copied!" : "Copy"}
+              {copied ? (
+                <>
+                  {/* Checkmark */}
+                  <svg
+                    width="12" height="12" viewBox="0 0 12 12" fill="none"
+                    className="transition-opacity duration-150"
+                  >
+                    <path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  Copied!
+                </>
+              ) : (
+                <>
+                  {/* Copy icon */}
+                  <svg
+                    width="12" height="12" viewBox="0 0 12 12" fill="none"
+                    className="opacity-50 transition-opacity duration-150 group-hover:opacity-100"
+                  >
+                    <rect x="4" y="4" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="1.2" />
+                    <path d="M2 8V2a1 1 0 011-1h6" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+                  </svg>
+                  Copy
+                </>
+              )}
             </button>
             <button
               onClick={onClose}

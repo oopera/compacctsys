@@ -19,8 +19,8 @@ main {
   /* Hero section palette */
   --hero-bg: #000000;
   --hero-fg: rgba(255, 255, 255, 1);
-  --hero-muted: rgba(255, 255, 255, 0.30);
-  --hero-dimmer: rgba(255, 255, 255, 0.20);
+  --hero-muted: rgba(255, 255, 255, 0.75);
+  --hero-dimmer: rgba(255, 255, 255, 0.75);
   --hero-line: rgba(255, 255, 255, 0.10);
   /* Canvas animation palette */
   --canvas-fg: #ffffff;
@@ -40,8 +40,8 @@ main {
   /* Hero section palette — inverted */
   --hero-bg: #ffffff;
   --hero-fg: rgba(0, 0, 0, 1);
-  --hero-muted: rgba(0, 0, 0, 0.40);
-  --hero-dimmer: rgba(0, 0, 0, 0.25);
+  --hero-muted: rgba(0, 0, 0, 0.75);
+  --hero-dimmer: rgba(0, 0, 0, 0.75);
   --hero-line: rgba(0, 0, 0, 0.10);
   /* Canvas animation palette */
   --canvas-fg: #000000;
@@ -61,8 +61,8 @@ main {
   --secondary: #34d399;
   --hero-bg: #0f172a;
   --hero-fg: rgba(226, 232, 240, 1);
-  --hero-muted: rgba(148, 163, 184, 0.55);
-  --hero-dimmer: rgba(148, 163, 184, 0.35);
+  --hero-muted: rgba(148, 163, 184, 0.75);
+  --hero-dimmer: rgba(148, 163, 184, 0.75);
   --hero-line: rgba(148, 163, 184, 0.10);
   --canvas-fg: #94a3b8;
   --canvas-glow: #8b5cf6;
@@ -82,7 +82,7 @@ main {
   --secondary: #d97706;
   --hero-bg: #120900;
   --hero-fg: rgba(255, 180, 0, 1);
-  --hero-muted: rgba(255, 180, 0, 0.45);
+  --hero-muted: rgba(255, 180, 0, 0.75);
   --hero-dimmer: rgba(255, 180, 0, 0.25);
   --hero-line: rgba(255, 180, 0, 0.10);
   /* Canvas animation palette */
@@ -103,7 +103,7 @@ main {
   --secondary: #f5a23d;
   --hero-bg: #03030a;
   --hero-fg: rgb(245, 147, 0);
-  --hero-muted: rgba(255, 255, 255, 0.45);
+  --hero-muted: rgba(255, 255, 255, 0.75);
   --hero-dimmer: rgba(146, 56, 255, 0.25);
   --hero-line: rgba(60, 0, 255, 0.08);
   /* Canvas animation palette */
@@ -114,21 +114,21 @@ main {
 
 /* ── Synthwave — deep purple, neon pink ─────────────────────────────────── */
 [data-theme="synthwave"] {
-  --bg: #120025;
-  --bg-alt: #1d0040;
-  --surface: #1d0040;
+  --bg: #1b1720;
+  --bg-alt: #1b1720;
+  --surface: #1b1720;
   --border: #3d1080;
   --text: #ffd6f5;
   --muted: #c084fc;
-  --main: #a42dff;
-  --secondary: #01cdfe;
+  --main: #f5a23d;
+  --secondary: #f5a23d;
   --hero-bg: #0d0020;
   --hero-fg: rgba(255, 214, 245, 1);
-  --hero-muted: rgba(255, 113, 206, 0.55);
+  --hero-muted: #c084fc;
   --hero-dimmer: rgba(255, 113, 206, 0.30);
   --hero-line: rgba(255, 113, 206, 0.12);
-  --canvas-fg: #ffd6f5;
-  --canvas-glow: #ff71ce;
+  --canvas-fg: #f5a23d;
+  --canvas-glow: #f5a23d;
   --canvas-line-alpha: 0.10;
 }
 
