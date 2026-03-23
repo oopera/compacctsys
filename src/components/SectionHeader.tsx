@@ -14,9 +14,13 @@ export function SectionHeader({ label, title, accent = "main", light = false }: 
   return (
     <div className="mb-16">
       {/* Ruled label row */}
-      <div className="flex items-center gap-4 mb-6" style={{ borderTop: `1px solid ${borderColor}`, paddingTop: "1rem" }}>
+      <div className="flex items-center gap-4 mb-6"
+        style={{
+          // borderTop: `1px solid ${borderColor}`, 
+          paddingTop: "1rem"
+        }}>
         <p
-          className="shrink-0 font-mono text-[10px] uppercase tracking-widest"
+          className="font-mono text-xs font-semibold uppercase tracking-widest text-[var(--muted)]"
           style={{ color: labelColor }}
         >
           {label}

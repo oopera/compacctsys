@@ -111,7 +111,7 @@ export async function Team({ standalone }: TeamProps) {
   );
 
   return (
-    <section id="team" className="bg-[var(--bg)] py-16">
+    <section id="team" className="bg-[var(--bg)] py-24">
       <div className="mx-auto max-w-6xl px-6 md:px-10">
         {!standalone && <SectionHeader label="The group" title="Team" accent="secondary" />}
 
