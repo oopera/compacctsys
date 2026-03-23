@@ -8,21 +8,21 @@ export async function Recognitions() {
   return (
     <section id="recognitions" className="bg-[var(--bg-alt)] py-24">
       <div className="mx-auto max-w-6xl px-6">
-        <SectionHeader label="Honours" title="Recognitions" accent="orange" />
+        <SectionHeader label="Honours" title="Recognitions" accent="secondary" />
         <ul className="space-y-4">
           {pubs.map((pub) => (
             <li
               key={pub.id}
-              className="border border-[var(--border)] bg-[var(--surface)] p-6 transition-colors hover:border-[var(--orange)]/40"
+              className="border border-[var(--border)] bg-[var(--surface)] p-6 transition-colors hover:border-[var(--secondary)]/40"
             >
               <div className="flex flex-wrap items-start gap-4">
                 {/* Award badge */}
                 <div
                   className="shrink-0 border px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest"
                   style={{
-                    borderColor: "color-mix(in srgb, var(--orange) 40%, transparent)",
-                    color: "var(--orange)",
-                    background: "color-mix(in srgb, var(--orange) 6%, transparent)",
+                    borderColor: "color-mix(in srgb, var(--secondary) 40%, transparent)",
+                    color: "var(--secondary)",
+                    background: "color-mix(in srgb, var(--secondary) 6%, transparent)",
                   }}
                 >
                   {pub.award}
@@ -38,7 +38,7 @@ export async function Recognitions() {
                       href={pub.url ?? `https://doi.org/${pub.doi}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mb-1 block text-sm font-semibold leading-snug text-[var(--text)] transition-colors hover:text-[var(--orange)]"
+                      className="mb-1 block text-sm font-semibold leading-snug text-[var(--text)] transition-colors hover:text-[var(--secondary)]"
                     >
                       {pub.title}
                     </a>

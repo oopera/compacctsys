@@ -1,12 +1,12 @@
 interface SectionHeaderProps {
   label: string;
   title?: string;
-  accent?: "violet" | "orange";
+  accent?: "main" | "secondary";
   light?: boolean;
 }
 
-export function SectionHeader({ label, title, accent = "violet", light = false }: SectionHeaderProps) {
-  const accentColor = accent === "orange" ? "var(--orange)" : "var(--violet)";
+export function SectionHeader({ label, title, accent = "main", light = false }: SectionHeaderProps) {
+  const accentColor = accent === "secondary" ? "var(--secondary)" : "var(--main)";
   const labelColor = light ? "rgba(255,255,255,0.4)" : "var(--muted)";
   const titleColor = light ? "#ffffff" : "var(--text)";
   const borderColor = light ? "rgba(255,255,255,0.12)" : "var(--border)";

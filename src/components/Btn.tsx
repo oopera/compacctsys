@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
 
 const cls =
   "border border-[var(--border)] px-4 py-2 font-mono text-[10px] uppercase tracking-widest text-[var(--text)] transition-colors hover:bg-[var(--text)] hover:text-[var(--bg)]";
@@ -33,7 +36,7 @@ const toggleBase =
 
 export function BtnToggle({
   active,
-  accent = "var(--violet)",
+  accent = "var(--main)",
   onClick,
   children,
 }: {
@@ -42,15 +45,28 @@ export function BtnToggle({
   onClick: () => void;
   children: React.ReactNode;
 }) {
+  const [hovered, setHovered] = useState(false);
+
+  let style: React.CSSProperties;
+  if (active && hovered) {
+    // filled on hover when active
+    style = { color: "var(--bg)", borderColor: accent, background: accent };
+  } else if (active) {
+    style = { color: accent, borderColor: accent, background: `color-mix(in srgb, ${accent} 10%, transparent)` };
+  } else if (hovered) {
+    // border sharpens on hover when inactive
+    style = { color: "var(--text)", borderColor: "var(--text)" };
+  } else {
+    style = { color: "var(--muted)", borderColor: "var(--border)" };
+  }
+
   return (
     <button
       onClick={onClick}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       className={toggleBase}
-      style={
-        active
-          ? { color: accent, borderColor: accent, background: `color-mix(in srgb, ${accent} 10%, transparent)` }
-          : { color: "var(--muted)", borderColor: "var(--border)" }
-      }
+      style={style}
     >
       {children}
     </button>

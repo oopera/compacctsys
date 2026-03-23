@@ -69,7 +69,7 @@ export function NavShell({ groupName }: { groupName: string }) {
               key={l.href}
               href={l.href}
               onClick={() => setOpen(false)}
-              className={`block border-b border-[var(--border)] px-6 py-4 font-mono text-[10px] uppercase tracking-widest transition-colors hover:text-[var(--violet)] ${
+              className={`block border-b border-[var(--border)] px-6 py-4 font-mono text-[10px] uppercase tracking-widest transition-colors hover:text-[var(--main)] ${
                 pathname === l.href ? "text-[var(--text)]" : "text-[var(--muted)]"
               }`}
             >
@@ -79,7 +79,7 @@ export function NavShell({ groupName }: { groupName: string }) {
           <Link
             href="/apply"
             onClick={() => setOpen(false)}
-            className="block border-b border-[var(--border)] px-6 py-4 font-mono text-[10px] uppercase tracking-widest text-[var(--text)] transition-colors hover:text-[var(--violet)]"
+            className="block border-b border-[var(--border)] px-6 py-4 font-mono text-[10px] uppercase tracking-widest text-[var(--text)] transition-colors hover:text-[var(--main)]"
           >
             Apply
           </Link>

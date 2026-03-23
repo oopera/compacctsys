@@ -75,7 +75,7 @@ export function PublicationsClient({ publications }: Props) {
           <BtnToggle active={active === ALL} onClick={() => setActive(ALL)}>All</BtnToggle>
 
           {availableTypes.map((t) => (
-            <BtnToggle key={t} active={active === t} onClick={() => setActive(t)}>
+            <BtnToggle key={t} active={active === t} onClick={() => setActive(active === t ? ALL : t)}>
               {typeLabel[t]}
             </BtnToggle>
           ))}
@@ -84,7 +84,7 @@ export function PublicationsClient({ publications }: Props) {
             <>
               <span className="self-center mx-1 h-4 w-px bg-[var(--border)]" />
               {availableVenues.map((v) => (
-                <BtnToggle key={v} active={active === VENUE_PREFIX + v} onClick={() => setActive(VENUE_PREFIX + v)}>
+                <BtnToggle key={v} active={active === VENUE_PREFIX + v} onClick={() => setActive(active === VENUE_PREFIX + v ? ALL : VENUE_PREFIX + v)}>
                   {venueLabels[v] ?? v}
                 </BtnToggle>
               ))}
@@ -92,7 +92,7 @@ export function PublicationsClient({ publications }: Props) {
           )}
 
           {hasAwards && (
-            <BtnToggle active={active === AWARDED} accent="var(--orange)" onClick={() => setActive(AWARDED)}>
+            <BtnToggle active={active === AWARDED} accent="var(--secondary)" onClick={() => setActive(active === AWARDED ? ALL : AWARDED)}>
               Recognised
             </BtnToggle>
           )}
@@ -122,9 +122,9 @@ export function PublicationsClient({ publications }: Props) {
                     <span
                       className="font-mono text-[10px] uppercase tracking-widest px-2 py-0.5 border"
                       style={{
-                        color: "var(--violet)",
-                        borderColor: "color-mix(in srgb, var(--violet) 30%, transparent)",
-                        background: "color-mix(in srgb, var(--violet) 6%, transparent)",
+                        color: "var(--main)",
+                        borderColor: "color-mix(in srgb, var(--main) 30%, transparent)",
+                        background: "color-mix(in srgb, var(--main) 6%, transparent)",
                       }}
                     >
                       {typeLabel[pub.type] ?? pub.type}
@@ -134,9 +134,9 @@ export function PublicationsClient({ publications }: Props) {
                       <span
                         className="font-mono text-[10px] uppercase tracking-widest px-2 py-0.5 border"
                         style={{
-                          color: "var(--orange)",
-                          borderColor: "color-mix(in srgb, var(--orange) 30%, transparent)",
-                          background: "color-mix(in srgb, var(--orange) 6%, transparent)",
+                          color: "var(--secondary)",
+                          borderColor: "color-mix(in srgb, var(--secondary) 30%, transparent)",
+                          background: "color-mix(in srgb, var(--secondary) 6%, transparent)",
                         }}
                       >
                         {pub.award}

@@ -15,7 +15,7 @@ function highlight(bibtex: string): React.ReactNode[] {
     if (entryMatch) {
       nodes.push(
         <span key={li}>
-          <span style={{ color: "var(--violet)" }}>{entryMatch[1]}</span>
+          <span style={{ color: "var(--main)" }}>{entryMatch[1]}</span>
           {"{"}<span style={{ color: "#f59e0b" }}>{entryMatch[2]}</span>{","}
         </span>
       );

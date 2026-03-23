@@ -77,7 +77,7 @@ export function NewsCarousel({ items }: { items: NewsItem[] }) {
                 year: "numeric",
               })}
             </p>
-            <h3 className="mb-2 text-sm font-semibold leading-snug text-[var(--text)] transition-colors group-hover:text-[var(--violet)]">
+            <h3 className="mb-2 text-sm font-semibold leading-snug text-[var(--text)] transition-colors group-hover:text-[var(--main)]">
               {item.title}
             </h3>
             {item.body && (
@@ -90,7 +90,7 @@ export function NewsCarousel({ items }: { items: NewsItem[] }) {
                 href={item.externalUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-auto pt-4 font-mono text-[10px] uppercase tracking-widest text-[var(--muted)] transition-colors hover:text-[var(--violet)]"
+                className="mt-auto pt-4 font-mono text-[10px] uppercase tracking-widest text-[var(--muted)] transition-colors hover:text-[var(--main)]"
               >
                 Read more ↗
               </a>

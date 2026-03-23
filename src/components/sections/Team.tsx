@@ -4,13 +4,13 @@ import { SectionHeader } from "@/components/SectionHeader";
 import { TeamRole, TeamMember, TeamMemberLinkProvider } from "@/types";
 
 const roleLabel: Record<TeamRole, string> = {
-  pi:                  "Principal Investigator",
-  postdoc:             "PostDoc",
-  phd:                 "PhD Candidate",
+  pi: "Principal Investigator",
+  postdoc: "PostDoc",
+  phd: "PhD Candidate",
   "research-assistant": "Research Assistant",
-  "research-intern":   "Research Intern",
-  associate:           "Associate Researcher",
-  admin:               "Administrative",
+  "research-intern": "Research Intern",
+  associate: "Associate Researcher",
+  admin: "Administrative",
 };
 
 const roleOrder: TeamRole[] = ["pi", "postdoc", "phd", "research-assistant", "research-intern", "associate", "admin"];
@@ -57,10 +57,10 @@ function ScholarIcon() {
 // ─── Links ────────────────────────────────────────────────────────────────────
 
 const providerMeta: Record<TeamMemberLinkProvider, { label: string; icon: React.JSX.Element }> = {
-  website:  { label: "Personal Website", icon: <GlobeIcon /> },
-  linkedin: { label: "LinkedIn",         icon: <LinkedInIcon /> },
-  orcid:    { label: "ORCID",            icon: <OrcidIcon /> },
-  scholar:  { label: "Google Scholar",   icon: <ScholarIcon /> },
+  website: { label: "Personal Website", icon: <GlobeIcon /> },
+  linkedin: { label: "LinkedIn", icon: <LinkedInIcon /> },
+  orcid: { label: "ORCID", icon: <OrcidIcon /> },
+  scholar: { label: "Google Scholar", icon: <ScholarIcon /> },
 };
 
 function MemberLinks({ member }: { member: TeamMember }) {
@@ -77,7 +77,7 @@ function MemberLinks({ member }: { member: TeamMember }) {
             rel="noopener noreferrer"
             aria-label={meta.label}
             title={meta.label}
-            className="text-[var(--muted)] transition-colors hover:text-[var(--violet)]"
+            className="text-[var(--muted)] transition-colors hover:text-[var(--main)]"
           >
             {meta.icon}
           </a>
@@ -113,7 +113,7 @@ export async function Team({ standalone }: TeamProps) {
   return (
     <section id="team" className="bg-[var(--bg)] py-16">
       <div className="mx-auto max-w-6xl px-6 md:px-10">
-        {!standalone && <SectionHeader label="The group" title="Team" accent="orange" />}
+        {!standalone && <SectionHeader label="The group" title="Team" accent="secondary" />}
 
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {members.map((member) => (
@@ -127,22 +127,8 @@ export async function Team({ standalone }: TeamProps) {
                       src={member.photo}
                       alt={member.name}
                       fill
-                      className="object-cover object-center group-hover:grayscale group-hover:contrast-125"
+                      className="object-cover object-center"
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                    />
-                    {/* Duotone colour wash — fades in on hover */}
-                    <div
-                      className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-75"
-                      style={{ background: "var(--violet)", mixBlendMode: "color" }}
-                    />
-                    {/* Halftone dot grid — fades in on hover */}
-                    <div
-                      className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100"
-                      style={{
-                        backgroundImage: "radial-gradient(circle, rgba(0,0,0,0.55) 1px, transparent 1px)",
-                        backgroundSize: "4px 4px",
-                        mixBlendMode: "multiply",
-                      }}
                     />
                   </>
                 ) : (
@@ -174,7 +160,7 @@ export async function Team({ standalone }: TeamProps) {
                   {member.email ? (
                     <a
                       href={`mailto:${member.email}`}
-                      className="truncate font-mono text-[10px] text-[var(--muted)] transition-colors hover:text-[var(--violet)]"
+                      className="truncate font-mono text-[10px] text-[var(--muted)] transition-colors hover:text-[var(--main)]"
                     >
                       {member.email}
                     </a>

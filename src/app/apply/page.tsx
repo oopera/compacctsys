@@ -28,7 +28,7 @@ export default async function ApplyPage() {
         {/* Positions */}
         <section className="bg-[var(--bg)] py-24">
           <div className="mx-auto max-w-6xl px-6 md:px-10">
-            <SectionHeader label="Opportunities" title="Open Positions" accent="violet" />
+            <SectionHeader label="Opportunities" title="Open Positions" accent="main" />
 
             {data?.intro && (
               <p className="mb-12 max-w-2xl text-sm leading-relaxed text-[var(--muted)]">
@@ -66,11 +66,11 @@ export default async function ApplyPage() {
         {expectations.length > 0 && (
           <section className="bg-[var(--bg-alt)] py-24">
             <div className="mx-auto max-w-6xl px-6 md:px-10">
-              <SectionHeader label="Culture" title="What We Look For" accent="orange" />
+              <SectionHeader label="Culture" title="What We Look For" accent="secondary" />
               <div className="grid gap-8 md:grid-cols-2">
                 {expectations.map((e) => (
                   <div key={e.heading} className="flex gap-5">
-                    <div className="mt-1 h-2 w-2 shrink-0" style={{ background: "var(--violet)" }} />
+                    <div className="mt-1 h-2 w-2 shrink-0" style={{ background: "var(--main)" }} />
                     <div>
                       <h4 className="mb-1 font-semibold text-[var(--text)]">{e.heading}</h4>
                       {e.body && (
@@ -88,7 +88,7 @@ export default async function ApplyPage() {
         {(data?.howToApply || checklist.length > 0 || contactEmail) && (
           <section className="bg-[var(--bg)] py-24">
             <div className="mx-auto max-w-6xl px-6 md:px-10">
-              <SectionHeader label="Process" title="How to Apply" accent="violet" />
+              <SectionHeader label="Process" title="How to Apply" accent="main" />
               <div className="max-w-2xl">
                 {data?.howToApply && (
                   <p className="mb-6 text-sm leading-relaxed text-[var(--muted)]">
@@ -101,7 +101,7 @@ export default async function ApplyPage() {
                       <li key={item} className="flex gap-4 text-sm leading-relaxed text-[var(--muted)]">
                         <span
                           className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full"
-                          style={{ background: "var(--violet)" }}
+                          style={{ background: "var(--main)" }}
                         />
                         {item}
                       </li>

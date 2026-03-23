@@ -9,8 +9,6 @@ export function Footer() {
       className="relative overflow-hidden py-14"
       style={{ background: "var(--hero-bg)" }}
     >
-      <SceneCanvas />
-
       <div className="relative z-10 mx-auto max-w-6xl px-6">
         <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
           <div>

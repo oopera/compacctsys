@@ -15,7 +15,7 @@ function CornerDot({ pos }: { pos: "tl" | "tr" | "bl" | "br" }) {
   }[pos];
   return (
     <span
-      className={`absolute ${cls} h-[6px] w-[6px] rounded-full bg-[var(--violet)] opacity-0 transition-opacity duration-200 group-hover:opacity-100`}
+      className={`absolute ${cls} h-[6px] w-[6px] rounded-full bg-[var(--main)] opacity-0 transition-opacity duration-200 group-hover:opacity-100`}
     />
   );
 }

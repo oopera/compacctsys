@@ -29,9 +29,9 @@ export async function Projects({ standalone }: ProjectsProps) {
                     style={
                       project.status === "active"
                         ? {
-                            color: "var(--violet)",
-                            borderColor: "color-mix(in srgb, var(--violet) 30%, transparent)",
-                            background: "color-mix(in srgb, var(--violet) 6%, transparent)",
+                            color: "var(--main)",
+                            borderColor: "color-mix(in srgb, var(--main) 30%, transparent)",
+                            background: "color-mix(in srgb, var(--main) 6%, transparent)",
                           }
                         : {
                             color: "var(--muted)",
@@ -51,7 +51,7 @@ export async function Projects({ standalone }: ProjectsProps) {
                 </div>
 
                 {/* Title */}
-                <h3 className="mb-3 text-lg font-semibold leading-snug text-[var(--text)] transition-colors group-hover:text-[var(--violet)]">
+                <h3 className="mb-3 text-lg font-semibold leading-snug text-[var(--text)] transition-colors group-hover:text-[var(--main)]">
                   {project.title}
                 </h3>
 
@@ -69,8 +69,8 @@ export async function Projects({ standalone }: ProjectsProps) {
                       key={funder}
                       className="border px-2 py-0.5 font-mono text-[10px]"
                       style={{
-                        borderColor: "color-mix(in srgb, var(--orange) 35%, transparent)",
-                        color: "var(--orange)",
+                        borderColor: "color-mix(in srgb, var(--secondary) 35%, transparent)",
+                        color: "var(--secondary)",
                       }}
                     >
                       {funder}
