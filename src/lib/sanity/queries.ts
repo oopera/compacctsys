@@ -6,6 +6,7 @@ import type {
   Publication,
   NewsItem,
   SiteSettings,
+  ApplyPage,
 } from "@/types";
 
 // ─── Team ────────────────────────────────────────────────────────────────────
@@ -26,6 +27,20 @@ const teamQuery = `*[_type == "teamMember" && current == true] | order(order asc
 
 export async function getTeam(): Promise<TeamMember[]> {
   return client.fetch(teamQuery, {}, { next: { tags: ["teamMember"] } });
+}
+
+const pastTeamQuery = `*[_type == "teamMember" && current == false] | order(order asc) {
+  "id": _id,
+  name,
+  title,
+  role,
+  links[]{provider, url},
+  order,
+  current
+}`;
+
+export async function getPastTeam(): Promise<TeamMember[]> {
+  return client.fetch(pastTeamQuery, {}, { next: { tags: ["teamMember"] } });
 }
 
 // ─── Research themes ─────────────────────────────────────────────────────────
@@ -125,6 +140,21 @@ const awardsQuery = `*[_type == "publication" && defined(award)] | order(year de
 
 export async function getAwardedPublications(): Promise<Publication[]> {
   return client.fetch(awardsQuery, {}, { next: { tags: ["publication"] } });
+}
+
+// ─── Apply page ──────────────────────────────────────────────────────────────
+
+const applyPageQuery = `*[_type == "applyPage"][0] {
+  intro,
+  positions[]{ role, type, description },
+  expectations[]{ heading, body },
+  howToApply,
+  applicationChecklist,
+  applicationEmail
+}`;
+
+export async function getApplyPage(): Promise<ApplyPage | null> {
+  return client.fetch(applyPageQuery, {}, { next: { tags: ["applyPage"] } });
 }
 
 // ─── Site settings ───────────────────────────────────────────────────────────

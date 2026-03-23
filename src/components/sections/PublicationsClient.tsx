@@ -197,7 +197,16 @@ export function PublicationsClient({ publications }: Props) {
 
                   {/* Authors */}
                   <p className="mb-5 font-mono text-xs text-[var(--muted)]">
-                    {pub.authors.map((a) => a.name).join(" · ")}
+                    {pub.authors.map((a, i) => (
+                      <span key={i}>
+                        {i > 0 && " · "}
+                        {a.teamMemberId ? (
+                          <span className="text-[var(--text)] font-medium">{a.name}</span>
+                        ) : (
+                          a.name
+                        )}
+                      </span>
+                    ))}
                   </p>
 
                   {/* Links */}

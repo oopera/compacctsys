@@ -4,6 +4,8 @@ export type TeamRole =
   | "pi"
   | "postdoc"
   | "phd"
+  | "research-assistant"
+  | "research-intern"
   | "associate"
   | "admin";
 
@@ -100,6 +102,28 @@ export interface NewsItem {
   externalUrl?: string;
   image?: string;
   publicationId?: string; // link to related publication if relevant
+}
+
+// ─── Apply Page ──────────────────────────────────────────────────────────────
+
+export interface ApplyPosition {
+  role: string;
+  type?: string;
+  description?: string;
+}
+
+export interface ApplyExpectation {
+  heading: string;
+  body?: string;
+}
+
+export interface ApplyPage {
+  intro?: string;
+  positions: ApplyPosition[];
+  expectations: ApplyExpectation[];
+  howToApply?: string;
+  applicationChecklist: string[];
+  applicationEmail?: string;
 }
 
 // ─── Site Settings ───────────────────────────────────────────────────────────

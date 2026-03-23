@@ -41,7 +41,7 @@ export async function News() {
                     {item.title}
                   </h3>
                   {item.body && (
-                    <p className="line-clamp-2 text-sm leading-relaxed text-[var(--muted)]">
+                    <p className="text-sm leading-relaxed text-[var(--muted)]">
                       {item.body}
                     </p>
                   )}
