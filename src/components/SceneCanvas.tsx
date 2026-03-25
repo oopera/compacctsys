@@ -5,10 +5,10 @@ import { useCanvasTheme, type CanvasPalette } from "@/hooks/useCanvasTheme";
 
 // ─── Grid scene ───────────────────────────────────────────────────────────────
 
-const GRID     = 72;
-const DRIFT    = 0.1;
+const GRID = 50;
+const DRIFT = 0.1;
 const TRAIL_MS = 750;
-const GLOW_R   = GRID * 1.5;
+const GLOW_R = GRID;
 
 interface Pt { x: number; y: number; t: number; }
 
@@ -21,7 +21,7 @@ function runGrid(
   const trail: Pt[] = [];
 
   function resize() {
-    w = canvas.width  = canvas.offsetWidth;
+    w = canvas.width = canvas.offsetWidth;
     h = canvas.height = canvas.offsetHeight;
   }
   resize();
@@ -51,9 +51,9 @@ function runGrid(
           let intensity = 0;
           for (const pt of trail) {
             const dist = Math.hypot(pt.x - cx, pt.y - cy);
-            const age  = 1 - (now - pt.t) / TRAIL_MS;
+            const age = 1 - (now - pt.t) / TRAIL_MS;
             const prox = Math.max(0, 1 - dist / GLOW_R);
-            intensity  = Math.max(intensity, age * prox * prox);
+            intensity = Math.max(intensity, age * prox * prox);
           }
           if (intensity > 0.01) {
             ctx.fillStyle = `rgba(${glow},${intensity * 0.42})`;
@@ -65,7 +65,7 @@ function runGrid(
 
     // Grid lines
     ctx.strokeStyle = `rgba(${fg},${lineAlpha})`;
-    ctx.lineWidth   = 1;
+    ctx.lineWidth = 1;
     ctx.beginPath();
     for (let x = -GRID + ox; x < w + GRID; x += GRID) { ctx.moveTo(x, 0); ctx.lineTo(x, h); }
     for (let y = -GRID + oy; y < h + GRID; y += GRID) { ctx.moveTo(0, y); ctx.lineTo(w, y); }
@@ -77,7 +77,7 @@ function runGrid(
         let boost = 0;
         for (const pt of trail) {
           const dist = Math.hypot(pt.x - x, pt.y - y);
-          const age  = 1 - (now - pt.t) / TRAIL_MS;
+          const age = 1 - (now - pt.t) / TRAIL_MS;
           const prox = Math.max(0, 1 - dist / (GRID * 1.5));
           boost = Math.max(boost, age * prox);
         }
@@ -103,16 +103,17 @@ function runGrid(
 
 // ─── Node graph scene ─────────────────────────────────────────────────────────
 
-const NODE_COUNT = 42;
-const MAX_DIST   = 150;
-const MAX_SPEED  = 0.28;
-const MOUSE_R    = 200;
+const NODE_COUNT = 200;
+const MAX_DIST = 300;
+const MAX_SPEED = 0.05;
+const MOUSE_R = 200;
 
 interface Node { x: number; y: number; vx: number; vy: number; r: number; }
 
 function runNodes(
   canvas: HTMLCanvasElement,
   paletteRef: React.RefObject<CanvasPalette>,
+  fullyConnected = false,
 ): () => void {
   const ctx = canvas.getContext("2d")!;
   let w = 0, h = 0, raf: number;
@@ -128,7 +129,7 @@ function runNodes(
     }));
   }
   function resize() {
-    w = canvas.width  = canvas.offsetWidth;
+    w = canvas.width = canvas.offsetWidth;
     h = canvas.height = canvas.offsetHeight;
     seed();
   }
@@ -155,9 +156,9 @@ function runNodes(
       n.vy += (Math.random() - 0.5) * 0.015;
 
       // Soft wall repulsion — pushes back when near edges, no central gravity
-      if (n.x < MARGIN)     n.vx += (MARGIN - n.x)     * 0.002;
+      if (n.x < MARGIN) n.vx += (MARGIN - n.x) * 0.002;
       if (n.x > w - MARGIN) n.vx -= (n.x - (w - MARGIN)) * 0.002;
-      if (n.y < MARGIN)     n.vy += (MARGIN - n.y)     * 0.002;
+      if (n.y < MARGIN) n.vy += (MARGIN - n.y) * 0.002;
       if (n.y > h - MARGIN) n.vy -= (n.y - (h - MARGIN)) * 0.002;
 
       // Speed cap
@@ -167,16 +168,19 @@ function runNodes(
       n.x += n.vx; n.y += n.vy;
     }
 
+    const maxDist = fullyConnected ? Math.hypot(w, h) : MAX_DIST;
     for (let i = 0; i < nodes.length; i++) {
       for (let j = i + 1; j < nodes.length; j++) {
         const a = nodes[i], b = nodes[j];
         const d = Math.hypot(a.x - b.x, a.y - b.y);
-        if (d > MAX_DIST) continue;
-        const proximity = 1 - d / MAX_DIST;
+        if (!fullyConnected && d > MAX_DIST) continue;
+        const proximity = fullyConnected
+          ? Math.max(0.03, 1 - d / maxDist)
+          : 1 - d / MAX_DIST;
         const mGlow = Math.max(0, 1 - Math.hypot((a.x + b.x) / 2 - mx, (a.y + b.y) / 2 - my) / MOUSE_R);
         ctx.strokeStyle = mGlow > 0.01
           ? `rgba(${glow},${(0.15 + mGlow * 0.6) * proximity})`
-          : `rgba(${fg},${0.10 * proximity})`;
+          : `rgba(${fg},${0.08 * proximity})`;
         ctx.lineWidth = 1;
         ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
       }
@@ -211,7 +215,13 @@ function runNodes(
 
 export type CanvasVariant = "grid" | "nodes";
 
-export function SceneCanvas({ variant = "grid" }: { variant?: CanvasVariant }) {
+export function SceneCanvas({
+  variant = "grid",
+  fullyConnected = false,
+}: {
+  variant?: CanvasVariant;
+  fullyConnected?: boolean;
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { paletteRef } = useCanvasTheme();
 
@@ -219,9 +229,9 @@ export function SceneCanvas({ variant = "grid" }: { variant?: CanvasVariant }) {
     const canvas = canvasRef.current;
     if (!canvas) return;
     return variant === "nodes"
-      ? runNodes(canvas, paletteRef)
+      ? runNodes(canvas, paletteRef, fullyConnected)
       : runGrid(canvas, paletteRef);
-  }, [variant, paletteRef]);
+  }, [variant, fullyConnected, paletteRef]);
 
   return <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />;
 }
