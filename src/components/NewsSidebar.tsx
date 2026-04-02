@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 
 export function NewsSidebar({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const [open, setOpen] = useState(pathname === "/");
+  const [open, setOpen] = useState(true);
 
   return (
     // The whole aside (panel + tab) shifts together.
@@ -13,8 +13,8 @@ export function NewsSidebar({ children }: { children: React.ReactNode }) {
     // Open:   translateX(0)      → full panel + tab visible.
     <aside
       className={`
-        fixed top-[42px] left-0 z-40
-        hidden 2xl:flex
+        fixed top-[0px] left-0 z-40
+        hidden min-[1600px]:flex
         h-[calc(100vh-42px)]
         transition-transform duration-300 ease-in-out
         ${open ? "translate-x-0" : "-translate-x-64"}

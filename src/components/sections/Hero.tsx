@@ -14,7 +14,7 @@ export async function Hero() {
 
         {/* Contained canvas graphic — stretches to match text column height */}
         <div
-          className="relative w-full overflow-hidden border border-[var(--border)] min-h-64"
+          className="relative w-full overflow-hidden  min-h-64"
           style={{ background: "var(--hero-bg)" }}
         >
           <SceneCanvas variant="nodes" fullyConnected />

@@ -17,13 +17,13 @@ main {
   --hero-mid: #000000;
   --hero-to: #000000;
   /* Hero section palette */
-  --hero-bg: #3d3d3d;
+  --hero-bg: #f5f5f5;
   --hero-fg: rgba(255, 255, 255, 1);
   --hero-muted: rgba(255, 255, 255, 0.75);
   --hero-dimmer: rgba(255, 255, 255, 0.75);
   --hero-line: rgba(255, 255, 255, 0.10);
   /* Canvas animation palette */
-  --canvas-fg: #ffffff;
+  --canvas-fg: #000000;
   --canvas-glow: #8b5cf6;
   --canvas-line-alpha: 0.07;
 }
@@ -38,7 +38,7 @@ main {
   --main: #a78bfa;
   --secondary: #fb923c;
   /* Hero section palette — inverted */
-  --hero-bg: #2e2e2e;
+  --hero-bg: #1a1a1a;
   --hero-fg: rgb(255, 255, 255);
   --hero-muted: rgba(255, 255, 255, 0.75);
   --hero-dimmer: rgba(255, 255, 255, 0.75);
