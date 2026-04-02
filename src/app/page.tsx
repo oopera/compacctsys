@@ -14,7 +14,7 @@ export default function Home() {
         <Hero />
         <ResearchThemes />
         {/* News in normal flow on mobile only — desktop uses the global slide-in panel */}
-        <div className="2xl:hidden">
+        <div className="min-[1600px]:hidden">
           <News />
         </div>
       </main>

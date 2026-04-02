@@ -7,6 +7,8 @@ export function NewsSidebar({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(true);
 
+  if (pathname.startsWith("/studio")) return null;
+
   return (
     // The whole aside (panel + tab) shifts together.
     // Closed: translateX(-256px) → only the 20px tab peeks from the left edge.
