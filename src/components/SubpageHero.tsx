@@ -12,18 +12,18 @@ export function SubpageHero({ label, title, scene = "grid" }: SubpageHeroProps) 
       id="about"
       className="bg-[var(--bg)]"
     >
-      <div className="mx-auto max-w-6xl px-6 md:px-10 pt-14 grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-10 items-start">
+      <div className="mx-auto max-w-6xl px-6 md:px-10 pt-14 grid grid-cols-1 sm:grid-cols-[1fr_1fr] gap-10 items-start">
 
         {/* Contained canvas graphic */}
         <div
-          className="relative w-full overflow-hidden border border-[var(--border)]"
-          style={{ aspectRatio: "4/3", background: "var(--hero-bg)" }}
+          className="relative w-full overflow-hidden aspect-video"
+          style={{ background: "var(--hero-bg)" }}
         >
           <SceneCanvas variant={scene} />
         </div>
 
         {/* Text content */}
-        <div className="flex flex-col justify-end gap-4 lg:py-2 lg:h-full">
+        <div className="flex flex-col justify-end gap-4 lg:py-2 sm:h-full">
           <p className="font-mono text-[10px] uppercase tracking-widest text-[var(--muted)]">
             {label}
           </p>
