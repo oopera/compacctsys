@@ -1,5 +1,12 @@
+import Link from "next/link";
 import { SceneCanvas } from "@/components/SceneCanvas";
 import { getSiteSettings } from "@/lib/sanity/queries";
+
+const subpageLinks = [
+  { label: "Team", href: "/team" },
+  { label: "Projects", href: "/projects" },
+  { label: "Publications", href: "/publications" },
+];
 
 export async function Hero() {
   const settings = await getSiteSettings();
@@ -17,7 +24,7 @@ export async function Hero() {
           className="relative w-full overflow-hidden  min-h-64"
           style={{ background: "var(--hero-bg)" }}
         >
-          <SceneCanvas variant="nodes" fullyConnected />
+          <SceneCanvas variant="orbit" />
         </div>
 
         {/* Text content */}
@@ -63,7 +70,19 @@ export async function Hero() {
             )}
           </div>
         </div>
+      </div>
 
+      {/* Subpage navigation strip */}
+      <div className="mx-auto max-w-6xl px-6 md:px-10 flex flex-wrap gap-3">
+        {subpageLinks.map(({ label, href }) => (
+          <Link
+            key={href}
+            href={href}
+            className="border border-[var(--border)] px-5 py-2 font-mono text-[10px] uppercase tracking-widest text-[var(--muted)] transition-colors hover:border-[var(--text)] hover:text-[var(--text)]"
+          >
+            {label} →
+          </Link>
+        ))}
       </div>
     </section>
   );

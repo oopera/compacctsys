@@ -14,7 +14,7 @@ export default function TeamPage() {
     <>
       <Nav />
       <main>
-        <SubpageHero label="People" title="Team" scene="grid" />
+        <SubpageHero label="People" title="Team" scene="nodes" />
         <Team standalone />
       </main>
       <Footer />

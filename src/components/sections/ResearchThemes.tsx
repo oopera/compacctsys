@@ -8,11 +8,11 @@ interface ResearchThemesProps {
 export async function ResearchThemes({ standalone }: ResearchThemesProps) {
   const researchThemes = await getResearchThemes();
   return (
-    <section id="research" className="bg-[var(--bg)] py-12">
+    <section id="research" className="bg-[var(--bg)] pt-14">
       <div className="mx-auto max-w-6xl px-6 md:px-10">
         {/* <SectionHeader label="Focus areas" /> */}
 
-        <ul className="divide-y divide-[var(--border)] border-y border-[var(--border)]">
+        <ul className="divide-y divide-[var(--border)]">
           {researchThemes.map((theme, i) => (
             <li
               key={theme.id}
@@ -22,7 +22,7 @@ export async function ResearchThemes({ standalone }: ResearchThemesProps) {
                 {String(i + 1).padStart(2, "0")}
               </span>
               <div className="flex flex-col gap-1 sm:flex-row sm:gap-12">
-                <h3 className="w-72 shrink-0 text-sm font-semibold leading-snug text-[var(--text)]">
+                <h3 className="w-72 shrink-0 text-sm leading-snug text-[var(--text)]">
                   {theme.title}
                 </h3>
                 <p className="text-xs leading-relaxed text-[var(--muted)]">

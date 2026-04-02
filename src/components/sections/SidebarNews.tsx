@@ -6,7 +6,7 @@ export async function SidebarNews() {
     const news = await getNews();
 
     return (
-        <div className="px-6 py-8">
+        <div className="px-6 py-6">
             <p className="mb-6 font-mono text-[10px] uppercase tracking-widest text-[var(--muted)]">
                 News
             </p>

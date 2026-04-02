@@ -9,7 +9,7 @@ export async function Projects({ standalone }: ProjectsProps) {
   const projects = await getProjects();
 
   return (
-    <section id="projects" className="bg-[var(--bg)] py-24">
+    <section id="projects" className="bg-[var(--bg)] pt-14">
       <div className="mx-auto max-w-6xl px-6 md:px-10">
         {!standalone && <SectionHeader label="Funded work" title="Projects" />}
 
@@ -20,7 +20,7 @@ export async function Projects({ standalone }: ProjectsProps) {
         ) : (
           <ul className="divide-y divide-[var(--border)]">
             {projects.map((project) => (
-              <li key={project.id} className="group py-10 first:pt-0">
+              <li key={project.id} className="group py-7 first:pt-0">
 
                 {/* Status + shortTitle */}
                 <div className="mb-3 flex flex-wrap items-center gap-3">
@@ -29,15 +29,15 @@ export async function Projects({ standalone }: ProjectsProps) {
                     style={
                       project.status === "active"
                         ? {
-                            color: "var(--main)",
-                            borderColor: "color-mix(in srgb, var(--main) 30%, transparent)",
-                            background: "color-mix(in srgb, var(--main) 6%, transparent)",
-                          }
+                          color: "var(--main)",
+                          borderColor: "color-mix(in srgb, var(--main) 30%, transparent)",
+                          background: "color-mix(in srgb, var(--main) 6%, transparent)",
+                        }
                         : {
-                            color: "var(--muted)",
-                            borderColor: "color-mix(in srgb, var(--muted) 30%, transparent)",
-                            background: "transparent",
-                          }
+                          color: "var(--muted)",
+                          borderColor: "color-mix(in srgb, var(--muted) 30%, transparent)",
+                          background: "transparent",
+                        }
                     }
                   >
                     {project.status}

@@ -19,15 +19,16 @@ export function NewsSidebar({ children }: { children: React.ReactNode }) {
         hidden min-[1600px]:flex
         h-[calc(100vh-42px)]
         transition-transform duration-300 ease-in-out
-        ${open ? "translate-x-0" : "-translate-x-64"}
       `}
+      style={{
+        // Panel width grows with the viewport
+        ["--panel-w" as string]: "clamp(14rem, calc(50vw - 36rem), 22rem)",
+      }}
     >
       {/* Panel */}
       <div
-        className="w-64 h-full overflow-y-auto 
-        shrink-0"
-        // border-r border-[var(--border)] 
-        style={{ background: "var(--bg)" }}
+        className="h-full overflow-y-auto shrink-0"
+        style={{ width: "var(--panel-w)", background: "var(--bg)" }}
       >
         {children}
       </div>

@@ -20,7 +20,7 @@ export function SectionHeader({ label, title, accent = "main", light = false }: 
           paddingTop: "1rem"
         }}>
         <p
-          className="font-mono text-xs font-semibold uppercase tracking-widest text-[var(--muted)]"
+          className="font-mono text-[10px] uppercase tracking-widest text-[var(--muted)]"
           style={{ color: labelColor }}
         >
           {label}

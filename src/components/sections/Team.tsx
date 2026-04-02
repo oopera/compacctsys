@@ -111,7 +111,7 @@ export async function Team({ standalone }: TeamProps) {
   );
 
   return (
-    <section id="team" className="bg-[var(--bg)] py-24">
+    <section id="team" className="bg-[var(--bg)] pt-14">
       <div className="mx-auto max-w-6xl px-6 md:px-10">
         {!standalone && <SectionHeader label="The group" title="Team" accent="secondary" />}
 
@@ -176,9 +176,9 @@ export async function Team({ standalone }: TeamProps) {
 
       {/* Past members — standalone page only */}
       {standalone && pastSorted.length > 0 && (
-        <div className="mx-auto max-w-6xl px-6 md:px-10 mt-20">
-          <div className="mb-8 flex items-center gap-4">
-            <span className="font-mono text-xs font-semibold uppercase tracking-widest text-[var(--muted)]">
+        <div className="mx-auto max-w-6xl px-6 md:px-10 mt-14">
+          <div className="mb-4 flex items-center gap-14">
+            <span className="font-mono text-[10px] font-semibold uppercase tracking-widest text-[var(--muted)]">
               Past Members
             </span>
             <div className="h-px flex-1 bg-[var(--border)]" />
@@ -186,7 +186,7 @@ export async function Team({ standalone }: TeamProps) {
 
           <ul className="divide-y divide-[var(--border)]">
             {pastSorted.map((member) => (
-              <li key={member.id} className="flex items-center justify-between gap-4 py-4">
+              <li key={member.id} className="flex items-center justify-between gap-4 py-7">
                 <div className="flex items-baseline gap-3">
                   <span className="text-sm font-medium text-[var(--text)]">
                     {member.title ? `${member.title} ` : ""}{member.name}
