@@ -1,29 +1,40 @@
-import { SceneCanvas } from "@/components/SceneCanvas";
+import { SceneCanvas, type CanvasVariant } from "@/components/SceneCanvas";
 
 interface SubpageHeroProps {
   label: string;
   title: string;
+  scene?: CanvasVariant;
 }
 
-export function SubpageHero({ label, title }: SubpageHeroProps) {
+export function SubpageHero({ label, title, scene = "grid" }: SubpageHeroProps) {
   return (
     <section
-      className="relative flex min-h-[30vh] flex-col overflow-hidden"
-      style={{ background: "var(--hero-bg)" }}
+      id="about"
+      className="bg-[var(--bg)]"
     >
-      {/* <SceneCanvas /> */}
-      <div className="relative z-10 flex flex-1 flex-col justify-end">
-        <div className="mx-auto w-full max-w-6xl px-6 pb-10 pt-20 md:px-10">
-          <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.2em]" style={{ color: "var(--hero-muted)" }}>
+      <div className="mx-auto max-w-6xl px-6 md:px-10 pt-14 grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-10 items-start">
+
+        {/* Contained canvas graphic */}
+        <div
+          className="relative w-full overflow-hidden border border-[var(--border)]"
+          style={{ aspectRatio: "4/3", background: "var(--hero-bg)" }}
+        >
+          <SceneCanvas variant={scene} />
+        </div>
+
+        {/* Text content */}
+        <div className="flex flex-col justify-end gap-4 lg:py-2 lg:h-full">
+          <p className="font-mono text-[10px] uppercase tracking-widest text-[var(--muted)]">
             {label}
           </p>
           <h1
-            className="font-semibold leading-tight tracking-tight"
-            style={{ fontSize: "clamp(2rem, 5vw, 4.5rem)", color: "var(--hero-fg)" }}
+            className="font-semibold leading-tight tracking-tight text-[var(--text)]"
+            style={{ fontSize: "clamp(1.6rem, 3vw, 3rem)" }}
           >
             {title}
           </h1>
         </div>
+
       </div>
     </section>
   );

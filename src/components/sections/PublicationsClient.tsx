@@ -67,11 +67,18 @@ export function PublicationsClient({ publications }: Props) {
     return Array.from(map.entries()).sort(([a], [b]) => b - a);
   }, [filtered]);
 
+  const hasFilters = availableTypes.length > 1 || hasAwards || availableVenues.length > 0;
+
   return (
-    <>
-      {/* Filter bar */}
-      {(availableTypes.length > 1 || hasAwards || availableVenues.length > 0) && (
-        <div className="mb-10 flex flex-wrap gap-2">
+    <div className={hasFilters ? "grid grid-cols-1 lg:grid-cols-[200px_1fr] lg:items-start gap-10" : ""}>
+
+      {/* Sticky filter sidebar — stacks above on small screens */}
+      {hasFilters && (
+        <aside className="sticky top-20 flex flex-col gap-1">
+          <p className="font-mono text-[10px] uppercase tracking-widest text-[var(--muted)] mb-3">
+            Filter
+          </p>
+
           <BtnToggle active={active === ALL} onClick={() => setActive(ALL)}>All</BtnToggle>
 
           {availableTypes.map((t) => (
@@ -82,7 +89,7 @@ export function PublicationsClient({ publications }: Props) {
 
           {availableVenues.length > 0 && (
             <>
-              <span className="self-center mx-1 h-4 w-px bg-[var(--border)]" />
+              <div className="my-2 h-px bg-[var(--border)]" />
               {availableVenues.map((v) => (
                 <BtnToggle key={v} active={active === VENUE_PREFIX + v} onClick={() => setActive(active === VENUE_PREFIX + v ? ALL : VENUE_PREFIX + v)}>
                   {venueLabels[v] ?? v}
@@ -92,14 +99,18 @@ export function PublicationsClient({ publications }: Props) {
           )}
 
           {hasAwards && (
-            <BtnToggle active={active === AWARDED} accent="var(--secondary)" onClick={() => setActive(active === AWARDED ? ALL : AWARDED)}>
-              Recognised
-            </BtnToggle>
+            <>
+              <div className="my-2 h-px bg-[var(--border)]" />
+              <BtnToggle active={active === AWARDED} accent="var(--secondary)" onClick={() => setActive(active === AWARDED ? ALL : AWARDED)}>
+                Recognised
+              </BtnToggle>
+            </>
           )}
-        </div>
+        </aside>
       )}
 
       {/* Publications grouped by year */}
+      <div>
       {byYear.length === 0 ? (
         <p className="font-mono text-xs text-[var(--muted)]">No publications match this filter.</p>
       ) : (
@@ -185,6 +196,8 @@ export function PublicationsClient({ publications }: Props) {
           </div>
         ))
       )}
-    </>
+      </div>
+
+    </div>
   );
 }

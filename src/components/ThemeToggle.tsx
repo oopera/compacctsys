@@ -26,48 +26,48 @@ const THEMES: { value: Theme; label: string; icon: React.ReactNode }[] = [
       </svg>
     ),
   },
-  {
-    value: "code",
-    label: "Code",
-    icon: (
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" />
-      </svg>
-    ),
-  },
-  {
-    value: "retro",
-    label: "Retro",
-    icon: (
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="9" />
-        <polyline points="12 7 12 12 15 15" />
-      </svg>
-    ),
-  },
-  {
-    value: "cyberpunk",
-    label: "Cyber",
-    icon: (
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-      </svg>
-    ),
-  },
-  {
-    value: "synthwave",
-    label: "Synth",
-    icon: (
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M2 12 Q5 4 8 12 Q11 20 14 12 Q17 4 20 12 Q21.5 16 22 12" />
-      </svg>
-    ),
-  },
+  // {
+  //   value: "code",
+  //   label: "Code",
+  //   icon: (
+  //     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  //       <polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" />
+  //     </svg>
+  //   ),
+  // },
+  // {
+  //   value: "retro",
+  //   label: "Retro",
+  //   icon: (
+  //     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  //       <circle cx="12" cy="12" r="9" />
+  //       <polyline points="12 7 12 12 15 15" />
+  //     </svg>
+  //   ),
+  // },
+  // {
+  //   value: "cyberpunk",
+  //   label: "Cyber",
+  //   icon: (
+  //     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  //       <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+  //     </svg>
+  //   ),
+  // },
+  // {
+  //   value: "synthwave",
+  //   label: "Synth",
+  //   icon: (
+  //     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  //       <path d="M2 12 Q5 4 8 12 Q11 20 14 12 Q17 4 20 12 Q21.5 16 22 12" />
+  //     </svg>
+  //   ),
+  // },
 ];
 
 export function ThemeToggle() {
-  const [theme, setTheme]   = useState<Theme>("light");
-  const [open, setOpen]     = useState(false);
+  const [theme, setTheme] = useState<Theme>("light");
+  const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
