@@ -132,7 +132,7 @@ export function NavShell({ groupName, showApply = true }: { groupName: string; s
           className="absolute left-0 right-0 top-full z-20 border-t border-b border-[var(--border)] bg-[var(--bg)] md:hidden"
           style={{
             opacity: visible ? 1 : 0,
-            transform: visible ? "translateY(0)" : "translateY(-6px)",
+
             transition: "opacity 260ms ease, transform 260ms ease",
           }}
         >
