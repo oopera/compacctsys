@@ -1,0 +1,49 @@
+"use client";
+
+import { useState } from "react";
+import { usePathname } from "next/navigation";
+
+export function NewsSidebar({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const [open, setOpen] = useState(pathname === "/");
+
+  return (
+    // The whole aside (panel + tab) shifts together.
+    // Closed: translateX(-256px) → only the 20px tab peeks from the left edge.
+    // Open:   translateX(0)      → full panel + tab visible.
+    <aside
+      className={`
+        fixed top-[42px] left-0 z-40
+        hidden 2xl:flex
+        h-[calc(100vh-42px)]
+        transition-transform duration-300 ease-in-out
+        ${open ? "translate-x-0" : "-translate-x-64"}
+      `}
+    >
+      {/* Panel */}
+      <div
+        className="w-64 h-full overflow-y-auto 
+        shrink-0"
+        // border-r border-[var(--border)] 
+        style={{ background: "var(--bg)" }}
+      >
+        {children}
+      </div>
+
+      {/* Pull tab — always peeks out at the left edge when closed */}
+      {/* <button
+        onClick={() => setOpen((v) => !v)}
+        aria-label={open ? "Close news panel" : "Open news panel"}
+        className="flex items-center justify-center w-5 shrink-0 self-center h-16 border border-l-0 border-[var(--border)] transition-colors hover:border-[var(--main)]"
+        style={{ background: "var(--bg)" }}
+      >
+        <span
+          className="font-mono text-[10px] uppercase tracking-widest text-[var(--muted)] select-none"
+          style={{ writingMode: "vertical-rl", transform: open ? "rotate(180deg)" : "none" }}
+        >
+          News
+        </span>
+      </button> */}
+    </aside>
+  );
+}

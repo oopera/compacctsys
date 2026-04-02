@@ -14,7 +14,7 @@ export default function PublicationsPage() {
     <>
       <Nav />
       <main>
-        <SubpageHero label="Output" title="Publications" />
+        <SubpageHero label="Output" title="Publications" scene="orbits" />
         <Publications standalone />
       </main>
       <Footer />

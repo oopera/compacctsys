@@ -10,7 +10,7 @@ export async function ResearchThemes({ standalone }: ResearchThemesProps) {
   return (
     <section id="research" className="bg-[var(--bg)] py-12">
       <div className="mx-auto max-w-6xl px-6 md:px-10">
-        <SectionHeader label="Focus areas" />
+        {/* <SectionHeader label="Focus areas" /> */}
 
         <ul className="divide-y divide-[var(--border)] border-y border-[var(--border)]">
           {researchThemes.map((theme, i) => (

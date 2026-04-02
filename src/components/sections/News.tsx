@@ -7,7 +7,7 @@ export async function News() {
   const news = await getNews();
 
   return (
-    <section id="news" className="bg-[var(--bg)] py-16">
+    <section id="news" className="bg-[var(--bg)] py-8">
       <div className="mx-auto max-w-6xl px-6 md:px-10">
         <SectionHeader label="News" />
 

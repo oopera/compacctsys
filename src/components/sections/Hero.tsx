@@ -3,60 +3,67 @@ import { getSiteSettings } from "@/lib/sanity/queries";
 
 export async function Hero() {
   const settings = await getSiteSettings();
+  const description = settings?.description ?? settings?.tagline;
 
   return (
     <section
       id="about"
-      className="relative flex min-h-[65vh] flex-col overflow-hidden"
-      style={{ background: "var(--hero-bg)" }}
+      className="bg-[var(--bg)]"
     >
-      <div className="abgsolute overflow-hidden h-full max-w-6xl" style={{ background: "var(--hero-bg)" }}>
-        <SceneCanvas variant="nodes" />
-      </div>
+      <div className="mx-auto max-w-6xl px-6 md:px-10 py-14 grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-10 items-stretch">
 
-      {/* Top strip */}
-      <div className="relative z-10" style={{ borderBottom: "1px solid var(--hero-line)" }}>
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 md:px-10">
-          <span className="font-mono text-[10px] uppercase tracking-[0.2em]" style={{ color: "var(--hero-muted)" }}>
-            Research Group
-          </span>
-          <span className="font-mono text-[10px] uppercase tracking-[0.2em]" style={{ color: "var(--hero-muted)" }}>
-            Compliant · Accountable · Trustworthy
-          </span>
+        {/* Contained canvas graphic — stretches to match text column height */}
+        <div
+          className="relative w-full overflow-hidden border border-[var(--border)] min-h-64"
+          style={{ background: "var(--hero-bg)" }}
+        >
+          <SceneCanvas variant="nodes" fullyConnected />
         </div>
-      </div>
 
-      {/* Main — title fills the space */}
-      <div className="relative z-10 flex flex-1 flex-col justify-end">
-        <div className="mx-auto w-full max-w-6xl px-6 pb-10 pt-16 md:px-10">
-          <h1
-            className="font-semibold leading-tight tracking-tight"
-            style={{ fontSize: "clamp(2rem, 5vw, 4.5rem)", color: "var(--hero-fg)" }}
-          >
-            {settings?.groupName ?? "Compliant and Accountable Systems"}
-          </h1>
-        </div>
-      </div>
-
-      {/* Bottom strip */}
-      <div className="relative z-10" style={{ borderTop: "1px solid var(--hero-line)" }}>
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-4 md:px-10">
-          <div className="flex flex-wrap gap-6">
-            {settings?.affiliations?.map((a) => (
-              <span key={a} className="font-mono text-[10px] uppercase tracking-wider" style={{ color: "var(--hero-muted)" }}>
-                {a}
-              </span>
-            ))}
-          </div>
-          {settings?.contactEmail && (
-            <a
-              href={`mailto:${settings.contactEmail}`}
-              className="hero-email font-mono text-[10px]"
+        {/* Text content */}
+        <div className="flex flex-col justify-between gap-10 lg:py-2">
+          <div className="flex flex-col gap-6">
+            <p className="font-mono text-[10px] uppercase tracking-widest text-[var(--muted)]">
+              Research Group · Compliant · Accountable · Trustworthy
+            </p>
+            <h1
+              className="font-semibold leading-tight tracking-tight text-[var(--text)]"
+              style={{ fontSize: "clamp(1.6rem, 3vw, 3rem)" }}
             >
-              {settings.contactEmail}
-            </a>
-          )}
+              {settings?.groupName ?? "Compliant and Accountable Systems"}
+            </h1>
+            {description && (
+              <p className="text-sm leading-relaxed text-[var(--muted)] max-w-md">
+                {description}
+              </p>
+            )}
+          </div>
+
+          {/* Affiliations + email */}
+          <div className="flex flex-col gap-3 border-t border-[var(--border)] pt-6">
+            {settings?.affiliations && settings.affiliations.length > 0 && (
+              <div className="flex flex-wrap gap-4">
+                {settings.affiliations.map((a) => (
+                  <span
+                    key={a}
+                    className="font-mono text-[10px] uppercase tracking-wider text-[var(--muted)]"
+                  >
+                    {a}
+                  </span>
+                ))}
+              </div>
+            )}
+            {settings?.contactEmail && (
+              <a
+                href={`mailto:${settings.contactEmail}`}
+                className="font-mono text-[10px] text-[var(--main)] hover:underline underline-offset-2 w-fit"
+              >
+                {settings.contactEmail}
+              </a>
+            )}
+          </div>
         </div>
+
       </div>
     </section>
   );
