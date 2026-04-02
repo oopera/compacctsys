@@ -12,7 +12,7 @@ export function SubpageHero({ label, title, scene = "grid" }: SubpageHeroProps) 
       id="about"
       className="bg-[var(--bg)]"
     >
-      <div className="mx-auto max-w-6xl px-6 md:px-10 pt-14 grid grid-cols-1 sm:grid-cols-[1fr_1fr] gap-10 items-start">
+      <div className="mx-auto max-w-6xl px-4 md:px-10 pt-8 md:pt-14 grid grid-cols-1 sm:grid-cols-[1fr_1fr] gap-6 md:gap-10 items-start">
 
         {/* Contained canvas graphic */}
         <div

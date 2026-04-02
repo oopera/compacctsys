@@ -19,7 +19,7 @@ export default function NotFound() {
         >
           <SceneCanvas variant="nodes" />
           <div className="relative z-10 flex flex-1 flex-col items-start justify-center">
-            <div className="mx-auto w-full max-w-6xl px-6 md:px-10">
+            <div className="mx-auto w-full max-w-6xl px-4 md:px-10">
               <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.2em]" style={{ color: "var(--hero-muted)" }}>
                 Error
               </p>

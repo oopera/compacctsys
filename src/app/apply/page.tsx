@@ -30,7 +30,7 @@ export default async function ApplyPage() {
 
         {/* Positions */}
         <section className="bg-[var(--bg)] py-24">
-          <div className="mx-auto max-w-6xl px-6 md:px-10">
+          <div className="mx-auto max-w-6xl px-4 md:px-10">
             <SectionHeader label="Opportunities" title="Open Positions" accent="main" />
 
             {data?.intro && (
@@ -68,7 +68,7 @@ export default async function ApplyPage() {
         {/* What we look for */}
         {expectations.length > 0 && (
           <section className="bg-[var(--bg-alt)] py-24">
-            <div className="mx-auto max-w-6xl px-6 md:px-10">
+            <div className="mx-auto max-w-6xl px-4 md:px-10">
               <SectionHeader label="Culture" title="What We Look For" accent="secondary" />
               <div className="grid gap-8 md:grid-cols-2">
                 {expectations.map((e) => (
@@ -90,7 +90,7 @@ export default async function ApplyPage() {
         {/* How to apply */}
         {(data?.howToApply || checklist.length > 0 || contactEmail) && (
           <section className="bg-[var(--bg)] py-24">
-            <div className="mx-auto max-w-6xl px-6 md:px-10">
+            <div className="mx-auto max-w-6xl px-4 md:px-10">
               <SectionHeader label="Process" title="How to Apply" accent="main" />
               <div className="max-w-2xl">
                 {data?.howToApply && (

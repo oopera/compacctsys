@@ -6,10 +6,10 @@ import { SceneCanvas } from "@/components/SceneCanvas";
 export function Footer() {
   return (
     <footer
-      className="relative overflow-hidden py-14"
+      className="relative overflow-hidden py-8 md:py-14"
       style={{ background: "var(--bg)" }}
     >
-      <div className="relative z-10 mx-auto max-w-6xl px-6 md:px-10">
+      <div className="relative z-10 mx-auto max-w-6xl px-4 md:px-10">
         <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
           <div>
             <p className="mb-2 font-mono text-sm font-semibold tracking-widest" style={{ color: "var(--text)" }}>

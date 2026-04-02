@@ -32,7 +32,7 @@ export function BtnLink({
 }
 
 const toggleBase =
-  "border px-4 py-2 font-mono text-[10px] uppercase tracking-widest transition-colors duration-150 cursor-pointer";
+  "shrink-0 whitespace-nowrap border px-4 py-2 font-mono text-[10px] uppercase tracking-widest transition-colors duration-150 cursor-pointer";
 
 export function BtnToggle({
   active,

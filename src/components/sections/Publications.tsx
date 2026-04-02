@@ -10,8 +10,8 @@ export async function Publications({ standalone }: PublicationsProps) {
   const publications = await getPublications();
 
   return (
-    <section id="publications" className="bg-[var(--bg)] pt-14">
-      <div className="mx-auto max-w-6xl px-6 md:px-10">
+    <section id="publications" className="bg-[var(--bg)] pt-8 md:pt-14">
+      <div className="mx-auto max-w-6xl px-4 md:px-10">
         {/* <SectionHeader label="Output" accent="secondary" /> */}
 
         {publications.length === 0 ? (

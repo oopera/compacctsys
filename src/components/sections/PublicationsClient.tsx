@@ -69,43 +69,44 @@ export function PublicationsClient({ publications }: Props) {
 
   const hasFilters = availableTypes.length > 1 || hasAwards || availableVenues.length > 0;
 
-  return (
-    <div className={hasFilters ? "grid grid-cols-1 lg:grid-cols-[200px_1fr] lg:items-start gap-10" : ""}>
+  const filterButtons = (
+    <>
+      <BtnToggle active={active === ALL} onClick={() => setActive(ALL)}>All</BtnToggle>
+      {availableTypes.map((t) => (
+        <BtnToggle key={t} active={active === t} onClick={() => setActive(active === t ? ALL : t)}>
+          {typeLabel[t]}
+        </BtnToggle>
+      ))}
+      {availableVenues.map((v) => (
+        <BtnToggle key={v} active={active === VENUE_PREFIX + v} onClick={() => setActive(active === VENUE_PREFIX + v ? ALL : VENUE_PREFIX + v)}>
+          {venueLabels[v] ?? v}
+        </BtnToggle>
+      ))}
+      {hasAwards && (
+        <BtnToggle active={active === AWARDED} accent="var(--secondary)" onClick={() => setActive(active === AWARDED ? ALL : AWARDED)}>
+          Recognised
+        </BtnToggle>
+      )}
+    </>
+  );
 
-      {/* Sticky filter sidebar — stacks above on small screens */}
+  return (
+    <div className={hasFilters ? "lg:grid lg:grid-cols-[200px_1fr] lg:items-start lg:gap-10" : ""}>
+
+      {/* Mobile: horizontal scrollable strip */}
       {hasFilters && (
-        <aside className="sticky top-20 flex flex-col gap-1">
+        <div className="mb-8 flex gap-2 overflow-x-auto pb-2 lg:hidden [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: "none" }}>
+          {filterButtons}
+        </div>
+      )}
+
+      {/* Desktop: sticky vertical sidebar */}
+      {hasFilters && (
+        <aside className="hidden lg:flex self-start sticky top-20 flex-col gap-1">
           <p className="font-mono text-[10px] uppercase tracking-widest text-[var(--muted)] mb-3">
             Filter
           </p>
-
-          <BtnToggle active={active === ALL} onClick={() => setActive(ALL)}>All</BtnToggle>
-
-          {availableTypes.map((t) => (
-            <BtnToggle key={t} active={active === t} onClick={() => setActive(active === t ? ALL : t)}>
-              {typeLabel[t]}
-            </BtnToggle>
-          ))}
-
-          {availableVenues.length > 0 && (
-            <>
-              <div className="my-2 h-px bg-[var(--border)]" />
-              {availableVenues.map((v) => (
-                <BtnToggle key={v} active={active === VENUE_PREFIX + v} onClick={() => setActive(active === VENUE_PREFIX + v ? ALL : VENUE_PREFIX + v)}>
-                  {venueLabels[v] ?? v}
-                </BtnToggle>
-              ))}
-            </>
-          )}
-
-          {hasAwards && (
-            <>
-              <div className="my-2 h-px bg-[var(--border)]" />
-              <BtnToggle active={active === AWARDED} accent="var(--secondary)" onClick={() => setActive(active === AWARDED ? ALL : AWARDED)}>
-                Recognised
-              </BtnToggle>
-            </>
-          )}
+          {filterButtons}
         </aside>
       )}
 
@@ -115,7 +116,7 @@ export function PublicationsClient({ publications }: Props) {
           <p className="font-mono text-xs text-[var(--muted)]">No publications match this filter.</p>
         ) : (
           byYear.map(([year, pubs]) => (
-            <div key={year} className="mb-12 last:mb-0">
+            <div key={year} className="mb-8 md:mb-12 last:mb-0">
               {/* Year heading */}
               <div className="mb-6 flex items-center gap-4">
                 <span className="font-mono text-[10px] tracking-widest text-[var(--muted)] uppercase">
@@ -127,7 +128,7 @@ export function PublicationsClient({ publications }: Props) {
 
               <ul className="divide-y divide-[var(--border)]">
                 {pubs.map((pub) => (
-                  <li key={pub.id} className="py-8 first:pt-0">
+                  <li key={pub.id} className="py-5 md:py-8 first:pt-0">
 
                     {/* Type + award + venue badges */}
                     <div className="mb-4 flex flex-wrap items-center gap-3">

@@ -7,8 +7,8 @@ export async function News() {
   const news = await getNews();
 
   return (
-    <section id="news" className="bg-[var(--bg)] py-8">
-      <div className="mx-auto max-w-6xl px-6 md:px-10">
+    <section id="news" className="bg-[var(--bg)] py-6 md:py-8">
+      <div className="mx-auto max-w-6xl px-4 md:px-10">
         <SectionHeader label="News" />
 
         {news.length === 0 ? (
@@ -18,7 +18,7 @@ export async function News() {
         ) : (
           <ul className="divide-y divide-[var(--border)]">
             {news.map((item) => (
-              <li key={item.id} className="flex gap-6 py-8 first:pt-0">
+              <li key={item.id} className="flex gap-4 md:gap-6 py-5 md:py-8 first:pt-0">
                 {item.image && (
                   <div className="relative h-24 w-36 shrink-0 overflow-hidden bg-[var(--bg-alt)]">
                     <Image

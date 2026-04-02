@@ -8,15 +8,15 @@ interface ResearchThemesProps {
 export async function ResearchThemes({ standalone }: ResearchThemesProps) {
   const researchThemes = await getResearchThemes();
   return (
-    <section id="research" className="bg-[var(--bg)] pt-14">
-      <div className="mx-auto max-w-6xl px-6 md:px-10">
+    <section id="research" className="bg-[var(--bg)] pt-8 md:pt-14">
+      <div className="mx-auto max-w-6xl px-4 md:px-10">
         {/* <SectionHeader label="Focus areas" /> */}
 
         <ul className="divide-y divide-[var(--border)]">
           {researchThemes.map((theme, i) => (
             <li
               key={theme.id}
-              className="flex gap-8 py-5"
+              className="flex gap-6 md:gap-8 py-4 md:py-5"
             >
               <span className="w-6 shrink-0 font-mono text-[10px] text-[var(--main)] pt-0.5">
                 {String(i + 1).padStart(2, "0")}

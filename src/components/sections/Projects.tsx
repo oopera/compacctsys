@@ -9,8 +9,8 @@ export async function Projects({ standalone }: ProjectsProps) {
   const projects = await getProjects();
 
   return (
-    <section id="projects" className="bg-[var(--bg)] pt-14">
-      <div className="mx-auto max-w-6xl px-6 md:px-10">
+    <section id="projects" className="bg-[var(--bg)] pt-8 md:pt-14">
+      <div className="mx-auto max-w-6xl px-4 md:px-10">
         {!standalone && <SectionHeader label="Funded work" title="Projects" />}
 
         {projects.length === 0 ? (
@@ -20,7 +20,7 @@ export async function Projects({ standalone }: ProjectsProps) {
         ) : (
           <ul className="divide-y divide-[var(--border)]">
             {projects.map((project) => (
-              <li key={project.id} className="group py-7 first:pt-0">
+              <li key={project.id} className="group py-4 md:py-7 first:pt-0">
 
                 {/* Status + shortTitle */}
                 <div className="mb-3 flex flex-wrap items-center gap-3">

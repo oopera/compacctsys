@@ -17,7 +17,7 @@ export async function Hero() {
       id="about"
       className="bg-[var(--bg)]"
     >
-      <div className="mx-auto max-w-6xl px-6 md:px-10 py-14 grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-10 items-stretch">
+      <div className="mx-auto max-w-6xl px-4 md:px-10 py-8 md:py-14 grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-6 md:gap-10 items-stretch">
 
         {/* Contained canvas graphic — stretches to match text column height */}
         <div
@@ -73,7 +73,7 @@ export async function Hero() {
       </div>
 
       {/* Subpage navigation strip */}
-      <div className="mx-auto max-w-6xl px-6 md:px-10 flex flex-wrap gap-3">
+      <div className="mx-auto max-w-6xl px-4 md:px-10 flex flex-wrap gap-3">
         {subpageLinks.map(({ label, href }) => (
           <Link
             key={href}

@@ -69,8 +69,8 @@ export function NavShell({ groupName, showApply = true }: { groupName: string; s
   ];
 
   return (
-    <header className="sticky top-0 z-30 w-full bg-[var(--bg)] border-b border-[var(--border)]">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3 md:px-10">
+    <header className="sticky top-0 z-30 w-full bg-[var(--bg)]">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:px-10">
         <Link
           href="/"
           className="py-3 font-mono text-sm font-semibold leading-none tracking-widest text-[var(--text)]"
@@ -89,9 +89,8 @@ export function NavShell({ groupName, showApply = true }: { groupName: string; s
             <Link
               key={l.href}
               href={l.href}
-              className={`px-2 py-3 font-mono text-[10px] uppercase tracking-widest transition-colors hover:text-[var(--text)] ${
-                pathname === l.href ? "text-[var(--text)]" : "text-[var(--muted)]"
-              }`}
+              className={`px-2 py-3 font-mono text-[10px] uppercase tracking-widest transition-colors hover:text-[var(--text)] ${pathname === l.href ? "text-[var(--text)]" : "text-[var(--muted)]"
+                }`}
             >
               {l.label}
             </Link>
@@ -142,15 +141,14 @@ export function NavShell({ groupName, showApply = true }: { groupName: string; s
               key={l.href}
               href={l.href}
               onClick={closeDrawer}
-              className={`flex items-center justify-between border-b border-[var(--border)] px-6 py-4 font-mono text-[11px] uppercase tracking-widest transition-colors hover:text-[var(--text)] ${
-                pathname === l.href ? "text-[var(--text)]" : "text-[var(--muted)]"
-              }`}
+              className={`flex items-center justify-between border-b border-[var(--border)] px-4 py-4 font-mono text-[11px] uppercase tracking-widest transition-colors hover:text-[var(--text)] ${pathname === l.href ? "text-[var(--text)]" : "text-[var(--muted)]"
+                }`}
             >
               {l.label}
               {pathname === l.href && <span className="h-1 w-1 rounded-full bg-[var(--main)]" />}
             </Link>
           ))}
-          <div className="flex items-center justify-between px-6 py-4">
+          <div className="flex items-center justify-between px-4 py-4">
             <span className="font-mono text-[10px] uppercase tracking-widest text-[var(--muted)]">Theme</span>
             <ThemeToggle />
           </div>

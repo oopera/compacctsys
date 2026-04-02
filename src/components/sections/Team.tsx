@@ -111,11 +111,11 @@ export async function Team({ standalone }: TeamProps) {
   );
 
   return (
-    <section id="team" className="bg-[var(--bg)] pt-14">
-      <div className="mx-auto max-w-6xl px-6 md:px-10">
+    <section id="team" className="bg-[var(--bg)] pt-8 md:pt-14">
+      <div className="mx-auto max-w-6xl px-4 md:px-10">
         {!standalone && <SectionHeader label="The group" title="Team" accent="secondary" />}
 
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-5 md:gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {members.map((member) => (
             <div key={member.id} className="group flex flex-col">
 
@@ -176,7 +176,7 @@ export async function Team({ standalone }: TeamProps) {
 
       {/* Past members — standalone page only */}
       {standalone && pastSorted.length > 0 && (
-        <div className="mx-auto max-w-6xl px-6 md:px-10 mt-14">
+        <div className="mx-auto max-w-6xl px-4 md:px-10 mt-14">
           <div className="mb-4 flex items-center gap-14">
             <span className="font-mono text-[10px] font-semibold uppercase tracking-widest text-[var(--muted)]">
               Past Members
@@ -186,7 +186,7 @@ export async function Team({ standalone }: TeamProps) {
 
           <ul className="divide-y divide-[var(--border)]">
             {pastSorted.map((member) => (
-              <li key={member.id} className="flex items-center justify-between gap-4 py-7">
+              <li key={member.id} className="flex items-center justify-between gap-4 py-4 md:py-7">
                 <div className="flex items-baseline gap-3">
                   <span className="text-sm font-medium text-[var(--text)]">
                     {member.title ? `${member.title} ` : ""}{member.name}

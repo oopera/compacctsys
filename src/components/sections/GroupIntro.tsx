@@ -8,7 +8,7 @@ export async function GroupIntro() {
 
   return (
     <section className="bg-[var(--bg)] py-10">
-      <div className="mx-auto max-w-6xl px-6 md:px-10">
+      <div className="mx-auto max-w-6xl px-4 md:px-10">
         <p className="max-w-3xl text-base leading-relaxed text-[var(--text)] md:text-lg">
           {text}
         </p>

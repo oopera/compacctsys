@@ -19,7 +19,6 @@ export function NewsSidebar({ children }: { children: React.ReactNode }) {
         hidden min-[1600px]:flex
         h-[calc(100vh)]
         transition-transform duration-300 ease-in-out
-        border-r border-[var(--border)]
       `}
       style={{
         // Panel width grows with the viewport
