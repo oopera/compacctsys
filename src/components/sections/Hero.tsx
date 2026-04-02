@@ -24,7 +24,7 @@ export async function Hero() {
           className="relative w-full overflow-hidden  min-h-64"
           style={{ background: "var(--hero-bg)" }}
         >
-          <SceneCanvas variant="orbit" />
+          <SceneCanvas variant="nodes" fullyConnected />
         </div>
 
         {/* Text content */}
