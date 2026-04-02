@@ -3,13 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
-const DURATION = 300; // ms for each fade leg
+const DURATION = 250; // ms for each fade leg
 
 export function PageTransition() {
   const [opacity, setOpacity] = useState(1); // start covered on first load
   const pathname = usePathname();
-  const router   = useRouter();
-  const selfNav  = useRef(false); // true when we triggered the navigation
+  const router = useRouter();
+  const selfNav = useRef(false); // true when we triggered the navigation
 
   // Fade in whenever the route settles
   useEffect(() => {
@@ -39,7 +39,7 @@ export function PageTransition() {
       selfNav.current = true;
       setOpacity(1); // fade out
 
-      setTimeout(() => router.push(href), DURATION);
+      setTimeout(() => router.push(href, { scroll: true }), DURATION);
     }
 
     document.addEventListener("click", onClick, true);
@@ -49,7 +49,7 @@ export function PageTransition() {
   return (
     <div
       aria-hidden
-      className="pointer-events-none fixed inset-0 z-[9999] bg-[var(--bg)]"
+      className="pointer-events-none fixed inset-0 z-[20] bg-[var(--bg)]"
       style={{ opacity, transition: `opacity ${DURATION}ms ease` }}
     />
   );

@@ -141,7 +141,7 @@ main {
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
 }
 
 body {
@@ -151,7 +151,7 @@ body {
 }
 
 ::selection {
-  background: var(--violet);
+  background: var(--main);
   color: #fff;
 }
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -12,7 +12,6 @@ function Reveal({ w, open, children }: { w: string; open: boolean; children: str
       className="inline-block whitespace-nowrap"
       style={{
         maxWidth: open ? w : "0px",
-        // clip-path doesn't alter the baseline — unlike overflow:hidden
         clipPath: open ? "inset(-50% 0% -50% 0)" : "inset(-50% 100% -50% 0)",
         transition: "max-width 500ms ease-in-out, clip-path 500ms ease-in-out",
       }}
@@ -30,8 +29,10 @@ const links = [
 
 export function NavShell({ groupName, showApply = true }: { groupName: string; showApply?: boolean }) {
   const [open, setOpen] = useState(false);
+  const [visible, setVisible] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [logoHovered, setLogoHovered] = useState(false);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -41,7 +42,23 @@ export function NavShell({ groupName, showApply = true }: { groupName: string; s
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Expanded at top, collapsed when scrolled — hover always re-expands
+  useEffect(() => { closeDrawer(); }, [pathname]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  function openDrawer() {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setOpen(true);
+    requestAnimationFrame(() => requestAnimationFrame(() => setVisible(true)));
+  }
+
+  function closeDrawer() {
+    setVisible(false);
+    closeTimer.current = setTimeout(() => setOpen(false), 260);
+  }
+
+  function toggleDrawer() {
+    open ? closeDrawer() : openDrawer();
+  }
+
   const logoExpanded = !scrolled || logoHovered;
 
   const logoSpans: [string, string][] = [
@@ -52,7 +69,7 @@ export function NavShell({ groupName, showApply = true }: { groupName: string; s
   ];
 
   return (
-    <header className="sticky top-0 z-30 w-full bg-[var(--bg)]">
+    <header className="sticky top-0 z-30 w-full bg-[var(--bg)] border-b border-[var(--border)]">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3 md:px-10">
         <Link
           href="/"
@@ -72,8 +89,9 @@ export function NavShell({ groupName, showApply = true }: { groupName: string; s
             <Link
               key={l.href}
               href={l.href}
-              className={`px-2 py-3 font-mono text-[10px] uppercase tracking-widest transition-colors hover:text-[var(--text)] ${pathname === l.href ? "text-[var(--text)]" : "text-[var(--muted)]"
-                }`}
+              className={`px-2 py-3 font-mono text-[10px] uppercase tracking-widest transition-colors hover:text-[var(--text)] ${
+                pathname === l.href ? "text-[var(--text)]" : "text-[var(--muted)]"
+              }`}
             >
               {l.label}
             </Link>
@@ -84,51 +102,55 @@ export function NavShell({ groupName, showApply = true }: { groupName: string; s
           </div>
         </nav>
 
-        {/* Mobile hamburger */}
+        {/* Hamburger */}
         <button
-          className="flex flex-col justify-center gap-[5px] p-3 md:hidden"
-          onClick={() => setOpen((v) => !v)}
+          onClick={toggleDrawer}
           aria-label={open ? "Close menu" : "Open menu"}
+          className="group relative flex h-8 w-8 cursor-pointer items-center justify-center md:hidden"
+          style={{ WebkitTapHighlightColor: "transparent" }}
         >
-          <span
-            className="block h-[2px] w-5 bg-[var(--text)] transition-transform origin-center"
-            style={{ transform: open ? "translateY(7px) rotate(45deg)" : undefined }}
-          />
-          <span
-            className="block h-[2px] w-5 bg-[var(--text)] transition-opacity"
-            style={{ opacity: open ? 0 : 1 }}
-          />
-          <span
-            className="block h-[2px] w-5 bg-[var(--text)] transition-transform origin-center"
-            style={{ transform: open ? "translateY(-7px) rotate(-45deg)" : undefined }}
-          />
+          <span className="absolute inset-0 rounded-full border border-[var(--border)] transition-colors duration-200 group-hover:border-[var(--muted)]" aria-hidden />
+          <span className="flex flex-col gap-[5px]">
+            <span
+              className="block h-px w-[14px] origin-center bg-[var(--text)] transition-all duration-300 ease-in-out"
+              style={{ transform: visible ? "translateY(6px) rotate(45deg)" : "none" }}
+            />
+            <span
+              className="block h-px w-[14px] bg-[var(--text)] transition-all duration-300 ease-in-out"
+              style={{ opacity: visible ? 0 : 1, transform: visible ? "scaleX(0)" : "none" }}
+            />
+            <span
+              className="block h-px w-[14px] origin-center bg-[var(--text)] transition-all duration-300 ease-in-out"
+              style={{ transform: visible ? "translateY(-6px) rotate(-45deg)" : "none" }}
+            />
+          </span>
         </button>
       </div>
 
-      {/* Mobile drawer */}
+      {/* Dropdown — absolute so it overlays content, no layout shift */}
       {open && (
-        <nav className="border-t border-[var(--border)] bg-[var(--bg)] md:hidden">
-          {links.map((l) => (
+        <nav
+          className="absolute left-0 right-0 top-full z-20 border-t border-b border-[var(--border)] bg-[var(--bg)] md:hidden"
+          style={{
+            opacity: visible ? 1 : 0,
+            transform: visible ? "translateY(0)" : "translateY(-6px)",
+            transition: "opacity 260ms ease, transform 260ms ease",
+          }}
+        >
+          {[...links, ...(showApply ? [{ label: "Apply", href: "/apply" }] : [])].map((l) => (
             <Link
               key={l.href}
               href={l.href}
-              onClick={() => setOpen(false)}
-              className={`block border-b border-[var(--border)] px-6 py-4 font-mono text-[10px] uppercase tracking-widest transition-colors hover:text-[var(--main)] ${pathname === l.href ? "text-[var(--text)]" : "text-[var(--muted)]"
-                }`}
+              onClick={closeDrawer}
+              className={`flex items-center justify-between border-b border-[var(--border)] px-6 py-4 font-mono text-[11px] uppercase tracking-widest transition-colors hover:text-[var(--text)] ${
+                pathname === l.href ? "text-[var(--text)]" : "text-[var(--muted)]"
+              }`}
             >
               {l.label}
+              {pathname === l.href && <span className="h-1 w-1 rounded-full bg-[var(--main)]" />}
             </Link>
           ))}
-          {showApply && (
-            <Link
-              href="/apply"
-              onClick={() => setOpen(false)}
-              className="block border-b border-[var(--border)] px-6 py-4 font-mono text-[10px] uppercase tracking-widest text-[var(--text)] transition-colors hover:text-[var(--main)]"
-            >
-              Apply
-            </Link>
-          )}
-          <div className="flex items-center gap-3 px-6 py-4">
+          <div className="flex items-center justify-between px-6 py-4">
             <span className="font-mono text-[10px] uppercase tracking-widest text-[var(--muted)]">Theme</span>
             <ThemeToggle />
           </div>
