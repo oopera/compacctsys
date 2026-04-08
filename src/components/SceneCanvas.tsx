@@ -104,8 +104,8 @@ function runGrid(
 
 // ─── Node graph scene (Landing) ───────────────────────────────────────────────
 
-const NODE_DENSITY = 1 / 12000;
-const MAX_DIST = 300;
+const NODE_DENSITY = 1 / 8000;
+const MAX_DIST = 180;
 const NODE_SPEED = 0.05;
 const MOUSE_R = 200;
 

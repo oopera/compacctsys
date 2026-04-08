@@ -4,43 +4,20 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { NavLogo } from "@/components/NavLogo";
 import { BtnLink } from "@/components/Btn";
-
-function Reveal({ w, open, children }: { w: string; open: boolean; children: string }) {
-  return (
-    <span
-      className="inline-block whitespace-nowrap"
-      style={{
-        maxWidth: open ? w : "0px",
-        clipPath: open ? "inset(-50% 0% -50% 0)" : "inset(-50% 100% -50% 0)",
-        transition: "max-width 500ms ease-in-out, clip-path 500ms ease-in-out",
-      }}
-    >
-      {children}
-    </span>
-  );
-}
 
 const links = [
   { label: "Team", href: "/team" },
-  { label: "Projects", href: "/projects" },
+  { label: "Research Themes", href: "/research-themes" },
   { label: "Publications", href: "/publications" },
 ];
 
 export function NavShell({ groupName, showApply = true }: { groupName: string; showApply?: boolean }) {
   const [open, setOpen] = useState(false);
   const [visible, setVisible] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [logoHovered, setLogoHovered] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pathname = usePathname();
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   useEffect(() => { closeDrawer(); }, [pathname]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -59,32 +36,13 @@ export function NavShell({ groupName, showApply = true }: { groupName: string; s
     open ? closeDrawer() : openDrawer();
   }
 
-  const logoExpanded = !scrolled || logoHovered;
-
-  const logoSpans: [string, string][] = [
-    ["liant\u00a0", "64px"],
-    ["and\u00a0", "46px"],
-    ["ountable\u00a0", "92px"],
-    ["tems", "44px"],
-  ];
-
   return (
     <header className="sticky top-0 z-30 w-full bg-[var(--bg)]">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:px-10">
-        <Link
-          href="/"
-          className="py-3 font-mono text-sm font-semibold leading-none tracking-widest text-[var(--text)]"
-          onMouseEnter={() => setLogoHovered(true)}
-          onMouseLeave={() => setLogoHovered(false)}
-        >
-          Comp<Reveal w={logoSpans[0][1]} open={logoExpanded}>{logoSpans[0][0]}</Reveal
-          ><Reveal w={logoSpans[1][1]} open={logoExpanded}>{logoSpans[1][0]}</Reveal
-          >Acct<Reveal w={logoSpans[2][1]} open={logoExpanded}>{logoSpans[2][0]}</Reveal
-          >Sys<Reveal w={logoSpans[3][1]} open={logoExpanded}>{logoSpans[3][0]}</Reveal>
-        </Link>
+        <NavLogo />
 
         {/* Desktop nav */}
-        <nav className="hidden items-center gap-4 md:flex">
+        <nav className="hidden shrink-0 items-center gap-4 md:flex">
           {links.map((l) => (
             <Link
               key={l.href}
@@ -132,7 +90,6 @@ export function NavShell({ groupName, showApply = true }: { groupName: string; s
           className="absolute left-0 right-0 top-full z-20 border-t border-b border-[var(--border)] bg-[var(--bg)] md:hidden"
           style={{
             opacity: visible ? 1 : 0,
-
             transition: "opacity 260ms ease, transform 260ms ease",
           }}
         >

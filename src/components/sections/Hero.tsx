@@ -1,12 +1,5 @@
-import Link from "next/link";
 import { SceneCanvas } from "@/components/SceneCanvas";
 import { getSiteSettings } from "@/lib/sanity/queries";
-
-const subpageLinks = [
-  { label: "Team", href: "/team" },
-  { label: "Projects", href: "/projects" },
-  { label: "Publications", href: "/publications" },
-];
 
 export async function Hero() {
   const settings = await getSiteSettings();
@@ -31,7 +24,7 @@ export async function Hero() {
         <div className="flex flex-col justify-between gap-10 lg:py-2">
           <div className="flex flex-col gap-6">
             <p className="font-mono text-[10px] uppercase tracking-widest text-[var(--muted)]">
-              Research Group · Compliant · Accountable · Trustworthy
+              Research Group
             </p>
             <h1
               className="font-semibold leading-tight tracking-tight text-[var(--text)]"
@@ -72,18 +65,6 @@ export async function Hero() {
         </div>
       </div>
 
-      {/* Subpage navigation strip */}
-      <div className="mx-auto max-w-6xl px-4 md:px-10 flex flex-wrap gap-3">
-        {subpageLinks.map(({ label, href }) => (
-          <Link
-            key={href}
-            href={href}
-            className="border border-[var(--border)] px-5 py-2 font-mono text-[10px] uppercase tracking-widest text-[var(--muted)] transition-colors hover:border-[var(--text)] hover:text-[var(--text)]"
-          >
-            {label} →
-          </Link>
-        ))}
-      </div>
     </section>
   );
 }

@@ -1,24 +1,30 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore, useCallback } from "react";
+
+function subscribe(cb: () => void) {
+  // Re-sync when theme changes (from other tabs or programmatic updates)
+  const observer = new MutationObserver(cb);
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  return () => observer.disconnect();
+}
+
+function getSnapshot() {
+  return document.documentElement.dataset.theme === "dark";
+}
+
+function getServerSnapshot() {
+  return true; // matches the default in the inline script
+}
 
 export function ThemeToggle() {
-  const [dark, setDark] = useState(true);
-  const [mounted, setMounted] = useState(false);
+  const dark = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
-  useEffect(() => {
-    setMounted(true);
-    setDark((document.documentElement.dataset.theme ?? "dark") === "dark");
-  }, []);
-
-  function toggle() {
+  const toggle = useCallback(() => {
     const next = dark ? "light" : "dark";
-    setDark(!dark);
     document.documentElement.dataset.theme = next;
-    try { localStorage.setItem("theme", next); } catch {}
-  }
-
-  if (!mounted) return <span className="w-[30px]" />;
+    try { localStorage.setItem("theme", next); } catch { }
+  }, [dark]);
 
   return (
     <button

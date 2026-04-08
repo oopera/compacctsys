@@ -38,25 +38,6 @@ export interface ResearchTheme {
   order: number;
 }
 
-// ─── Projects ────────────────────────────────────────────────────────────────
-
-export type ProjectStatus = "active" | "completed";
-
-export interface Project {
-  id: string;
-  title: string;
-  shortTitle?: string; // e.g. "RAInS"
-  description: string;
-  status: ProjectStatus;
-  funders: string[];
-  collaborators: string[];  // external institutions
-  teamMemberIds: string[];  // references TeamMember.id
-  researchThemeIds: string[];
-  url?: string;
-  startYear?: number;
-  endYear?: number;
-}
-
 // ─── Publications ────────────────────────────────────────────────────────────
 
 export type PublicationType =

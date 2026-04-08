@@ -1,23 +1,11 @@
 export const dynamic = "force-dynamic";
 
-import { Nav } from "@/components/Nav";
-import { SubpageHero } from "@/components/SubpageHero";
-import { Projects } from "@/components/sections/Projects";
-import { Footer } from "@/components/Footer";
+import { redirect } from "next/navigation";
 
 export const metadata = {
-  title: "Projects — CompAcctSys",
+  title: "Research Themes — CompAcctSys",
 };
 
 export default function ProjectsPage() {
-  return (
-    <>
-      <Nav />
-      <main>
-        <SubpageHero label="Funded work" title="Projects" scene="flow" />
-        <Projects standalone />
-      </main>
-      <Footer />
-    </>
-  );
+  redirect("/research-themes");
 }

@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { PageTransition } from "@/components/PageTransition";
-import { NewsSidebar } from "@/components/NewsSidebar";
-import { SidebarNews } from "@/components/sections/SidebarNews";
 import "./globals.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -21,10 +18,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: `(function(){try{var t=localStorage.getItem('theme')||'dark';}catch(e){var t='dark';}document.documentElement.dataset.theme=t;})();` }} />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex min-h-screen flex-col`}>
-        <PageTransition />
-        <NewsSidebar>
-          <SidebarNews />
-        </NewsSidebar>
         {children}
       </body>
     </html>

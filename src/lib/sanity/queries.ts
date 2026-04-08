@@ -2,7 +2,6 @@ import { client } from "./client";
 import type {
   TeamMember,
   ResearchTheme,
-  Project,
   Publication,
   NewsItem,
   SiteSettings,
@@ -54,27 +53,6 @@ const researchThemesQuery = `*[_type == "researchTheme"] | order(orderRank asc) 
 
 export async function getResearchThemes(): Promise<ResearchTheme[]> {
   return client.fetch(researchThemesQuery, {}, { next: { tags: ["researchTheme"] } });
-}
-
-// ─── Projects ────────────────────────────────────────────────────────────────
-
-const projectsQuery = `*[_type == "project"] | order(_createdAt asc) {
-  "id": _id,
-  title,
-  shortTitle,
-  "description": pt::text(description),
-  status,
-  funders,
-  collaborators,
-  "teamMemberIds": teamMembers[]->_id,
-  "researchThemeIds": researchThemes[]->_id,
-  url,
-  startYear,
-  endYear
-}`;
-
-export async function getProjects(): Promise<Project[]> {
-  return client.fetch(projectsQuery, {}, { next: { tags: ["project"] } });
 }
 
 // ─── Publications ────────────────────────────────────────────────────────────
