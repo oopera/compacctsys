@@ -182,7 +182,7 @@ function BibtexImporterTool() {
   const [parsed, setParsed] = useState<ParsedPublication[]>([]);
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [parseError, setParseError] = useState<string | null>(null);
-  const [status, setStatus] = useState<Record<string, "idle" | "importing" | "done" | "error">>({});
+  const [status, setStatus] = useState<Record<string, "idle" | "importing" | "done" | "updated" | "error">>({});
   const [importing, setImporting] = useState(false);
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
 
@@ -246,8 +246,7 @@ function BibtexImporterTool() {
           };
         });
 
-        await client.create({
-          _type: "publication",
+        const payload = {
           title: pub.title,
           authors,
           venue: pub.venue,
@@ -258,8 +257,22 @@ function BibtexImporterTool() {
           ...(pub.url ? { url: pub.url } : {}),
           ...(pub.abstract ? { abstract: pub.abstract } : {}),
           bibtex: pub.bibtex,
-        });
-        setStatus((s) => ({ ...s, [pub.raw.key]: "done" }));
+        };
+
+        const query = pub.doi
+          ? `*[_type == "publication" && (title == $title || doi == $doi)][0]`
+          : `*[_type == "publication" && title == $title][0]`;
+        const params: Record<string, any> = { title: pub.title, ...(pub.doi ? { doi: pub.doi } : {}) };
+
+        const existing = await client.fetch(query, params);
+
+        if (existing) {
+          await client.patch(existing._id).set(payload).commit();
+          setStatus((s) => ({ ...s, [pub.raw.key]: "updated" }));
+        } else {
+          await client.create({ _type: "publication", ...payload });
+          setStatus((s) => ({ ...s, [pub.raw.key]: "done" }));
+        }
       } catch (e) {
         console.error("Import failed for", pub.raw.key, e);
         setStatus((s) => ({ ...s, [pub.raw.key]: "error" }));
@@ -269,8 +282,9 @@ function BibtexImporterTool() {
   };
 
   const doneCount = Object.values(status).filter((s) => s === "done").length;
+  const updatedCount = Object.values(status).filter((s) => s === "updated").length;
   const errorCount = Object.values(status).filter((s) => s === "error").length;
-  const allDone = doneCount + errorCount > 0 && doneCount + errorCount === Object.keys(status).length;
+  const allDone = doneCount + updatedCount + errorCount > 0 && doneCount + updatedCount + errorCount === Object.keys(status).length;
 
   return (
     <div style={{ padding: "2rem", maxWidth: 900, margin: "0 auto", fontFamily: "system-ui, sans-serif" }}>
@@ -362,7 +376,7 @@ function BibtexImporterTool() {
 
           {allDone && (
             <div style={{ marginBottom: "0.75rem", padding: "0.75rem", background: "#f0fdf4", border: "1px solid #86efac", borderRadius: 6, fontSize: "0.875rem", color: "#166534" }}>
-              ✓ Imported {doneCount} publication{doneCount !== 1 ? "s" : ""} successfully.
+              ✓ Processed successfully: {doneCount} imported, {updatedCount} updated.
               {errorCount > 0 && ` ${errorCount} failed — check the console for details.`}
             </div>
           )}
@@ -373,17 +387,18 @@ function BibtexImporterTool() {
               const isSelected = selected.has(pub.raw.key);
 
               const borderColor =
-                st === "done" ? "#86efac" :
+                (st === "done" || st === "updated") ? "#86efac" :
                 st === "error" ? "#fca5a5" :
                 isSelected ? "#93c5fd" : "#e5e7eb";
 
               const bgColor =
-                st === "done" ? "#f0fdf4" :
+                (st === "done" || st === "updated") ? "#f0fdf4" :
                 st === "error" ? "#fef2f2" :
                 isSelected ? "#eff6ff" : "#f9fafb";
 
               const badge =
                 st === "done" ? "✓ Imported" :
+                st === "updated" ? "✓ Updated" :
                 st === "importing" ? "⟳ Importing…" :
                 st === "error" ? "✗ Error" : null;
 
@@ -414,8 +429,8 @@ function BibtexImporterTool() {
                         {badge && (
                           <span style={{
                             fontSize: "0.7rem", fontWeight: 600,
-                            color: st === "done" ? "#166534" : st === "error" ? "#b91c1c" : "#1d4ed8",
-                            background: st === "done" ? "#dcfce7" : st === "error" ? "#fef2f2" : "#dbeafe",
+                            color: (st === "done" || st === "updated") ? "#166534" : st === "error" ? "#b91c1c" : "#1d4ed8",
+                            background: (st === "done" || st === "updated") ? "#dcfce7" : st === "error" ? "#fef2f2" : "#dbeafe",
                             borderRadius: 4, padding: "0.1rem 0.4rem",
                           }}>
                             {badge}
