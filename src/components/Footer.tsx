@@ -13,12 +13,11 @@ export async function Footer() {
       <div className="relative z-10 mx-auto max-w-6xl px-4 md:px-10">
         <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
           <div>
-            <p className="mb-2 font-mono text-sm font-semibold tracking-widest" style={{ color: "var(--text)" }}>
+            <p className="mb-2 text-xs" style={{ color: "var(--text)" }}>
               {settings?.groupName ?? "CompAcctSys"}
             </p>
             {affiliations && affiliations.length > 0 && (
               <p className="max-w-sm text-xs leading-relaxed" style={{ color: "var(--muted)" }}>
-                Compliant and Accountable Systems Research Group.{" "}
                 {affiliations.join(". ")}.
               </p>
             )}

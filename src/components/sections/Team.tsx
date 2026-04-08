@@ -96,10 +96,8 @@ export async function Team({ standalone }: TeamProps) {
 
   // Sort alphabetically by last name, but keep PI(s) first
   const members = [...team].sort((a, b) => {
-    if (a.role === "pi" && b.role !== "pi") return -1;
-    if (a.role !== "pi" && b.role === "pi") return 1;
-    const aLast = a.name.split(" ").slice(-1)[0];
-    const bLast = b.name.split(" ").slice(-1)[0];
+    const aLast = a.name.split(" ").slice(0)[0];
+    const bLast = b.name.split(" ").slice(0)[0];
     return aLast.localeCompare(bLast);
   });
 
@@ -140,7 +138,7 @@ export async function Team({ standalone }: TeamProps) {
                   {roleLabel[member.role]}
                 </p>
                 <p className="mt-1 text-sm font-semibold leading-snug text-[var(--text)]">
-                  {member.title ? `${member.title} ` : ""}{member.name}
+                  {member.name}
                 </p>
 
                 {member.bio && (
