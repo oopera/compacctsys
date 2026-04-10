@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { CopyBibtexButton } from "@/components/CopyBibtexButton";
 import { BtnLink } from "@/components/Btn";
 import type { Publication, PublicationType } from "@/types";
+import { SectionHeader } from "../SectionHeader";
 
 const typeLabel: Record<PublicationType, string> = {
   conference: "Conference",
@@ -61,12 +62,7 @@ export function PublicationsClient({ publications }: Props) {
           byYear.map(([year, pubs]) => (
             <div key={year} id={`year-${year}`} className="mb-8 md:mb-12 last:mb-0 scroll-mt-20">
               {/* Year heading */}
-              <div className="mb-6 flex items-center gap-4">
-                <span className="font-mono text-sm font-semibold tracking-widest text-[var(--text)] uppercase">
-                  {year || "—"}
-                </span>
-                <div className="h-[2px] flex-1 bg-[var(--text)]" style={{ opacity: 0.2 }} />
-              </div>
+              <SectionHeader label={year.toString()} />
 
               <ul className="divide-y divide-[var(--border)]">
                 {pubs.map((pub) => (

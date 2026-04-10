@@ -12,20 +12,21 @@ export async function ResearchThemes({ standalone }: ResearchThemesProps) {
       <div className="mx-auto max-w-6xl px-4 md:px-10">
         {/* <SectionHeader label="Focus areas" /> */}
 
-        <ul className="divide-y divide-[var(--border)]">
+        <ul className="divide-y divide-[var(--border)] list-disc">
           {researchThemes.map((theme, i) => (
             <li
               key={theme.id}
               className="flex gap-2 md:gap-4 py-4 md:py-5"
             >
-
               <div className="flex flex-col gap-1 sm:flex-row sm:gap-12 w-full">
-                <h3 className="sm:w-72 shrink-0 text-sm leading-snug text-[var(--text)]">
-                  <span className="shrink-0 text-[var(--main)] mr-2">
+                <div className="flex items-center sm:gap-1">
+                  <span className="shrink-0 text-[var(--main)] text-2xl mr-2">
                     &bull;
                   </span>
-                  {theme.title}
-                </h3>
+                  <h3 className="sm:w-72 shrink-0 text-sm leading-snug text-[var(--text)]">
+                    {theme.title}
+                  </h3>
+                </div>
                 <p className="text-xs leading-relaxed text-[var(--muted)]">
                   {theme.description}
                 </p>

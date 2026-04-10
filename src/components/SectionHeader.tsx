@@ -12,19 +12,18 @@ export function SectionHeader({ label, title, accent = "main", light = false }: 
   const borderColor = light ? "rgba(255,255,255,0.12)" : "var(--border)";
 
   return (
-    <div className="mb-16">
+    <div className="mb-8">
       {/* Ruled label row */}
       <div className="flex items-center gap-4 mb-6"
         style={{
           // borderTop: `1px solid ${borderColor}`, 
           paddingTop: "1rem"
         }}>
-        <p
-          className="font-mono text-[10px] uppercase tracking-widest text-[var(--muted)]"
-          style={{ color: labelColor }}
+        <span
+          className="font-mono text-sm font-semibold tracking-widest text-[var(--text)] uppercase"
         >
           {label}
-        </p>
+        </span>
         <div className="flex-1 h-px" style={{ background: borderColor }} />
       </div>
 
@@ -38,3 +37,10 @@ export function SectionHeader({ label, title, accent = "main", light = false }: 
     </div>
   );
 }
+
+// <div className="mb-6 flex items-center gap-4">
+//   <span className="font-mono text-sm font-semibold tracking-widest text-[var(--text)] uppercase">
+//     {year || "—"}
+//   </span>
+//   <div className="h-[2px] flex-1 bg-[var(--text)]" style={{ opacity: 0.2 }} />
+// </div>

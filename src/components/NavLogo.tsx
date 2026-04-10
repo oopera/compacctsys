@@ -39,7 +39,8 @@ export function NavLogo() {
       <span className="hidden md:inline">
         Comp<Reveal w="64px" open={expanded}>{"liant\u00a0"}</Reveal
         ><Reveal w="46px" open={expanded}>{"and\u00a0"}</Reveal
-        >Acct<Reveal w="92px" open={expanded}>{"ountable\u00a0"}</Reveal
+        >Acc<Reveal w="92px" open={expanded}>{"oun"}</Reveal
+        >t<Reveal w="92px" open={expanded}>{"able\u00a0"}</Reveal
         >Sys<Reveal w="44px" open={expanded}>{"tems"}</Reveal
         ><span className="hidden lg:contents"><Reveal w="170px" open={expanded}>{"\u00a0Research\u00a0Group"}</Reveal></span>
       </span>

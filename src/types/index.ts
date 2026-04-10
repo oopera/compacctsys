@@ -90,7 +90,7 @@ export interface NewsItem {
 export interface SiteSettings {
   groupName: string;
   tagline?: string;
-  description?: string;
+  description?: any; // Portable Text block content
   contactEmail?: string;
   affiliations?: string[];
   domain?: string;

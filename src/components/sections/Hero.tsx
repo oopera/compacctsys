@@ -1,9 +1,26 @@
 import { SceneCanvas } from "@/components/SceneCanvas";
 import { getSiteSettings } from "@/lib/sanity/queries";
+import { PortableText } from "next-sanity";
+
+const ptComponents = {
+  marks: {
+    link: ({ children, value }: { children: React.ReactNode; value?: { href?: string } }) => (
+      <a
+        href={value?.href}
+        target={value?.href?.startsWith("http") ? "_blank" : undefined}
+        rel={value?.href?.startsWith("http") ? "noopener noreferrer" : undefined}
+        className="text-[var(--main)] hover:underline underline-offset-2 transition-colors"
+      >
+        {children}
+      </a>
+    ),
+  },
+};
 
 export async function Hero() {
   const settings = await getSiteSettings();
-  const description = settings?.description ?? settings?.tagline;
+  const description = settings?.description;
+  const tagline = settings?.tagline;
 
   return (
     <section
@@ -32,11 +49,15 @@ export async function Hero() {
             >
               {settings?.groupName ?? "Compliant and Accountable Systems"}
             </h1>
-            {description && (
+            {description ? (
+              <div className="text-sm leading-relaxed text-[var(--muted)] max-w-md prose prose-sm">
+                <PortableText value={description} components={ptComponents} />
+              </div>
+            ) : tagline ? (
               <p className="text-sm leading-relaxed text-[var(--muted)] max-w-md">
-                {description}
+                {tagline}
               </p>
-            )}
+            ) : null}
           </div>
 
           {/* Affiliations + email */}
