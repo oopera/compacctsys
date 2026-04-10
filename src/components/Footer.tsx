@@ -18,7 +18,7 @@ export async function Footer() {
             </p>
             {affiliations && affiliations.length > 0 && (
               <p className="max-w-sm text-xs leading-relaxed" style={{ color: "var(--muted)" }}>
-                {affiliations.join(". ")}.
+                {affiliations.join(" | ")}.
               </p>
             )}
           </div>

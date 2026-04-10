@@ -16,7 +16,7 @@ export function SubpageHero({ label, title, scene = "grid" }: SubpageHeroProps) 
 
         {/* Contained canvas graphic */}
         <div
-          className="relative w-full overflow-hidden aspect-video"
+          className="relative w-full overflow-hidden aspect-3/1"
           style={{ background: "var(--hero-bg)" }}
         >
           <SceneCanvas variant={scene} />
