@@ -1,36 +1,114 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CompAcctSys Website
+
+Website for the Compliant and Accountable Systems Research Group.
+
+## Stack
+
+- **Framework**: Next.js 16 (App Router)
+- **CMS**: Sanity v5
+- **Styling**: Tailwind CSS v4
+- **3D**: Three.js (canvas animations)
+- **Language**: TypeScript
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+# Install dependencies
+npm install
+
+# Create .env.local with Sanity credentials
+cp .env.example .env.local
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The site runs at `http://localhost:3000`. The Sanity Studio is at `/studio`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Variable | Description |
+|---|---|
+| `NEXT_PUBLIC_SANITY_PROJECT_ID` | Sanity project ID |
+| `NEXT_PUBLIC_SANITY_DATASET` | Sanity dataset (e.g. `production`) |
+| `SANITY_API_TOKEN` | Sanity API token (read/write) |
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+  app/                    # Next.js pages
+    page.tsx              # Homepage
+    team/                 # Team page
+    research-themes/      # Research themes page
+    publications/         # Publications page
+    studio/               # Sanity Studio
+  components/
+    Nav.tsx / NavShell.tsx # Navigation (server + client)
+    NavLogo.tsx           # Animated logo (client)
+    Footer.tsx            # Footer (server, fetches from Sanity)
+    ThemeToggle.tsx        # Dark/light mode toggle
+    SceneCanvas.tsx        # Three.js canvas animations
+    sections/             # Page section components
+  lib/
+    data/                 # Fallback data (used when Sanity is empty)
+    sanity/               # Sanity client and GROQ queries
+  types/                  # TypeScript interfaces
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+sanity/
+  schemas/                # Sanity document schemas
+  plugins/
+    bibtex-importer/      # BibTeX import tool for publications
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+public/
+  team/                   # Team member photos
+  procurement/            # Built procurement sub-app (if present)
+```
 
-## Deploy on Vercel
+## Content Management
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+All content is managed through Sanity Studio at `/studio`:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Team Members** - split into Current / Past views. Sorted alphabetically on the site (PI first).
+- **Research Themes** - drag-to-reorder list.
+- **Publications** - import via the BibTeX Import tool. Supports `venuedisplay` custom field for display names.
+- **News** - news items shown on the homepage.
+- **Site Settings** - group name, tagline, contact email, affiliations.
+
+### BibTeX Importer
+
+In the Studio, use the **BibTeX Import** tool to bulk-import publications:
+
+1. Paste BibTeX entries
+2. Preview parsed results (team members are auto-linked)
+3. Select and import
+
+The importer also has a **Delete all publications** button for clearing before a fresh import.
+
+Key BibTeX field mappings:
+- `venuedisplay` -> display venue name on the website
+- `booktitle` / `journal` -> full venue name (fallback)
+- `url` -> publisher link
+
+## Build
+
+```bash
+npm run build
+```
+
+This will:
+1. Build the Procurement sub-app if the `Procurement/` directory is present (skipped otherwise)
+2. Build the Next.js site
+
+## Procurement Sub-App
+
+A separate Vite/React app served at `/procurement`. To set up:
+
+1. Clone the procurement repo into `Procurement/`
+2. Run `npm run build:procurement` to build and copy to `public/procurement/`
+
+The sub-app is built automatically during `npm run build` if the directory exists.
+
+## Deployment
+
+Deployed via Vercel. Pushes to `main` trigger automatic deployments.
