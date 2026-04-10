@@ -61,11 +61,16 @@ const providerMeta: Record<TeamMemberLinkProvider, { label: string; icon: React.
   scholar: { label: "Google Scholar", icon: <ScholarIcon /> },
 };
 
+const linkOrder: TeamMemberLinkProvider[] = ["website", "linkedin", "scholar", "orcid"];
+
 function MemberLinks({ member }: { member: TeamMember }) {
   if (!member.links?.length) return null;
+  const sorted = [...member.links].sort(
+    (a, b) => linkOrder.indexOf(a.provider) - linkOrder.indexOf(b.provider)
+  );
   return (
     <div className="flex items-center gap-3">
-      {member.links.map(({ provider, url }) => {
+      {sorted.map(({ provider, url }) => {
         const meta = providerMeta[provider] ?? { label: provider, icon: <GlobeIcon /> };
         return (
           <a
