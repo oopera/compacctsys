@@ -60,6 +60,7 @@ export interface Publication {
   authors: PublicationAuthor[];
   venue: string;           // full venue name
   venueShort?: string;     // e.g. "CHI", "CSCW"
+  venueDisplay?: string;   // display name from venuedisplay bibtex field
   year: number;
   type: PublicationType;
   abstract?: string;
@@ -83,29 +84,6 @@ export interface NewsItem {
   externalUrl?: string;
   image?: string;
   publicationId?: string; // link to related publication if relevant
-}
-
-// ─── Apply Page ──────────────────────────────────────────────────────────────
-
-export interface ApplyPosition {
-  role: string;
-  type?: string;
-  description?: string;
-}
-
-export interface ApplyExpectation {
-  heading: string;
-  body?: string;
-}
-
-export interface ApplyPage {
-  showApplyPage?: boolean;
-  intro?: string;
-  positions: ApplyPosition[];
-  expectations: ApplyExpectation[];
-  howToApply?: string;
-  applicationChecklist: string[];
-  applicationEmail?: string;
 }
 
 // ─── Site Settings ───────────────────────────────────────────────────────────

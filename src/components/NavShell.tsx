@@ -13,7 +13,7 @@ const links = [
   { label: "Publications", href: "/publications" },
 ];
 
-export function NavShell({ groupName, showApply = true }: { groupName: string; showApply?: boolean }) {
+export function NavShell({ groupName }: { groupName: string }) {
   const [open, setOpen] = useState(false);
   const [visible, setVisible] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -53,7 +53,6 @@ export function NavShell({ groupName, showApply = true }: { groupName: string; s
               {l.label}
             </Link>
           ))}
-          {showApply && <BtnLink href="/apply">Apply</BtnLink>}
           <div className="p-2">
             <ThemeToggle />
           </div>
@@ -93,7 +92,7 @@ export function NavShell({ groupName, showApply = true }: { groupName: string; s
             transition: "opacity 260ms ease, transform 260ms ease",
           }}
         >
-          {[...links, ...(showApply ? [{ label: "Apply", href: "/apply" }] : [])].map((l) => (
+          {[...links].map((l) => (
             <Link
               key={l.href}
               href={l.href}

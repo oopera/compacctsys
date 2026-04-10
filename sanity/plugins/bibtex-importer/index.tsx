@@ -18,6 +18,7 @@ interface ParsedPublication {
   authors: string[];
   venue: string;
   venueShort?: string;
+  venueDisplay?: string;
   year: number;
   doi?: string;
   url?: string;
@@ -69,6 +70,7 @@ function toPublication(raw: RawEntry): ParsedPublication {
 
   const venue = str("BOOKTITLE") || str("JOURNAL") || str("PUBLISHER") || "";
   const venueShort = str("SERIES") || undefined;
+  const venueDisplay = str("VENUEDISPLAY") || undefined;
   const yearRaw = raw["YEAR"] ?? raw["year"];
   const year = typeof yearRaw === "number" ? yearRaw : parseInt(String(yearRaw ?? "0"), 10);
 
@@ -78,6 +80,7 @@ function toPublication(raw: RawEntry): ParsedPublication {
     authors: parseAuthors(str("AUTHOR")),
     venue,
     venueShort,
+    venueDisplay,
     year: isNaN(year) ? 0 : year,
     doi: str("DOI") || undefined,
     url: str("URL") || undefined,
@@ -111,6 +114,7 @@ const FIELD_MAP: { bibtex: string; sanity: string; notes?: string }[] = [
   { bibtex: "author",                 sanity: "authors",     notes: "Split by \"and\". \"Last, First\" is reordered to \"First Last\". Names matched against team members." },
   { bibtex: "booktitle / journal / publisher", sanity: "venue", notes: "First non-empty value used, in that order." },
   { bibtex: "series",                 sanity: "venueShort",  notes: "Short venue abbreviation, e.g. CHI, CSCW." },
+  { bibtex: "venuedisplay",           sanity: "venueDisplay", notes: "Display name shown on website. Takes priority over venue/venueShort." },
   { bibtex: "year",                   sanity: "year" },
   { bibtex: "doi",                    sanity: "doi" },
   { bibtex: "url",                    sanity: "url" },
@@ -185,6 +189,9 @@ function BibtexImporterTool() {
   const [status, setStatus] = useState<Record<string, "idle" | "importing" | "done" | "updated" | "error">>({});
   const [importing, setImporting] = useState(false);
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
+  const [deleteConfirm, setDeleteConfirm] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [deleteResult, setDeleteResult] = useState<string | null>(null);
 
   useEffect(() => {
     client
@@ -251,6 +258,7 @@ function BibtexImporterTool() {
           authors,
           venue: pub.venue,
           ...(pub.venueShort ? { venueShort: pub.venueShort } : {}),
+          ...(pub.venueDisplay ? { venueDisplay: pub.venueDisplay } : {}),
           year: pub.year,
           type: pub.pubType,
           ...(pub.doi ? { doi: pub.doi } : {}),
@@ -281,6 +289,26 @@ function BibtexImporterTool() {
     setImporting(false);
   };
 
+  const handleDeleteAll = async () => {
+    setDeleting(true);
+    setDeleteResult(null);
+    try {
+      const ids: string[] = await client.fetch(`*[_type == "publication"]._id`);
+      if (ids.length === 0) {
+        setDeleteResult("No publications to delete.");
+      } else {
+        let tx = client.transaction();
+        for (const id of ids) tx = tx.delete(id);
+        await tx.commit();
+        setDeleteResult(`Deleted ${ids.length} publication${ids.length === 1 ? "" : "s"}.`);
+      }
+    } catch (e) {
+      setDeleteResult(`Error: ${e instanceof Error ? e.message : String(e)}`);
+    }
+    setDeleting(false);
+    setDeleteConfirm(false);
+  };
+
   const doneCount = Object.values(status).filter((s) => s === "done").length;
   const updatedCount = Object.values(status).filter((s) => s === "updated").length;
   const errorCount = Object.values(status).filter((s) => s === "error").length;
@@ -294,6 +322,55 @@ function BibtexImporterTool() {
       </p>
 
       <Legend />
+
+      {/* Delete all publications */}
+      <div style={{ marginBottom: "1rem", padding: "0.75rem 1rem", border: "1px solid #e5e7eb", borderRadius: 6, background: "#f9fafb" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "0.75rem" }}>
+          <span style={{ fontSize: "0.8rem", color: "#6b7280" }}>
+            Clear all existing publications before a fresh import
+          </span>
+          {!deleteConfirm ? (
+            <button
+              onClick={() => { setDeleteConfirm(true); setDeleteResult(null); }}
+              disabled={deleting}
+              style={{
+                background: "none", border: "1px solid #ef4444", color: "#ef4444", borderRadius: 6,
+                padding: "0.35rem 0.9rem", fontSize: "0.8rem", fontWeight: 600, cursor: "pointer", whiteSpace: "nowrap",
+              }}
+            >
+              Delete all publications
+            </button>
+          ) : (
+            <div style={{ display: "flex", gap: "0.5rem" }}>
+              <button
+                onClick={handleDeleteAll}
+                disabled={deleting}
+                style={{
+                  background: "#ef4444", border: "none", color: "white", borderRadius: 6,
+                  padding: "0.35rem 0.9rem", fontSize: "0.8rem", fontWeight: 600, cursor: deleting ? "not-allowed" : "pointer", whiteSpace: "nowrap",
+                }}
+              >
+                {deleting ? "Deleting…" : "Confirm delete"}
+              </button>
+              <button
+                onClick={() => setDeleteConfirm(false)}
+                disabled={deleting}
+                style={{
+                  background: "none", border: "1px solid #d1d5db", color: "#6b7280", borderRadius: 6,
+                  padding: "0.35rem 0.9rem", fontSize: "0.8rem", cursor: "pointer", whiteSpace: "nowrap",
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          )}
+        </div>
+        {deleteResult && (
+          <p style={{ marginTop: "0.5rem", fontSize: "0.8rem", color: deleteResult.startsWith("Error") ? "#b91c1c" : "#166534" }}>
+            {deleteResult}
+          </p>
+        )}
+      </div>
 
       {/* Input area */}
       <textarea

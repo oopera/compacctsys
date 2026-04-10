@@ -5,7 +5,6 @@ import type {
   Publication,
   NewsItem,
   SiteSettings,
-  ApplyPage,
 } from "@/types";
 
 // ─── Team ────────────────────────────────────────────────────────────────────
@@ -66,6 +65,7 @@ const publicationsQuery = `*[_type == "publication"] | order(year desc) {
   },
   venue,
   venueShort,
+  venueDisplay,
   year,
   type,
   abstract,
@@ -118,32 +118,6 @@ const awardsQuery = `*[_type == "publication" && defined(award)] | order(year de
 
 export async function getAwardedPublications(): Promise<Publication[]> {
   return client.fetch(awardsQuery, {}, { next: { tags: ["publication"] } });
-}
-
-// ─── Apply page ──────────────────────────────────────────────────────────────
-
-const applyPageQuery = `*[_type == "applyPage"][0] {
-  showApplyPage,
-  intro,
-  positions[]{ role, type, description },
-  expectations[]{ heading, body },
-  howToApply,
-  applicationChecklist,
-  applicationEmail
-}`;
-
-export async function getApplyPage(): Promise<ApplyPage | null> {
-  return client.fetch(applyPageQuery, {}, { next: { tags: ["applyPage"] } });
-}
-
-export async function getApplyPageVisibility(): Promise<boolean> {
-  const result = await client.fetch<{ showApplyPage?: boolean } | null>(
-    `*[_type == "applyPage"][0]{ showApplyPage }`,
-    {},
-    { next: { tags: ["applyPage"] } },
-  );
-  // Default to true if the field hasn't been set yet
-  return result?.showApplyPage ?? true;
 }
 
 // ─── Site settings ───────────────────────────────────────────────────────────

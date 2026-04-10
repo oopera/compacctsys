@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run build:procurement && next build",
+    "build:procurement": "cd Procurement && npm run build && rm -rf ../public/procurement && cp -r dist ../public/procurement",
     "start": "next start",
     "lint": "eslint"
   },

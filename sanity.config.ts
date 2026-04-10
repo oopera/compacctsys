@@ -34,17 +34,9 @@ export default defineConfig({
                   .schemaType("siteSettings")
                   .documentId("siteSettings")
               ),
-            S.listItem()
-              .title("Apply Page")
-              .id("applyPage")
-              .child(
-                S.document()
-                  .schemaType("applyPage")
-                  .documentId("applyPage")
-              ),
             S.divider(),
             ...S.documentTypeListItems().filter(
-              (item) => !["researchTheme", "siteSettings", "applyPage"].includes(item.getId() ?? "")
+              (item) => !["researchTheme", "siteSettings"].includes(item.getId() ?? "")
             ),
           ]),
     }),

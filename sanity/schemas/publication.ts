@@ -48,6 +48,12 @@ export const publication = defineType({
       description: 'e.g. "CHI", "CSCW", "UIST"',
     }),
     defineField({
+      name: "venueDisplay",
+      title: "Venue Display Name",
+      type: "string",
+      description: "The venue name shown on the website (from venuedisplay BibTeX field). Takes priority over venue/venueShort.",
+    }),
+    defineField({
       name: "year",
       title: "Year",
       type: "number",
