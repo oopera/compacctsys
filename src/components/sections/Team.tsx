@@ -156,7 +156,7 @@ export async function Team({ standalone }: TeamProps) {
                   {member.email ? (
                     <a
                       href={`mailto:${member.email}`}
-                      className="truncate font-mono text-[10px] text-[var(--muted)] transition-colors hover:text-[var(--main)]"
+                      className="truncate font-mono text-[10px] text-[var(--main)] transition-colors hover:underline underline-offset-2"
                     >
                       {member.email}
                     </a>

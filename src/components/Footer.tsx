@@ -26,7 +26,7 @@ export async function Footer() {
             <div className="text-left md:text-right">
               <a
                 href={`mailto:${email}`}
-                className="truncate font-mono text-[10px] text-[var(--muted)] transition-colors hover:text-[var(--main)]"
+                className="truncate font-mono text-[10px] text-[var(--main)] transition-colors hover:underline underline-offset-2"
               >
                 {email}
               </a>
