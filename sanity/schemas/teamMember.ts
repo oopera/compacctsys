@@ -90,12 +90,6 @@ export const teamMember = defineType({
       ],
     }),
     defineField({
-      name: "order",
-      title: "Display Order",
-      type: "number",
-      initialValue: 99,
-    }),
-    defineField({
       name: "current",
       title: "Current Member",
       type: "boolean",
@@ -104,9 +98,9 @@ export const teamMember = defineType({
   ],
   orderings: [
     {
-      title: "Display Order",
-      name: "orderAsc",
-      by: [{ field: "order", direction: "asc" }],
+      title: "Name",
+      name: "nameAsc",
+      by: [{ field: "name", direction: "asc" }],
     },
   ],
   preview: {

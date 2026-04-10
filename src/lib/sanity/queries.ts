@@ -9,7 +9,7 @@ import type {
 
 // ─── Team ────────────────────────────────────────────────────────────────────
 
-const teamQuery = `*[_type == "teamMember" && current == true] | order(order asc) {
+const teamQuery = `*[_type == "teamMember" && current == true] | order(name asc) {
   "id": _id,
   name,
   title,
@@ -19,7 +19,6 @@ const teamQuery = `*[_type == "teamMember" && current == true] | order(order asc
   "photo": photo.asset->url,
   "photoHotspot": photo.hotspot,
   links[]{provider, url},
-  order,
   current
 }`;
 
@@ -27,13 +26,12 @@ export async function getTeam(): Promise<TeamMember[]> {
   return client.fetch(teamQuery, {}, { next: { tags: ["teamMember"] } });
 }
 
-const pastTeamQuery = `*[_type == "teamMember" && current == false] | order(order asc) {
+const pastTeamQuery = `*[_type == "teamMember" && current == false] | order(name asc) {
   "id": _id,
   name,
   title,
   role,
   links[]{provider, url},
-  order,
   current
 }`;
 

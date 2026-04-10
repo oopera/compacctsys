@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npm run build:procurement && next build",
-    "build:procurement": "cd Procurement && npm run build && rm -rf ../public/procurement && cp -r dist ../public/procurement",
+    "build": "npm run build:procurement; next build",
+    "build:procurement": "[ -d Procurement ] && cd Procurement && npm run build && rm -rf ../public/procurement && cp -r dist ../public/procurement || echo 'Procurement dir not found, skipping'",
     "start": "next start",
     "lint": "eslint"
   },

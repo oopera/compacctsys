@@ -25,7 +25,6 @@ export interface TeamMember {
   email?: string;
   photo?: string;
   links?: TeamMemberLink[];
-  order: number; // for manual sort
   current: boolean;
 }
 
