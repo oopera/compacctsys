@@ -54,9 +54,10 @@ export async function Hero() {
               </div>
             )}
             {settings?.contactEmail && (
+
               <a
                 href={`mailto:${settings.contactEmail}`}
-                className="font-mono text-[10px] text-[var(--main)] hover:underline underline-offset-2 w-fit"
+                className="truncate font-mono text-[10px] text-[var(--muted)] transition-colors hover:text-[var(--main)]"
               >
                 {settings.contactEmail}
               </a>

@@ -26,8 +26,7 @@ export async function Footer() {
             <div className="text-left md:text-right">
               <a
                 href={`mailto:${email}`}
-                className="hero-email font-mono text-xs"
-                style={{ color: "var(--muted)" }}
+                className="truncate font-mono text-[10px] text-[var(--muted)] transition-colors hover:text-[var(--main)]"
               >
                 {email}
               </a>

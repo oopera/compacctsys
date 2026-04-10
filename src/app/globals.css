@@ -75,12 +75,3 @@ body {
   background: var(--main);
   color: #fff;
 }
-
-.hero-email {
-  color: var(--hero-muted);
-  transition: color 150ms;
-}
-
-.hero-email:hover {
-  color: var(--hero-fg);
-}
