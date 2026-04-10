@@ -35,8 +35,33 @@ export default defineConfig({
                   .documentId("siteSettings")
               ),
             S.divider(),
+            S.listItem()
+              .title("Team Members")
+              .id("teamMember")
+              .child(
+                S.list()
+                  .title("Team Members")
+                  .items([
+                    S.listItem()
+                      .title("Current Members")
+                      .child(
+                        S.documentList()
+                          .title("Current Members")
+                          .filter('_type == "teamMember" && current == true')
+                          .defaultOrdering([{ field: "name", direction: "asc" }])
+                      ),
+                    S.listItem()
+                      .title("Past Members")
+                      .child(
+                        S.documentList()
+                          .title("Past Members")
+                          .filter('_type == "teamMember" && current != true')
+                          .defaultOrdering([{ field: "name", direction: "asc" }])
+                      ),
+                  ])
+              ),
             ...S.documentTypeListItems().filter(
-              (item) => !["researchTheme", "siteSettings"].includes(item.getId() ?? "")
+              (item) => !["researchTheme", "siteSettings", "teamMember"].includes(item.getId() ?? "")
             ),
           ]),
     }),
