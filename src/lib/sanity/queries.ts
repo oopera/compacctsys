@@ -86,7 +86,7 @@ const newsQuery = `*[_type == "newsItem"] | order(date desc) {
   title,
   "slug": slug.current,
   date,
-  "body": pt::text(body),
+  body,
   tags,
   externalUrl,
   "image": image.asset->url,

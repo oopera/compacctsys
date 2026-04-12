@@ -1,21 +1,6 @@
 import { SceneCanvas } from "@/components/SceneCanvas";
 import { getSiteSettings } from "@/lib/sanity/queries";
-import { PortableText } from "next-sanity";
-
-const ptComponents = {
-  marks: {
-    link: ({ children, value }: { children: React.ReactNode; value?: { href?: string } }) => (
-      <a
-        href={value?.href}
-        target={value?.href?.startsWith("http") ? "_blank" : undefined}
-        rel={value?.href?.startsWith("http") ? "noopener noreferrer" : undefined}
-        className="text-[var(--main)] hover:underline underline-offset-2 transition-colors"
-      >
-        {children}
-      </a>
-    ),
-  },
-};
+import { PortableTextRenderer } from "@/components/PortableTextRenderer";
 
 export async function Hero() {
   const settings = await getSiteSettings();
@@ -51,7 +36,7 @@ export async function Hero() {
             </h1>
             {description ? (
               <div className="text-sm leading-relaxed text-[var(--muted)] max-w-md prose prose-sm">
-                <PortableText value={description} components={ptComponents} />
+                <PortableTextRenderer value={description} />
               </div>
             ) : tagline ? (
               <p className="text-sm leading-relaxed text-[var(--muted)] max-w-md">

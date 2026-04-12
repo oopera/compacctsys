@@ -78,7 +78,7 @@ export interface NewsItem {
   title: string;
   slug: string;
   date: string; // ISO date string
-  body: string; // will become block content in Sanity
+  body: any; // Portable Text block content
   tags: string[];
   externalUrl?: string;
   image?: string;

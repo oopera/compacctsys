@@ -2,6 +2,7 @@ import Image from "next/image";
 import { getNews } from "@/lib/sanity/queries";
 import { SectionHeader } from "@/components/SectionHeader";
 import { BtnLink } from "@/components/Btn";
+import { PortableTextRenderer } from "@/components/PortableTextRenderer";
 
 export async function News() {
   const news = await getNews();
@@ -42,9 +43,9 @@ export async function News() {
                     {item.title}
                   </h3>
                   {item.body && (
-                    <p className="text-sm leading-relaxed text-[var(--muted)]">
-                      {item.body}
-                    </p>
+                    <div className="text-sm leading-relaxed text-[var(--muted)] prose prose-sm">
+                      <PortableTextRenderer value={item.body} />
+                    </div>
                   )}
                   {item.externalUrl && (
                     <BtnLink href={item.externalUrl} external className="mt-3 w-fit">
