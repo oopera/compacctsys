@@ -10,15 +10,15 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  async redirects() {
-    return [
-      {
-        source: "/facct-event",
-        destination: "https://luma.com/r6ey1avq",
-        permanent: false,
-      },
-    ];
-  },
+  // async redirects() {
+  //   return [
+  //     {
+  //       source: "/facct-event",
+  //       destination: "https://luma.com/r6ey1avq",
+  //       permanent: false,
+  //     },
+  //   ];
+  // },
   async rewrites() {
     return [
       {
