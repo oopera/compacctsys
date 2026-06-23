@@ -19,7 +19,11 @@ export async function News() {
         ) : (
           <ul className="divide-y divide-[var(--border)]">
             {news.map((item) => (
-              <li key={item.id} className="flex gap-4 md:gap-6 py-5 md:py-8 first:pt-0">
+              <li
+                key={item.id}
+                id={item.slug}
+                className="flex gap-4 md:gap-6 py-5 md:py-8 first:pt-0 scroll-mt-20"
+              >
                 {item.image && (
                   <div className="relative h-24 w-36 shrink-0 overflow-hidden bg-[var(--bg-alt)]">
                     <Image

@@ -60,6 +60,13 @@ export const publication = defineType({
       validation: (r) => r.required().min(1990).max(2100),
     }),
     defineField({
+      name: "date",
+      title: "Publication Date",
+      type: "date",
+      description:
+        "Optional. Used only to order publications within the same year (newest first). Leave blank to fall back to when the entry was created.",
+    }),
+    defineField({
       name: "type",
       title: "Publication Type",
       type: "string",
@@ -116,7 +123,10 @@ export const publication = defineType({
     {
       title: "Year (newest first)",
       name: "yearDesc",
-      by: [{ field: "year", direction: "desc" }],
+      by: [
+        { field: "year", direction: "desc" },
+        { field: "date", direction: "desc" },
+      ],
     },
   ],
   preview: {

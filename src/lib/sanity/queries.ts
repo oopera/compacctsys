@@ -54,7 +54,7 @@ export async function getResearchThemes(): Promise<ResearchTheme[]> {
 
 // ─── Publications ────────────────────────────────────────────────────────────
 
-const publicationsQuery = `*[_type == "publication"] | order(year desc) {
+const publicationsQuery = `*[_type == "publication"] | order(year desc, coalesce(date, _createdAt) desc) {
   "id": _id,
   title,
   authors[]{
@@ -90,7 +90,7 @@ const newsQuery = `*[_type == "newsItem"] | order(date desc) {
   tags,
   externalUrl,
   "image": image.asset->url,
-  "publicationId": publication->_id
+  "publicationId": relatedPublication->_id
 }`;
 
 export async function getNews(): Promise<NewsItem[]> {
@@ -99,7 +99,7 @@ export async function getNews(): Promise<NewsItem[]> {
 
 // ─── Awards ──────────────────────────────────────────────────────────────────
 
-const awardsQuery = `*[_type == "publication" && defined(award)] | order(year desc) {
+const awardsQuery = `*[_type == "publication" && defined(award)] | order(year desc, coalesce(date, _createdAt) desc) {
   "id": _id,
   title,
   authors[]{
