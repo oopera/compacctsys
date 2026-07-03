@@ -22,20 +22,20 @@ export async function News() {
               <li
                 key={item.id}
                 id={item.slug}
-                className="flex gap-4 md:gap-6 py-5 md:py-8 first:pt-0 scroll-mt-20"
+                className="py-5 first:pt-0 md:py-8 scroll-mt-20"
               >
                 {item.image && (
-                  <div className="relative h-24 w-36 shrink-0 overflow-hidden bg-[var(--bg-alt)]">
+                  <div className="relative mb-5 aspect-video w-full max-w-[514px] overflow-hidden bg-[var(--bg-alt)]">
                     <Image
                       src={item.image}
                       alt={item.title}
                       fill
                       className="object-cover"
-                      sizes="144px"
+                      sizes="(max-width: 514px) 100vw, 514px"
                     />
                   </div>
                 )}
-                <div className="flex min-w-0 flex-1 flex-col justify-center">
+                <div>
                   <p className="mb-1 font-mono text-[10px] text-[var(--muted)]">
                     {new Date(item.date).toLocaleDateString("en-GB", {
                       day: "numeric",
